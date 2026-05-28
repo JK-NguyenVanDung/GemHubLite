@@ -1,0 +1,157 @@
+Picup Media — Mobile App
+Engineer Take-Home Exercise
+Role: Mobile App Engineer AI Driven Development
+Company: Picup Media — jewelry photography & digital solutions GemLightbox,
+GemCam, GemHub
+Time budget: A focused session — for many strong RN engineers this is a few hours with AI tools Cursor, Claude Code, etc.); others may need up to half a day depending on environment setup and camera-library friction. We do not expect this to take multiple days.
+Due: Within 5 business days of receiving this brief — work at your own pace, but sooner is better. We are moving quickly to fill this role and will review submissions as they arrive.
+ 
+Overview
+Picup Media builds GemHub, a React Native app used by jewelry retailers and studios to capture product photos and videos, organize them by SKU (stockkeeping unit), and manage product listings for e-commerce and catalogs.
+This exercise asks you to vibe-code a simplified, self-contained version of the core capture-and-catalog experience. We are not giving you access to our production codebase or backend. You should stand up your own lightweight data layer (local persistence, Supabase, Firebase, SQLite + file storage, etc.) — whatever lets you ship a credible demo quickly.
+We care less about pixel-perfect branding and more about whether you can:
+Ship a working RN app on iOS and Android
+Implement the core product flows end-to-end
+Design your own UX where it makes sense — you do not need to copy
+GemHubʼs screens, tab order, or visual design
+Use AI coding tools effectively while applying engineering judgment
+What you are building
+Think of it as “GemHub Lite” — a mobile app for a jewelry merchant who photographs inventory and needs every shot tied to a product SKU.
+Required scope (must demonstrate)
+Build a React Native app that exposes the areas below. Bottom tabs are a suggestion, not a requirement — use tabs, a drawer, a hub screen, or any navigation pattern you can justify if it makes the flows clearer.
+Minimum three areas (names and layout are up to you):
+Area	Purpose
+Camera	Capture product photos (see below)
+Media	Browse all captured/imported media
+Products	Browse products organized by SKU
+Plus Product detail (stack screen from Products or Media).
+1. Camera
+Full-screen (or primary) camera experience to take still photos of products.
+After capture, show a preview / save step where the user must confirm a SKU before save:
+	 	Type a SKU, pick an existing SKU, and/or offer “Generate SKU” that
+creates a unique value (e.g. SKU-20260526-001 ) — your format choice, documented in README
+SKU is always required; there is no “save without SKU” path
+Optionally set a few basic fields (your choice — see Product sense below)
+On save, media is always linked to that SKU — create the product if the SKU is new, or append media if it already exists
+Photo capture only is sufficient. Video is a nice-to-have, not required.
+2. Products
+ 	List or grid of products, each identified primarily by SKU.
+Show at least: SKU, title (or placeholder), and a thumbnail (cover image).
+Tapping a product opens Product detail.
+3. Media
+Gallery-style view of all media items (every item belongs to a product SKU .
+Show enough context to identify the item (thumbnail + SKU and/or title).
+Tapping media → open Product detail for that SKU.
+Optional: adjustable grid density or list/grid toggle — bonus only (see below).
+4. Product detail
+View and edit core product info, e.g.:
+SKU (may be read-only after create — your call)
+Title
+Description (short text)
+Product type (simple picker or free text — e.g. Ring, Necklace, Earring) Media section: show all images for this product.
+Cover/thumbnail for list views: default to the first image is enough. Letting the user pick a different cover is optional (bonus).
+ 	Ability to add more photos from the camera flow while on this product (navigate to camera with SKU pre-filled, return with new media attached).
+You do not need catalogs/collections, pricing/inventory, gemstone appraisal, share links, analytics, or org/multi-tenant features.
+ 
+Explicitly out of scope
+Out of scope	Notes
+Home / dashboard tab	Not required
+Bluetooth / hardware	No GemLightbox, turntable, BLE, UVC camera integrations
+Lighting filters	No white background, eclipse, or device-specific filter pipelines
+Out of scope	Notes
+GPU / native media editor	No retouch, background removal, crop pipelines, or custom native editors
+360° video	Not required
+Production Picup backend	No GraphQL/API keys for our systems
+Auth / org / cloud sync	Optional login only if it helps your storage choice
+App Store / Play Store release	Local/dev builds are fine
+If you touch any of the above, keep it trivial and donʼt let it block the core flows.
+ 
+Bonus scope (optional — extra credit only)
+Evaluation is based on the required scope above. The items below can strengthen your submission but are not required to pass:
+Video capture (short clip per product)
+Import from gallery (camera roll) — still requires SKU before save, same rules as camera
+ 	AI product description via a conventional LLM API OpenAI, Anthropic, etc.) — e.g. button on preview or product detail that drafts description from title/type; user can edit before save
+Basic search or sort on Products or Media
+Offline-first with sync to Supabase or other cloud storage
+List/grid toggle or adjustable media grid density
+If you only complete required scope, you can still receive a strong pass. Bonus work mainly helps us see range and polish, not baseline competence.
+ 
+Product sense & UX freedom (important)
+Our production app has years of domain and visual design. You are not building a UI clone.
+ 	Preserve the product logic (capture → required SKU → products + media libraries → detail).
+ 	Redesign the UX freely — screen order, navigation pattern, labels, preview flow, list vs grid, how SKU entry works — if your version is clearer for a jeweler photographing inventory.
+We will not compare your app to GemHub screenshots. We care that the journeys work and feel intentional.
+Document in your README
+What you included and what you deliberately cut
+SKU rules — required on every save, uniqueness, and how auto-generated
+SKUs work (if you offer them)
+UX choices — at least one place where you diverged from a typical “threetab catalog app” (or from GemHub) and why
+Time spent (honest estimate — many finish in a few hours; half a day is normal if you hit setup or camera snags)
+We are evaluating whether the result feels usable by a non-technical jeweler, not whether it matches our branding or layout.
+ 
+Technical requirements
+Requirement	Detail
+Framework	React Native Expo or bare — your choice)
+Platforms	Must run on iOS and Android (simulators/emulators acceptable; real devices welcome)
+Navigation	Your choice — tabs, stack, modal flows, etc. — as long as the four journeys are easy to follow
+Camera	Use a maintained RN approach ( expo-camera , react-native-visioncamera , etc.)
+Storage	Self-contained: local DB/files, Supabase, Firebase, or similar — no dependency on Picup APIs
+Requirement	Detail
+Responsive layout	Reasonable on different phone sizes (small iPhone, large Android); handle safe areas and orientation you support
+TypeScript	Preferred
+AI tools	Encouraged Cursor, Claude Code, Copilot, etc.) — say how you used them in the README
+Quality bar
+App should build and run from your README instructions
+No hard-coded secrets in the repo (use .env.example )
+Crashes on happy path are a red flag; basic empty states (no products yet, no media) are expected
+ 
+Suggested user journeys (acceptance checklist)
+Use these to self-test before submit:
+New product from camera
+Camera → capture photo → enter new SKU (typed or generated) + optional title → save → product appears under Products; photo appears under Media.
+Add media to existing product
+Open product detail → add photo → capture → same SKU pre-filled or selected → save → return to detail with new image in the list.
+Existing SKU from camera
+Camera → capture → choose existing SKU → save → media appended to that product (no duplicate product row).
+Browse
+Products and Media tabs stay in sync after saves; product list shows a thumbnail (first image is fine).
+ 
+Deliverables
+Submit the following English:
+Git repository GitHub/GitLab/Bitbucket — private link is fine with full source README including:
+Prerequisites Node version, Xcode/Android SDK, Expo if used
+Install and run steps for iOS and Android
+Architecture overview (navigation, state, storage)
+Scope decisions (see Product sense)
+AI tooling: what you used, one example where you corrected or rejected AI output
+ 	Known gaps and what you would tackle next if this were a real sprint Demo evidence (at least one):
+ 	Short screen recording 2 5 min walking through the journeys above (call out if any are not implemented), or
+	 	Screenshots + written walkthrough
+Optional: APK/IPA or TestFlight/Internal Testing link — only if easy for you
+ 
+How we will evaluate
+Dimension	What we look for
+Core flows	Camera → save → Products / Media / Detail work end-to-end
+Mobile craft	RN competence, navigation, state, camera integration, list performance
+Cross-platform	Evidence both platforms were considered (layout, permissions, camera)
+Product & UX	Clear SKU/media model; thoughtful UX you designed (not a
+GemHub lookalike); acceptable empty/error states
+AI-assisted delivery	Speed and quality of output; README honesty about AI limits and time spent
+Engineering judgment	Readable structure, reasonable dependencies, no obvious security issues
+Dimension	What we look for
+Bonus scope
+(optional)	Extra credit only — video, import, AI description, search, etc.
+We expect complete required scope in one or two focused sessions, not days of open-ended work. Bonus features only after that; a complete modest build beats a flashy partial one.
+ 
+Reference context (no repo access)
+Our production app GemHub roughly follows:
+ 
+Your version should preserve the mental model: capture → SKU (required) → library → detail, without our hardware stack or AI pipeline. UI/layout may differ completely — we only need that model to be obvious in your demo.
+We simplified vs production: no unassigned / “No SKU” media bucket — every save must have a SKU (manual or auto-generated).
+ 
+Questions?
+Reasonable clarifications are welcome — use the same channel weʼve been using to correspond.
+Your own work
+Submit work you did yourself. AI coding assistants Cursor, Claude Code, Copilot, etc. are expected and allowed — that is how we build. Help from other people is not (no co-developers, tutors, agencies, or code you cannot explain). In a follow-up, we will ask you to walk through your implementation and decisions.
+Good luck — weʼre excited to see what you ship.
+ 
