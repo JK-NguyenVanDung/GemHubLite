@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "GemHub Lite",
+    "slug": "gemhub-lite",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gemhublite.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "GemHub Lite needs camera access to capture jewelry product photos."
+      }
+    },
+    "android": {
+      "package": "com.gemhublite.app",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-image",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "buildReactNativeFromSource": true,
+            "usePrecompiledModules": false
+          }
+        }
+      ]
+    ]
+  }
+}

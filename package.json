@@ -1,0 +1,46 @@
+{
+  "name": "gemhub-lite",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "expo": "~56.0.6",
+    "expo-build-properties": "~56.0.15",
+    "expo-dev-client": "~56.0.16",
+    "expo-file-system": "~56.0.7",
+    "expo-haptics": "~56.0.3",
+    "expo-image": "~56.0.9",
+    "expo-router": "~56.2.7",
+    "expo-sqlite": "~56.0.4",
+    "expo-status-bar": "~56.0.4",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-gesture-handler": "~2.31.1",
+    "react-native-mmkv": "^4.3.1",
+    "react-native-nitro-image": "^0.15.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-native-vision-camera": "^5.0.11"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~56.0.4",
+    "react-dom": "^19.2.3",
+    "typescript": "~6.0.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "ios": "expo run:ios",
+    "android": "expo run:android",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "lint": "expo lint",
+    "doctor": "bash scripts/doctor.sh"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20.19 <23",
+    "npm": ">=10"
+  }
+}
