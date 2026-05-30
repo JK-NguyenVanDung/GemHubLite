@@ -10,6 +10,8 @@
     "expo-file-system": "~56.0.7",
     "expo-haptics": "~56.0.3",
     "expo-image": "~56.0.9",
+    "expo-image-manipulator": "~56.0.16",
+    "expo-image-picker": "~56.0.14",
     "expo-router": "~56.2.7",
     "expo-sqlite": "~56.0.4",
     "expo-status-bar": "~56.0.4",
@@ -24,9 +26,12 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "connect": "^3.7.0",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~56.0.4",
+    "patch-package": "^8.0.1",
     "react-dom": "^19.2.3",
+    "serve-sim": "^0.1.38",
     "typescript": "~6.0.3"
   },
   "scripts": {
@@ -36,7 +41,11 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
-    "doctor": "bash scripts/doctor.sh"
+    "doctor": "bash scripts/doctor.sh",
+    "sim": "serve-sim",
+    "sim:kill": "serve-sim --kill",
+    "sim:camera": "serve-sim camera com.gemhublite.app",
+    "postinstall": "patch-package"
   },
   "private": true,
   "engines": {

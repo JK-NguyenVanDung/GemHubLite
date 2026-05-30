@@ -2,12 +2,30 @@
 
 ## Current Status
 
-- Phase: Camera capture/save and Product Detail slices implemented; native/manual validation still pending.
-- Repo state: Expo TypeScript app, UI primitives, SKU/domain persistence, camera capture/save flow, repository-backed Products/Media tabs, and editable Product Detail exist alongside planning docs.
+- Phase: Screenshot-parity tab shell and filter slice implemented; native/manual validation still pending.
+- Repo state: Expo TypeScript app, UI primitives, SKU/domain persistence, camera capture/save flow, repository-backed Home/Media/Camera/Products/More tabs, filterable Products/Media tabs, and editable Product Detail exist alongside planning docs.
 - Current blocker: iOS native build, Android native build, real camera smoke, and manual persistence smoke remain unverified.
 - Next slice: run native iOS/Android validation, then close README/demo evidence gaps.
 
 ## Log
+
+### 2026-05-29
+
+- Added screenshot-parity shell tabs: Home, Media, raised Camera, Products, and More.
+- Repointed launch route from Camera to Home to match researched app navigation rhythm while keeping Camera as primary CTA.
+- Added Home dashboard with quick capture, recent products, local metrics, and top-right profile action to More.
+- Added More/Profile-style tab with Lite-scoped profile, inventory, and support rows; no auth/cloud/collections implementation added.
+- Added reusable `FilterSheet` and extended `InventoryHeader` with tappable filter chip.
+- Added Product filters: search, product type, newest/oldest/most-photos sort.
+- Added Media filters: search, product type, captured date range, newest/oldest sort.
+- Extended media repository list rows with joined product type for gallery filtering.
+- Added app-owned asset storage split into `Documents/media/images/` and `Documents/media/videos/`.
+- Added image compression pipeline via `expo-image-manipulator`: max 1600px edge, JPEG quality 0.86, stored-byte metadata.
+- Added video import storage path with iOS H.264 1280x720 picker export request and video-safe Media/Product placeholders.
+- Migrated SQLite media schema to version 2 with kind, MIME type, dimensions, duration, original/stored bytes, and compression flag.
+- Captured simulator validation screenshots for Home, Products, Product filter, Media, Media filter, and More under `docs/research/screenshots/validation/`.
+- Ran `npm run typecheck` successfully.
+- Ran `npm run lint` successfully.
 
 ### 2026-05-28
 
@@ -16,7 +34,13 @@
 - Confirmed `app.json` carries iOS/Android camera permissions; `react-native-vision-camera@5.0.11` has no package config plugin file in this install, so no invalid plugin entry was added.
 - Ran `npm run typecheck` successfully after camera route fix on 2026-05-28.
 - Ran `npm run lint` successfully after camera route fix on 2026-05-28.
-- Native gates not run in this session: `npm run ios`, `npm run android`, live-camera screenshots, and save-flow screenshots remain pending.
+- Ran Argent simulator UI verification on booted `iPhone 17 Pro` (`B8664E32-83EA-41D4-B2BB-F15681DD5331`) against Expo dev-client LAN server `http://192.168.138.91:8081`.
+- Captured UI evidence for Camera, Products, and Media tabs through Argent screenshots: `/var/folders/mn/7162t97n5wq4wp8qksrl_chw0000gp/T/simserver-sv5GIo/media/994755000-1779976708995.png`, `/var/folders/mn/7162t97n5wq4wp8qksrl_chw0000gp/T/simserver-sv5GIo/media/129502000-1779976676130.png`, and `/var/folders/mn/7162t97n5wq4wp8qksrl_chw0000gp/T/simserver-sv5GIo/media/183227000-1779976686184.png`.
+- Found development-server launch issue: `--localhost` bound Metro to IPv6 localhost only, causing dev client `Could not connect to the server`; restarting with `npx expo start --dev-client --host lan --clear` fixed simulator loading.
+- Removed stale `react-native-vision-camera` config-plugin entry from `app.json`; this package install exposes no package config plugin, so Expo config fails when the plugin is listed manually.
+- Attempted `argent-ios-profiler`; `ios-profiler-start` reported recording, but `ios-profiler-stop` repeatedly returned `No active iOS profiling session found`, so no Argent Instruments report was produced.
+- Attempted fallback `xcrun xctrace`; trace packaging was unreliable in this environment. Fresh native build still fails because current VisionCamera v5 pod references missing generated Nitro Swift files under `node_modules/react-native-vision-camera/nitrogen/generated/ios/swift/`.
+- Native gates still incomplete: Android native build, live-camera capture, save-flow screenshots, and real-device test-page cross-check remain pending.
 
 - Implemented Product Detail slice from handoff: `app/product/[sku].tsx`, `src/features/product-detail/`, `ProductCard`, `MediaTile`, and repo-backed Products/Media grids.
 - Added Product Detail edit form for title, product type, and description with explicit Save, inline save error, immutable SKU header, media grid, and Add Photo route to `/camera?sku=...`.
