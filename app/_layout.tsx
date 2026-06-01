@@ -1,8 +1,10 @@
-import { Pressable } from "react-native";
+import { Pressable, View } from "react-native";
 import { router } from "expo-router";
 import { Stack } from "expo-router/stack";
 
+import { ErrorBoundary } from "@/src/components/ErrorBoundary";
 import { Icon, Text } from "@/src/components/ui";
+import { useStartupMaintenance } from "@/src/features/startup/useStartupMaintenance";
 import { ThemeProvider, useTheme } from "@/src/theme";
 
 function ProductBackButton() {
@@ -33,40 +35,51 @@ function ProductBackButton() {
 
 function AppStack() {
   const theme = useTheme();
+  const { storageWarning } = useStartupMaintenance();
 
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.background },
-        headerShadowVisible: true,
-        headerTintColor: theme.colors.accentDark,
-        headerTitleStyle: {
-          color: theme.colors.text,
-          fontSize: theme.typography.screenTitle.fontSize,
-          fontWeight: theme.typography.screenTitle.fontWeight,
-        },
-      }}
-    >
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="capture-preview" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="product/[sku]"
-        options={{
-          headerBackTitle: "",
-          headerBackVisible: false,
-          headerLeft: () => <ProductBackButton />,
-          title: "Product Detail",
+    <View style={{ flex: 1 }}>
+      {storageWarning ? (
+        <View style={{ backgroundColor: theme.colors.danger, paddingHorizontal: theme.spacing.md, paddingVertical: theme.spacing.xs }}>
+          <Text variant="metadata" tone="onAccent">{storageWarning}</Text>
+        </View>
+      ) : null}
+      <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerShadowVisible: true,
+          headerTintColor: theme.colors.accentDark,
+          headerTitleStyle: {
+            color: theme.colors.text,
+            fontSize: theme.typography.screenTitle.fontSize,
+            fontWeight: theme.typography.screenTitle.fontWeight,
+          },
         }}
-      />
-    </Stack>
+      >
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="camera" options={{ animation: "slide_from_bottom", headerShown: false, presentation: "fullScreenModal" }} />
+        <Stack.Screen name="capture-preview" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="product/[sku]"
+          options={{
+            headerBackTitle: "",
+            headerBackVisible: false,
+            headerLeft: () => <ProductBackButton />,
+            title: "Product Detail",
+          }}
+        />
+      </Stack>
+    </View>
   );
 }
 
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <AppStack />
+      <ErrorBoundary>
+        <AppStack />
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }

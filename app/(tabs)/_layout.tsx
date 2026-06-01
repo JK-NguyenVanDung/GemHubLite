@@ -67,6 +67,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="camera"
         options={{
+          tabBarStyle: { display: "none" },
           title: "Camera",
           tabBarIcon: ({ focused }) => <CameraIcon focused={focused} />,
         }}

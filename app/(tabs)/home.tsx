@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { Pressable, View } from "react-native";
 
 import { Button, Card, Chip, EmptyStateCard, Icon, Screen, Spinner, Text } from "@/src/components/ui";
@@ -14,6 +14,9 @@ export default function HomeScreen() {
   const { data: media, loading: mediaLoading } = useMedia();
   const recentProducts = useMemo(() => products.slice(0, 4), [products]);
   const loading = productsLoading && mediaLoading && products.length === 0;
+  const openProduct = useCallback((sku: string) => {
+    router.push({ pathname: "/product/[sku]", params: { sku } });
+  }, []);
 
   if (loading) {
     return <Screen testID="home-screen"><Spinner /></Screen>;
@@ -24,11 +27,11 @@ export default function HomeScreen() {
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: theme.spacing.sm }}>
         <View style={{ flex: 1, gap: theme.spacing.xxs }}>
           <Text variant="screenTitle">GemHub Lite</Text>
-          <Text variant="metadata" tone="secondary">Capture jewelry, assign SKU, build catalog.</Text>
+          <Text variant="metadata" tone="secondary">Fast product photos for your jewelry catalog.</Text>
         </View>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Open profile menu"
+          accessibilityLabel="Open More support menu"
           onPress={() => router.push("/(tabs)/more")}
           style={({ pressed }) => ({
             alignItems: "center",
@@ -36,14 +39,13 @@ export default function HomeScreen() {
             borderColor: theme.colors.border,
             borderRadius: theme.radius.pill,
             borderWidth: 1,
-            height: 42,
+            height: 44,
             justifyContent: "center",
             opacity: pressed ? 0.75 : 1,
-            width: 42,
+            width: 44,
           })}
-          testID="home-profile-button"
         >
-          <Icon name="person-outline" tone="accent" />
+          <Icon name="ellipsis-horizontal" tone="accent" />
         </Pressable>
       </View>
 
@@ -60,11 +62,11 @@ export default function HomeScreen() {
             <Icon name="camera" size={34} tone="accent" />
           </View>
           <View style={{ flex: 1, gap: theme.spacing.xs }}>
-            <Text variant="bodyStrong">Ready for next SKU</Text>
-            <Text variant="body" tone="secondary">Capture photo, create or attach SKU, then review in Products and Media.</Text>
+            <Text variant="bodyStrong">Add a product</Text>
+            <Text variant="body" tone="secondary">Take a photo, add the SKU, and save it to your catalog.</Text>
           </View>
         </View>
-        <Button fullWidth label="Capture Product" leftIcon={<Icon name="camera-outline" tone="onAccent" />} onPress={() => router.push("/(tabs)/camera")} testID="home-capture-button" />
+        <Button fullWidth label="Add Product" leftIcon={<Icon name="camera-outline" tone="onAccent" />} onPress={() => router.push("/camera")} testID="home-capture-button" />
       </Card>
 
       <View style={{ flexDirection: "row", gap: theme.spacing.sm }}>
@@ -75,15 +77,15 @@ export default function HomeScreen() {
       <View style={{ gap: theme.spacing.sm }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
           <Text variant="sectionTitle">Recent products</Text>
-          <Chip label="Local" tone="accent" />
+          <Chip label="On device" tone="accent" />
         </View>
         {recentProducts.length === 0 ? (
-          <EmptyStateCard icon="sparkles-outline" title="No catalog yet" body="Start by capturing first product photo." actionLabel="Open Camera" onAction={() => router.push("/(tabs)/camera")} />
+          <EmptyStateCard icon="sparkles-outline" title="No products yet" body="Add your first product photo to get started." actionLabel="Open Camera" onAction={() => router.push("/camera")} />
         ) : (
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: theme.spacing.sm }}>
             {recentProducts.map((product) => (
               <View key={product.sku} style={{ width: "48%" }}>
-                <ProductCard product={product} onPress={(sku) => router.push({ pathname: "/product/[sku]", params: { sku } })} />
+                <ProductCard product={product} onPress={openProduct} />
               </View>
             ))}
           </View>
