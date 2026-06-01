@@ -51,3 +51,10 @@ test("product-detail barrel exports new components and drops retired ones", () =
   assert.doesNotMatch(src, /AddPhotoButton/);
   assert.doesNotMatch(src, /MediaGrid/);
 });
+
+test("Products grid is 2-col and Media grid is 3-col on compact width", () => {
+  const products = read("app/(tabs)/products.tsx");
+  const media = read("app/(tabs)/media.tsx");
+  assert.match(products, /useResponsiveColumns\(\{ compact: 2/);
+  assert.match(media, /useResponsiveColumns\(\{ compact: 3/);
+});
