@@ -16,8 +16,8 @@ test("manual and scanned SKUs use safe catalog identity characters", () => {
 });
 
 test("generated SKU is deterministic, padded, and parseable", () => {
-  const sku = generateSku(new Date(2026, 4, 31), 8);
+  const sku = generateSku(8);
 
-  assert.equal(sku, "SKU-20260531-008");
-  assert.deepEqual(parseGeneratedSku(sku), { date: "20260531", sequence: 8 });
+  assert.equal(sku, "GH-000008");
+  assert.deepEqual(parseGeneratedSku(sku), { sequence: 8 });
 });

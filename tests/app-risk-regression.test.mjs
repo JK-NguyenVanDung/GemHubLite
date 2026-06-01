@@ -25,7 +25,7 @@ test("scope docs allow restored Lite Home and More shell", () => {
   assert.doesNotMatch(prp, /No Home\/dashboard tab\./);
   assert.match(prp, /Lite local summary and shortcuts/);
   assert.match(design, /Lite Home and More may appear/);
-  assert.match(readme, /Lite Home and More stay local-only/);
+  assert.match(readme, /deliberate local-only additions/);
 });
 
 test("product and media image grids use expo-image caching", () => {
@@ -78,7 +78,8 @@ test("capture preview and SKU scanner use mobile-safe inputs and cached image re
   const captureReview = read("src/features/camera/components/CaptureReview.tsx");
 
   assert.match(captureReview, /<Image[\s\S]*?cachePolicy="memory-disk"/);
-  assert.match(captureReview, /Field[\s\S]*?label="Prefix"[\s\S]*?autoCorrect=\{false\}/);
+  assert.doesNotMatch(captureReview, /label="Prefix"|label="Date"|label="Seq"/);
+  assert.doesNotMatch(captureReview, /Generate SKU creates|New SKU\. Save photo/);
   assert.match(captureReview, /TextInput[\s\S]*autoCapitalize="characters"[\s\S]*autoCorrect=\{false\}/);
 });
 
@@ -142,8 +143,9 @@ test("camera route params normalize and reject invalid SKU handoff", () => {
   assert.match(captureReview, /const initialSku = normalizeSku\(readParam\(params\.sku\) \?\? ""\)/);
   assert.match(captureReview, /const initialValidSku = isValidSku\(initialSku\) \? initialSku : ""/);
   assert.match(captureReview, /useState\(initialValidSku\)/);
-  assert.match(captureReview, /usePhotoImport\(initialValidSku \|\| undefined\)/);
-  assert.match(captureReview, /params: \{ sku: initialValidSku \}/);
+  assert.match(captureReview, /const \[pendingMedia, setPendingMedia\] = useState<PendingCaptureMedia\[\]>/);
+  assert.match(captureReview, /label: "Add Photo from Library"/);
+  assert.match(captureReview, /params: \{ sku: normalizedSku \}/);
   assert.doesNotMatch(captureReview, /typeof params\.sku === "string"/);
   assert.match(captureReview, /function readParam\(value\?: string \| string\[\]\): string \| null/);
 });
@@ -157,20 +159,51 @@ test("existing SKU saves can update metadata without creating duplicate rows", (
   assert.match(productsRepo, /UPDATE products SET title = \?, type = \?, description = \?, updated_at = \? WHERE sku = \?/);
   assert.match(productsRepo, /created: false/);
   assert.match(mediaRepo, /SELECT \* FROM media WHERE sku = \? AND uri = \? LIMIT 1/);
-  assert.match(mediaRepo, /WHERE media\.id = \(/);
-  assert.match(mediaRepo, /WHERE latest_media\.sku = media\.sku/);
   assert.doesNotMatch(captureReview, /SKU already exists/);
   assert.match(captureReview, /Photo will be added to this product/);
 });
 
+test("Media gallery lists every media item, not one cover per SKU", () => {
+  const mediaRepo = read("src/lib/db/repositories/media.ts");
+  const listAll = mediaRepo.slice(mediaRepo.indexOf("async listAll"), mediaRepo.indexOf("async listForSku"));
+
+  // Gallery must surface all media rows (brief: "a gallery-style view of all media items").
+  assert.match(listAll, /FROM media\s+INNER JOIN products ON products\.sku = media\.sku\s+ORDER BY media\.created_at DESC/);
+  assert.doesNotMatch(listAll, /latest_media/);
+  assert.doesNotMatch(listAll, /LIMIT 1/);
+});
+
 
 test("shared interactive components avoid tiny unlabeled press targets", () => {
+  const actionSheet = read("src/components/ui/ActionSheet/ActionSheet.tsx");
+  const field = read("src/components/ui/Field/Field.tsx");
+  const productDetail = read("app/product/[sku].tsx");
   const picker = read("src/components/ui/Picker/Picker.tsx");
   const thumbnail = read("src/components/ui/Thumbnail/Thumbnail.tsx");
 
+  assert.match(actionSheet, /pendingActionRef = useRef/);
+  assert.match(actionSheet, /onDismiss={handleDismiss}/);
+  assert.match(actionSheet, /fallbackTimerRef\.current = setTimeout\(runPendingAction, 400\)/);
+  assert.doesNotMatch(actionSheet, /requestAnimationFrame(() => option.onPress())/);
+  assert.match(field, /accessibilityLabel=\{accessibilityLabel \?\? label\}/);
+  assert.match(productDetail, /<ScrollView keyboardShouldPersistTaps="handled"/);
   assert.match(picker, /accessibilityLabel=\{`\$\{label\}: \$\{value \?\? placeholder \?\? "Select"\}`\}/);
   assert.match(thumbnail, /accessibilityLabel=\{accessibilityLabel\}/);
   assert.match(thumbnail, /hitSlop=\{10\}/);
+});
+
+test("Products and Media expose a grid density toggle", () => {
+  const header = read("src/components/ui/InventoryHeader.tsx");
+  const products = read("app/(tabs)/products.tsx");
+  const media = read("app/(tabs)/media.tsx");
+
+  assert.match(header, /onToggleDensity\?: \(\) => void/);
+  assert.match(header, /-density-button/);
+  for (const screen of [products, media]) {
+    assert.match(screen, /const \[dense, setDense\] = useState\(false\)/);
+    assert.match(screen, /dense \? baseColumns \+ 1 : baseColumns/);
+    assert.match(screen, /onToggleDensity=\{\(\) => setDense/);
+  }
 });
 
 test("hot list item presses use stable callbacks", () => {
