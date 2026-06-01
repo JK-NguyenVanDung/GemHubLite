@@ -1,4 +1,6 @@
-import { Image, Pressable, View } from "react-native";
+import { Image } from "expo-image";
+import { useCallback } from "react";
+import { Pressable, View } from "react-native";
 
 import { Chip } from "@/src/components/ui/Chip/Chip";
 import { Text } from "@/src/components/ui/Text/Text";
@@ -15,6 +17,7 @@ const dimensionMap: Record<ThumbnailSize, number> = {
 
 /** Thumbnail shows captured media with optional SKU overlay and selection highlight. */
 export function Thumbnail({
+  dimension: dimensionOverride,
   onPress,
   placeholder,
   radius = "md",
@@ -25,7 +28,9 @@ export function Thumbnail({
   testID,
 }: ThumbnailProps) {
   const theme = useTheme();
-  const dimension = dimensionMap[size];
+  const dimension = dimensionOverride ?? dimensionMap[size];
+  const accessibilityLabel = skuLabel ? `Open media for ${skuLabel}` : placeholder ? `Open ${placeholder}` : "Open media";
+  const handlePress = useCallback(() => onPress?.(), [onPress]);
 
   const content = (
     <View
@@ -44,9 +49,11 @@ export function Thumbnail({
     >
       {source ? (
         <Image
+          cachePolicy="memory-disk"
+          contentFit="cover"
           source={source}
           style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-          resizeMode="cover"
+          transition={120}
         />
       ) : placeholder ? (
         <Text variant="bodyStrong" tone="tertiary" align="center" style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, textAlignVertical: "center" }}>
@@ -62,7 +69,7 @@ export function Thumbnail({
   }
 
   return (
-    <Pressable accessibilityRole="imagebutton" onPress={onPress} hitSlop={6}>
+    <Pressable accessibilityRole="imagebutton" accessibilityLabel={accessibilityLabel} onPress={handlePress} hitSlop={10}>
       {content}
     </Pressable>
   );

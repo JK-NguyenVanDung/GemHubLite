@@ -2,6 +2,8 @@ export const colors = {
   background: "#F7FAFA",
   surface: "#FFFFFF",
   surfaceMuted: "#F2F5F5",
+  inputBorder: "#D6E4E4",
+  inputPlaceholder: "#7C8794",
   text: "#111827",
   secondaryText: "#6B7280",
   tertiaryText: "#9CA3AF",

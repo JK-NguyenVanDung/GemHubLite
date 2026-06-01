@@ -11,7 +11,7 @@ export function InventoryHeader({
   onSearchChange,
   searchValue,
   searchPlaceholder,
-  subtitle = "SKU-linked local catalog",
+  subtitle,
   title,
 }: {
   title: string;
@@ -31,20 +31,20 @@ export function InventoryHeader({
       <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", gap: theme.spacing.sm }}>
         <View style={{ flex: 1, gap: theme.spacing.xxs }}>
           <Text variant="screenTitle">{title}</Text>
-          <Text variant="metadata" tone="secondary">{subtitle}</Text>
+          {subtitle ? <Text variant="metadata" tone="secondary">{subtitle}</Text> : null}
         </View>
         <Button label={actionLabel} size="sm" onPress={onAction} />
       </View>
-      <View style={{ flexDirection: "row", gap: theme.spacing.sm, alignItems: "flex-end" }}>
+      <View style={{ flexDirection: "row", gap: theme.spacing.sm, alignItems: "center" }}>
         <View style={{ flex: 1 }}>
-          <Field label="Search" placeholder={searchPlaceholder} value={searchValue} onChangeText={onSearchChange} autoCapitalize="characters" autoCorrect={false} clearButtonMode="while-editing" />
+          <Field label="Search" hideLabel placeholder={searchPlaceholder} value={searchValue} onChangeText={onSearchChange} autoCapitalize="characters" autoCorrect={false} clearButtonMode="while-editing" />
         </View>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={`Filter: ${filterLabel}`}
           disabled={!onFilterPress}
           onPress={onFilterPress}
-          style={({ pressed }) => ({ opacity: pressed ? 0.72 : 1, paddingBottom: theme.spacing.sm })}
+          style={({ pressed }) => ({ justifyContent: "center", minHeight: 44, opacity: pressed ? 0.72 : 1 })}
           testID={`${title.toLowerCase()}-filter-button`}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: theme.spacing.xxs }}>

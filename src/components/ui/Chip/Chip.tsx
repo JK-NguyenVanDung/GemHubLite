@@ -18,11 +18,12 @@ export function Chip({ label, testID, tone = "neutral" }: ChipProps) {
         alignSelf: "flex-start",
         backgroundColor: accent ? theme.colors.accentSoft : theme.colors.surfaceMuted,
         borderRadius: theme.radius.pill,
+        maxWidth: "100%",
         paddingHorizontal: theme.spacing.sm,
         paddingVertical: theme.spacing.xxs,
       }}
     >
-      <Text variant="sku" tone={danger ? "danger" : accent ? "accent" : "secondary"}>
+      <Text variant="sku" tone={danger ? "danger" : accent ? "accent" : "secondary"} numberOfLines={1}>
         {label}
       </Text>
     </View>

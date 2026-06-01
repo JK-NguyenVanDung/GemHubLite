@@ -14,7 +14,7 @@ const toneColor = {
 } as const;
 
 /** Text renders all copy through theme typography to prevent ad-hoc font styles. */
-export function Text({ align, children, style, tone = "primary", variant = "body", ...props }: TextProps) {
+export function Text({ align, children, maxFontSizeMultiplier = 1.3, style, tone = "primary", variant = "body", ...props }: TextProps) {
   const theme = useTheme();
 
   return (
@@ -25,6 +25,7 @@ export function Text({ align, children, style, tone = "primary", variant = "body
         variant === "sectionTitle" ? { textTransform: "uppercase" } : null,
         style,
       ]}
+      maxFontSizeMultiplier={maxFontSizeMultiplier}
       {...props}
     >
       {children}

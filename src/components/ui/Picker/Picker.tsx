@@ -18,12 +18,13 @@ export function Picker({ error, helperText, label, onPress, placeholder, require
       </Text>
       <Pressable
         accessibilityRole="button"
+        accessibilityLabel={`${label}: ${value ?? placeholder ?? "Select"}`}
         onPress={onPress}
         testID={testID}
         style={({ pressed }) => ({
           alignItems: "center",
-          backgroundColor: theme.colors.surfaceMuted,
-          borderColor: hasError ? theme.colors.danger : theme.colors.border,
+          backgroundColor: theme.colors.surface,
+          borderColor: hasError ? theme.colors.danger : theme.colors.inputBorder,
           borderRadius: theme.radius.md,
           borderWidth: 1,
           flexDirection: "row",
@@ -35,10 +36,10 @@ export function Picker({ error, helperText, label, onPress, placeholder, require
           paddingVertical: theme.spacing.xs,
         })}
       >
-        <Text variant="body" tone={value ? "primary" : "tertiary"} numberOfLines={1} style={{ flex: 1 }}>
+        <Text variant="body" tone={value ? "primary" : "secondary"} numberOfLines={1} style={{ flex: 1 }}>
           {value ?? placeholder ?? "Select"}
         </Text>
-        <Icon name="chevron-down" tone="tertiary" />
+        <Icon name="chevron-down" tone="secondary" />
       </Pressable>
       {hasError ? <Text variant="metadata" tone="danger">{error}</Text> : helperText ? <Text variant="metadata" tone="tertiary">{helperText}</Text> : null}
     </View>

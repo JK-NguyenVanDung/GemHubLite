@@ -1,4 +1,4 @@
-import type { ImageSourcePropType } from "react-native";
+import type { ImageSource } from "expo-image";
 
 import type { RadiusToken } from "@/src/theme";
 
@@ -11,9 +11,10 @@ export type ThumbnailSize = "sm" | "md" | "lg";
  * `selected` draws the teal capture-strip border seen in 03-capture-product-info.png.
  */
 export type ThumbnailProps = {
-  source?: ImageSourcePropType;
+  source?: ImageSource;
   placeholder?: string;
   size?: ThumbnailSize;
+  dimension?: number;
   radius?: RadiusToken;
   skuLabel?: string;
   selected?: boolean;

@@ -7,10 +7,10 @@ import type { ButtonProps, ButtonSize, ButtonVariant } from "@/src/components/ui
 
 /**
  * sizeMap pairs ButtonSize with theme spacing tokens so vertical rhythm stays consistent.
- * minHeight values are intentional touch-target floors per Apple HIG (sm 36, md 44, lg 52).
+ * minHeight values keep every button at or above the 44 pt mobile touch-target floor.
  */
 const sizeMap: Record<ButtonSize, { paddingV: "xs" | "sm" | "md"; minHeight: number }> = {
-  sm: { paddingV: "xs", minHeight: 36 },
+  sm: { paddingV: "xs", minHeight: 44 },
   md: { paddingV: "sm", minHeight: 44 },
   lg: { paddingV: "md", minHeight: 52 },
 };
