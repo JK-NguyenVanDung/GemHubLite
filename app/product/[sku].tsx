@@ -1,41 +1,23 @@
-import { router, useLocalSearchParams } from "expo-router";
-import { memo, useCallback, useMemo } from "react";
-import { FlatList, View } from "react-native";
+import { router, Stack, useLocalSearchParams } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
+import { ScrollView } from "react-native";
 
-import { EmptyStateCard, Screen, Spinner, Text } from "@/src/components/ui";
-import type { Media } from "@/src/domain";
-import { MediaTile } from "@/src/features/media/components";
-import { AddPhotoButton, ProductFormSection, ProductHeader, useProductDetail } from "@/src/features/product-detail";
-import { useResponsiveColumns, useResponsiveLayout } from "@/src/lib/layout/useResponsiveColumns";
-
-const MemoMediaTile = memo(MediaTile);
+import { EmptyStateCard, Screen, Spinner } from "@/src/components/ui";
+import { MediaStrip, ProductFormSection, ProductHero, useProductDetail } from "@/src/features/product-detail";
+import { useResponsiveLayout } from "@/src/lib/layout/useResponsiveColumns";
 
 export default function ProductDetailScreen() {
   const { sku } = useLocalSearchParams<{ sku: string }>();
   const detailSku = Array.isArray(sku) ? sku[0] : sku;
   const { error, loading, media, mutate, product, saveError, saving } = useProductDetail(detailSku ?? "");
-  const columns = useResponsiveColumns({ compact: 2, medium: 3, expanded: 4 });
   const layout = useResponsiveLayout();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const renderMedia = useCallback(({ item }: { item: Media }) => (
-    <View style={{ flex: 1 / columns }}>
-      <MemoMediaTile media={item} showProductTitle={false} showSkuOverlay={false} size="lg" />
-    </View>
-  ), [columns]);
+  useEffect(() => {
+    setSelectedId((current) => (current && media.some((item) => item.id === current) ? current : media[0]?.id ?? null));
+  }, [media]);
 
-  const listHeader = useMemo(() => {
-    if (!product) return null;
-
-    return (
-      <View style={{ gap: layout.contentGap }}>
-        <ProductHeader sku={product.sku} coverUri={media[0]?.uri ?? null} coverKind={media[0]?.kind ?? null} mediaCount={media.length} />
-        <ProductFormSection key={`${product.sku}-${product.updatedAt}`} initialTitle={product.title} initialType={product.type} initialDescription={product.description} saving={saving} error={saveError} onSave={mutate} />
-        <AddPhotoButton sku={product.sku} />
-        <Text variant="sectionTitle">PHOTOS ({media.length})</Text>
-        {media.length === 0 ? <EmptyStateCard icon="images-outline" title="No photos yet" body="Add a photo for this product." /> : null}
-      </View>
-    );
-  }, [layout.contentGap, media, mutate, product, saveError, saving]);
+  const selected = useMemo(() => media.find((item) => item.id === selectedId) ?? media[0] ?? null, [media, selectedId]);
 
   if (loading) {
     return <Screen testID="product-detail-screen"><Spinner /></Screen>;
@@ -51,20 +33,12 @@ export default function ProductDetailScreen() {
 
   return (
     <Screen testID="product-detail-screen" scroll={false} safeAreaEdges={["left", "right"]} contentStyle={{ padding: 0, gap: 0 }}>
-      <FlatList
-        ListHeaderComponent={listHeader}
-        data={media}
-        key={columns}
-        keyExtractor={(item) => item.id}
-        numColumns={columns}
-        columnWrapperStyle={columns > 1 ? { gap: layout.gridGap } : undefined}
-        contentContainerStyle={{ alignSelf: "center", gap: layout.contentGap, maxWidth: layout.contentMaxWidth, padding: layout.pagePadding, width: "100%" }}
-        initialNumToRender={12}
-        maxToRenderPerBatch={12}
-        removeClippedSubviews
-        renderItem={renderMedia}
-        windowSize={7}
-      />
+      <Stack.Screen options={{ title: product.sku }} />
+      <ScrollView contentContainerStyle={{ alignSelf: "center", gap: layout.contentGap, maxWidth: layout.contentMaxWidth, padding: layout.pagePadding, width: "100%" }}>
+        <ProductHero uri={selected?.uri ?? null} kind={selected?.kind ?? null} />
+        <MediaStrip media={media} selectedId={selected?.id ?? null} onSelect={setSelectedId} sku={product.sku} />
+        <ProductFormSection key={`${product.sku}-${product.updatedAt}`} initialTitle={product.title} initialType={product.type} initialDescription={product.description} saving={saving} error={saveError} onSave={mutate} />
+      </ScrollView>
     </Screen>
   );
 }

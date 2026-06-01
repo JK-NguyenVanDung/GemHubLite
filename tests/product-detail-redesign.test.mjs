@@ -29,3 +29,16 @@ test("MediaStrip is a horizontal selector with an inline add tile", () => {
   assert.match(src, /active \? theme\.colors\.accent/);
   assert.match(src, /onSelect\(item\.id\)/);
 });
+
+test("product detail route uses hero + strip and SKU header title", () => {
+  const src = read("app/product/[sku].tsx");
+  assert.match(src, /ProductHero/);
+  assert.match(src, /MediaStrip/);
+  assert.match(src, /Stack\.Screen options=\{\{ title: product\.sku \}\}/);
+  assert.match(src, /selectedId/);
+  // retired components must no longer be referenced here
+  assert.doesNotMatch(src, /ProductHeader/);
+  assert.doesNotMatch(src, /AddPhotoButton/);
+  assert.doesNotMatch(src, /MediaGrid/);
+  assert.doesNotMatch(src, /from "@\/src\/features\/media\/components"/);
+});
