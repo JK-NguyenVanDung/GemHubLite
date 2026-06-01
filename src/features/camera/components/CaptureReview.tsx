@@ -1,9 +1,11 @@
 import { BottomSheet, RNHostView } from "@expo/ui";
 import { Image } from "expo-image";
+import * as ImagePicker from "expo-image-picker";
 import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   Modal,
@@ -47,11 +49,13 @@ import {
   type ProductType,
 } from "@/src/domain";
 import { productsRepo } from "@/src/lib/db";
-import { useResponsiveLayout } from "@/src/lib/layout/useResponsiveColumns";
+import { getPowerSaveWarning } from "@/src/lib/device/power";
+import { toUserFacingError } from "@/src/lib/errors/userFacing";
+import { storeMediaAsset } from "@/src/lib/files";
 import { useTheme } from "@/src/theme";
 import { BottomSaveBar } from "@/src/features/camera/components/BottomSaveBar";
+import type { CaptureMediaMetadata } from "@/src/features/camera/hooks/useCaptureSave";
 import { useCaptureSave } from "@/src/features/camera/hooks/useCaptureSave";
-import { usePhotoImport } from "@/src/features/camera/hooks/usePhotoImport";
 
 const productTypes: { value: ProductType; label: string; icon: IoniconName }[] =
   [
@@ -64,6 +68,8 @@ const productTypes: { value: ProductType; label: string; icon: IoniconName }[] =
   ];
 
 type SkuIntent = "new" | "existing";
+
+type PendingCaptureMedia = CaptureMediaMetadata & { uri: string };
 
 const skuScannerTypes: ScannedObjectType[] = [
   "qr",
@@ -135,14 +141,14 @@ export function CaptureReview() {
   const [skuIntent, setSkuIntent] = useState<SkuIntent>(
     initialValidSku ? "existing" : "new",
   );
-  const [skuPrefix, setSkuPrefix] = useState("SKU");
-  const [skuDateKey, setSkuDateKey] = useState(formatDateKey(new Date()));
-  const [skuSequence, setSkuSequence] = useState("001");
-  const [skuSuffix, setSkuSuffix] = useState("");
+  const [pendingMedia, setPendingMedia] = useState<PendingCaptureMedia[]>(() =>
+    uri ? [{ uri, ...mediaMetadata }] : [],
+  );
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [importingPhoto, setImportingPhoto] = useState(false);
   const { save } = useCaptureSave(uri);
-  const { importPhoto } = usePhotoImport(initialValidSku || undefined);
+  const normalizedSku = normalizeSku(sku);
 
   const typeOptions = useMemo(
     () =>
@@ -156,30 +162,29 @@ export function CaptureReview() {
   const imageOptions: ActionSheetOption[] = useMemo(
     () => [
       {
-        label: "Choose Different Photo",
+        label: "Add Photo from Library",
         icon: "images-outline",
-        onPress: importPhoto,
-        testID: "capture-choose-another-photo",
+        onPress: addPhotoFromLibrary,
+        testID: "capture-add-photo-library",
       },
       {
-        label: "Take New Photo",
+        label: "Add Photo with Camera",
         icon: "camera-outline",
         onPress: () =>
           router.replace(
-            initialValidSku
-              ? { pathname: "/camera", params: { sku: initialValidSku } }
+            normalizedSku
+              ? { pathname: "/camera", params: { sku: normalizedSku } }
               : "/camera",
           ),
-        testID: "capture-retake-camera",
+        testID: "capture-add-photo-camera",
       },
     ],
-    [importPhoto, initialValidSku],
+    [normalizedSku],
   );
   const typeLabel = useMemo(
     () => productTypes.find((option) => option.value === type)?.label,
     [type],
   );
-  const normalizedSku = normalizeSku(sku);
   const existingSku = useMemo(
     () =>
       existingProducts.find((product) => product.sku === normalizedSku) ?? null,
@@ -191,7 +196,7 @@ export function CaptureReview() {
     sku: normalizedSku,
   });
   const canSave =
-    Boolean(uri) && isValidSku(normalizedSku) && skuStatus.kind !== "error";
+    pendingMedia.length > 0 && isValidSku(normalizedSku) && skuStatus.kind !== "error";
 
   useEffect(() => {
     let alive = true;
@@ -213,7 +218,7 @@ export function CaptureReview() {
   async function generate() {
     const nextSku = await productsRepo.generateNextSku();
     applyNewSku(nextSku);
-    hydrateGeneratedParts(nextSku);
+    return nextSku;
   }
 
   function applyExistingSku(nextSku: string) {
@@ -238,56 +243,63 @@ export function CaptureReview() {
     );
     setSkuError(null);
     setScannerOpen(false);
-    setSkuFlowOpen(false);
+    setSkuFlowOpen(true);
   }
 
-  function composeSkuFromParts(
-    nextPrefix = skuPrefix,
-    nextDateKey = skuDateKey,
-    nextSequence = skuSequence,
-    nextSuffix = skuSuffix,
-  ) {
-    const paddedSequence = String(
-      Math.max(1, Number.parseInt(nextSequence, 10) || 1),
-    ).padStart(3, "0");
-    return normalizeSku(
-      [nextPrefix, nextDateKey, paddedSequence, nextSuffix]
-        .filter(Boolean)
-        .join("-"),
-    );
-  }
+  async function addPhotoFromLibrary() {
+    setImportingPhoto(true);
+    setSaveError(null);
 
-  function hydrateGeneratedParts(nextSku: string) {
-    const [
-      prefix = "SKU",
-      dateKey = formatDateKey(new Date()),
-      sequence = "001",
-      ...suffixParts
-    ] = normalizeSku(nextSku).split("-");
-    setSkuPrefix(prefix);
-    setSkuDateKey(dateKey);
-    setSkuSequence(sequence.padStart(3, "0"));
-    setSkuSuffix(suffixParts.join("-"));
-  }
+    try {
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permission.granted) {
+        throw new Error("Photo library access is required.");
+      }
 
-  function updateGeneratedPart(
-    part: "prefix" | "date" | "sequence" | "suffix",
-    value: string,
-  ) {
-    const nextPrefix = part === "prefix" ? normalizeSku(value) : skuPrefix;
-    const nextDateKey =
-      part === "date" ? value.replace(/\D/g, "").slice(0, 8) : skuDateKey;
-    const nextSequence =
-      part === "sequence" ? value.replace(/\D/g, "").slice(0, 6) : skuSequence;
-    const nextSuffix = part === "suffix" ? normalizeSku(value) : skuSuffix;
+      const powerWarning = await getPowerSaveWarning();
+      if (powerWarning) {
+        Alert.alert("Power saver active", powerWarning);
+      }
 
-    setSkuPrefix(nextPrefix);
-    setSkuDateKey(nextDateKey);
-    setSkuSequence(nextSequence);
-    setSkuSuffix(nextSuffix);
-    applyNewSku(
-      composeSkuFromParts(nextPrefix, nextDateKey, nextSequence, nextSuffix),
-    );
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsMultipleSelection: false,
+        allowsEditing: Platform.OS === "ios",
+        mediaTypes: ["images"],
+        quality: 1,
+      });
+      const asset = result.canceled ? null : result.assets[0];
+      if (!asset?.uri) return;
+
+      const stored = await storeMediaAsset({
+        uri: asset.uri,
+        kind: "image",
+        width: asset.width || null,
+        height: asset.height || null,
+        durationMs: asset.duration ?? null,
+        mimeType: asset.mimeType ?? null,
+        filenameHint: asset.fileName ?? asset.assetId ?? null,
+      });
+
+      setPendingMedia((current) => [
+        ...current,
+        {
+          uri: stored.uri,
+          kind: stored.kind,
+          mimeType: stored.mimeType,
+          originalBytes: stored.originalBytes,
+          storedBytes: stored.storedBytes,
+          width: stored.width,
+          height: stored.height,
+          durationMs: stored.durationMs,
+          compressed: stored.compressed,
+        },
+      ]);
+      setImageSheetOpen(false);
+    } catch (error) {
+      setSaveError(toUserFacingError(error, "Photo import failed. Try another file or free storage.").message);
+    } finally {
+      setImportingPhoto(false);
+    }
   }
 
   async function attemptSave() {
@@ -309,7 +321,7 @@ export function CaptureReview() {
         title,
         type,
         description,
-        media: mediaMetadata,
+        media: pendingMedia,
       });
     } catch (error) {
       setSaveError(error instanceof Error ? error.message : "Save failed.");
@@ -443,7 +455,10 @@ export function CaptureReview() {
         }}
       >
         <View style={{ flexDirection: "row", gap: theme.spacing.sm }}>
-          <View
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Add photo"
+            onPress={() => setImageSheetOpen(true)}
             style={{
               alignItems: "center",
               borderColor: theme.colors.border,
@@ -454,12 +469,14 @@ export function CaptureReview() {
               width: 62,
             }}
           >
-            <Icon name="add-circle" size={24} tone="secondary" />
-          </View>
-          {mediaKind === "image" ? (
-            <Thumbnail source={{ uri }} selected size="sm" />
-          ) : (
-            <VideoThumb />
+            {importingPhoto ? <ActivityIndicator /> : <Icon name="add-circle" size={24} tone="secondary" />}
+          </Pressable>
+          {pendingMedia.map((item, index) =>
+            item.kind === "image" ? (
+              <Thumbnail key={`${item.uri}-${index}`} source={{ uri: item.uri }} selected={index === pendingMedia.length - 1} size="sm" />
+            ) : (
+              <VideoThumb key={`${item.uri}-${index}`} />
+            ),
           )}
         </View>
         <View
@@ -471,7 +488,7 @@ export function CaptureReview() {
         >
           <Text variant="sectionTitle">Product Info</Text>
           <Button
-            label="Choose SKU"
+            label={normalizedSku ? "Edit SKU" : "Choose SKU"}
             variant="ghost"
             size="sm"
             onPress={() => setSkuFlowOpen(true)}
@@ -539,7 +556,7 @@ export function CaptureReview() {
       <BottomSaveBar canSave={canSave} saving={saving} onSave={onSave} />
       <ActionSheet
         visible={imageSheetOpen}
-        title="Photo actions"
+        title="Add photo"
         options={imageOptions}
         onClose={() => setImageSheetOpen(false)}
       />
@@ -557,22 +574,16 @@ export function CaptureReview() {
       ) : null}
       {skuFlowOpen ? (
         <SkuCreationFlow
-          composedSku={composeSkuFromParts()}
           existingProducts={existingProducts}
           intent={skuIntent}
           onApply={() => setSkuFlowOpen(false)}
-          onChangeGeneratedPart={updateGeneratedPart}
           onChangeManualSku={(value) => applyNewSku(value)}
           onClose={() => setSkuFlowOpen(false)}
           onGenerate={generate}
           onOpenScanner={() => setScannerOpen(true)}
           onSelectExisting={applyExistingSku}
           sku={normalizedSku}
-          skuDateKey={skuDateKey}
-          skuPrefix={skuPrefix}
-          skuSequence={skuSequence}
           skuStatus={skuStatus}
-          skuSuffix={skuSuffix}
         />
       ) : null}
     </View>
@@ -657,98 +668,109 @@ function SkuSummaryCard({
 }
 
 function SkuCreationFlow({
-  composedSku,
   existingProducts,
   intent,
   onApply,
-  onChangeGeneratedPart,
   onChangeManualSku,
   onClose,
   onGenerate,
   onOpenScanner,
   onSelectExisting,
   sku,
-  skuDateKey,
-  skuPrefix,
-  skuSequence,
   skuStatus,
-  skuSuffix,
 }: {
-  composedSku: string;
   existingProducts: ProductListItem[];
   intent: SkuIntent;
   onApply: () => void;
-  onChangeGeneratedPart: (
-    part: "prefix" | "date" | "sequence" | "suffix",
-    value: string,
-  ) => void;
   onChangeManualSku: (value: string) => void;
   onClose: () => void;
-  onGenerate: () => Promise<void>;
+  onGenerate: () => Promise<string>;
   onOpenScanner: () => void;
   onSelectExisting: (sku: string) => void;
   sku: string;
-  skuDateKey: string;
-  skuPrefix: string;
-  skuSequence: string;
   skuStatus: SkuStatus;
-  skuSuffix: string;
 }) {
   const theme = useTheme();
-  const layout = useResponsiveLayout();
   const { width } = useWindowDimensions();
   const sheetWidth = Math.max(280, width - theme.spacing.xxl);
-  const [query, setQuery] = useState(sku);
+  const [queryState, setQueryState] = useState({ sourceSku: sku, value: sku });
+  const query = queryState.sourceSku === sku ? queryState.value : sku;
   const normalizedQuery = normalizeSku(query);
   const filteredProducts = useMemo(
     () =>
       existingProducts.filter((product) =>
         product.sku.includes(normalizedQuery),
-      ),
+    ),
     [existingProducts, normalizedQuery],
   );
+  const compactProducts = filteredProducts.slice(0, 5);
   const exactProduct = useMemo(
     () =>
       existingProducts.find((product) => product.sku === normalizedQuery) ??
       null,
     [existingProducts, normalizedQuery],
   );
-  const ctaLabel =
-    normalizedQuery && !exactProduct ? "Use This SKU" : "Generate SKU";
+  const [generating, setGenerating] = useState(false);
+  const ctaLabel = normalizedQuery
+    ? exactProduct
+      ? "Use Existing SKU"
+      : "Use This SKU"
+    : "Generate SKU";
   const canApply = isValidSku(sku) && skuStatus.kind !== "error";
 
   function changeQuery(value: string) {
-    setQuery(value);
+    setQueryState({ sourceSku: sku, value });
     onChangeManualSku(value);
   }
 
   async function handlePrimarySkuAction() {
+    if (exactProduct) {
+      onSelectExisting(exactProduct.sku);
+      onApply();
+      return;
+    }
+
     if (normalizedQuery && !exactProduct) {
       onChangeManualSku(normalizedQuery);
       onApply();
       return;
     }
 
-    await onGenerate();
+    setGenerating(true);
+    try {
+      const generatedSku = await onGenerate();
+      setQueryState({ sourceSku: generatedSku, value: generatedSku });
+    } finally {
+      setGenerating(false);
+    }
   }
 
   return (
-    <BottomSheet isPresented onDismiss={onClose} snapPoints={[{ fraction: 0.88 }]}>
+    <BottomSheet isPresented onDismiss={onClose} snapPoints={[{ fraction: 0.58 }]}> 
       <RNHostView matchContents style={{ width: sheetWidth }}>
-        <View style={{ width: sheetWidth }}>
+        <View
+          style={{
+            backgroundColor: theme.colors.surface,
+            borderTopLeftRadius: theme.radius.xl,
+            borderTopRightRadius: theme.radius.xl,
+            overflow: "hidden",
+            width: sheetWidth,
+          }}
+        >
           <View
             style={{
               alignItems: "center",
-              backgroundColor: theme.colors.surface,
               flexDirection: "row",
               justifyContent: "space-between",
-              padding: theme.spacing.md,
+              paddingHorizontal: theme.spacing.md,
+              paddingTop: theme.spacing.lg,
+              paddingBottom: theme.spacing.sm,
             }}
           >
             <Button label="Cancel" variant="ghost" size="sm" onPress={onClose} />
             <Text variant="screenTitle">Choose SKU</Text>
             <Button
-              label="Apply"
+              label="Confirm"
               variant="ghost"
               size="sm"
               disabled={!canApply}
@@ -758,10 +780,10 @@ function SkuCreationFlow({
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             contentContainerStyle={{
-              alignSelf: "center",
-              gap: layout.contentGap,
-              maxWidth: layout.contentMaxWidth,
-              padding: layout.pagePadding,
+              gap: theme.spacing.md,
+              paddingHorizontal: theme.spacing.md,
+              paddingTop: theme.spacing.xs,
+              paddingBottom: theme.spacing.xl,
               width: "100%",
             }}
             keyboardShouldPersistTaps="handled"
@@ -772,45 +794,53 @@ function SkuCreationFlow({
               onScan={onOpenScanner}
             />
             <Button
-              label={ctaLabel}
+              label={generating ? "Generating" : ctaLabel}
               variant="secondary"
               fullWidth
               onPress={() => void handlePrimarySkuAction()}
+              disabled={generating}
               leftIcon={<Icon name="sparkles-outline" tone="accent" />}
             />
             {normalizedQuery && !exactProduct ? (
               <View
                 style={{
-                  alignItems: "center",
-                  gap: theme.spacing.sm,
-                  minHeight: 220,
-                  justifyContent: "center",
+                  backgroundColor: theme.colors.surfaceMuted,
+                  borderColor: theme.colors.border,
+                  borderRadius: theme.radius.lg,
+                  borderWidth: 1,
+                  gap: theme.spacing.xs,
+                  minHeight: 44,
+                  padding: theme.spacing.md,
                 }}
               >
-                <Icon name="diamond-outline" size={76} tone="tertiary" />
-                <Text variant="bodyStrong" align="center">
-                  {normalizedQuery} does not exist
-                </Text>
+                <Text variant="bodyStrong">{normalizedQuery}</Text>
               </View>
-            ) : filteredProducts.length ? (
-              <View style={{ gap: theme.spacing.sm }}>
-                {filteredProducts.map((product) => (
+            ) : compactProducts.length ? (
+              <View style={{ gap: theme.spacing.xs }}>
+                <Text variant="metadata" tone="secondary">
+                  Existing SKUs
+                </Text>
+                {compactProducts.map((product) => (
                   <Pressable
                     key={product.sku}
                     accessibilityRole="button"
                     accessibilityLabel={`Use existing SKU ${product.sku}`}
                     onPress={() => {
-                      setQuery(product.sku);
+                      setQueryState({ sourceSku: product.sku, value: product.sku });
                       onSelectExisting(product.sku);
                       onApply();
                     }}
                     style={({ pressed }) => ({
                       alignItems: "center",
+                      backgroundColor: theme.colors.surface,
+                      borderColor: theme.colors.border,
+                      borderRadius: theme.radius.md,
+                      borderWidth: 1,
                       flexDirection: "row",
-                      gap: theme.spacing.md,
-                      minHeight: 44,
+                      gap: theme.spacing.sm,
+                      minHeight: 64,
                       opacity: pressed ? 0.78 : 1,
-                      paddingVertical: theme.spacing.xs,
+                      padding: theme.spacing.sm,
                     })}
                   >
                     <Thumbnail
@@ -821,69 +851,38 @@ function SkuCreationFlow({
                       size="sm"
                     />
                     <View style={{ flex: 1 }}>
-                      <Text variant="screenTitle" selectable>
+                      <Text variant="bodyStrong" selectable>
                         {product.sku}
                       </Text>
                       <Text variant="metadata" tone="secondary">
-                        {product.title || "Untitled product"} ·{" "}
-                        {product.mediaCount} media
+                        {product.title || "Untitled product"} · {product.mediaCount} media
                       </Text>
                     </View>
+                    <Icon name="chevron-forward" size={18} tone="tertiary" />
                   </Pressable>
                 ))}
               </View>
             ) : (
               <View
                 style={{
-                  alignItems: "center",
+                  alignItems: "flex-start",
+                  backgroundColor: theme.colors.surfaceMuted,
+                  borderColor: theme.colors.border,
+                  borderRadius: theme.radius.lg,
+                  borderWidth: 1,
                   gap: theme.spacing.sm,
-                  minHeight: 220,
-                  justifyContent: "center",
+                  padding: theme.spacing.md,
                 }}
               >
-                <Icon name="diamond-outline" size={76} tone="tertiary" />
-                <Text variant="bodyStrong" align="center">
+                <Icon name="barcode-outline" size={24} tone="tertiary" />
+                <Text variant="bodyStrong">
                   No SKUs yet
                 </Text>
-                <Text variant="body" tone="secondary" align="center">
+                <Text variant="metadata" tone="secondary">
                   Add or scan a SKU to continue.
                 </Text>
               </View>
             )}
-            <View style={{ flexDirection: "row", gap: theme.spacing.sm }}>
-              <View style={{ flex: 0.8 }}>
-                <Field
-                  label="Prefix"
-                  value={skuPrefix}
-                  onChangeText={(value) =>
-                    onChangeGeneratedPart("prefix", value)
-                  }
-                  autoCapitalize="characters"
-                  autoCorrect={false}
-                />
-              </View>
-              <View style={{ flex: 1.2 }}>
-                <Field
-                  label="Date"
-                  value={skuDateKey}
-                  onChangeText={(value) => onChangeGeneratedPart("date", value)}
-                  keyboardType="number-pad"
-                />
-              </View>
-              <View style={{ flex: 0.8 }}>
-                <Field
-                  label="Seq"
-                  value={skuSequence}
-                  onChangeText={(value) =>
-                    onChangeGeneratedPart("sequence", value)
-                  }
-                  keyboardType="number-pad"
-                />
-              </View>
-            </View>
-            <Text variant="metadata" tone="tertiary">
-              Next generated preview: {composedSku}
-            </Text>
           </ScrollView>
         </View>
       </RNHostView>
@@ -988,9 +987,17 @@ function SkuScannerOverlay({
   const insets = useSafeAreaInsets();
   const device = useCameraDevice("back");
   const { hasPermission, requestPermission } = useCameraPermission();
-  const [manualCode, setManualCode] = useState("UN-0008");
+  const [manualCode, setManualCode] = useState("");
   const [detectedCode, setDetectedCode] = useState<string | null>(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const normalizedManualCode = normalizeSku(manualCode);
+  const canUseManualCode = isValidSku(normalizedManualCode);
+
+  function submitManualCode() {
+    if (!canUseManualCode) return;
+    onScanned(normalizedManualCode);
+  }
+
   const handleObjectsScanned = useCallback(
     (objects: ScannedObject[]) => {
       if (detectedCode) return;
@@ -1043,7 +1050,7 @@ function SkuScannerOverlay({
             style={StyleSheet.absoluteFill}
           />
         ) : null}
-        <View style={StyleSheet.absoluteFill} />
+        <View pointerEvents="none" style={StyleSheet.absoluteFill} />
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={{ flex: 1 }}
@@ -1173,7 +1180,7 @@ function SkuScannerOverlay({
                 blurOnSubmit
                 maxFontSizeMultiplier={1.3}
                 onChangeText={setManualCode}
-                onSubmitEditing={() => onScanned(manualCode)}
+                onSubmitEditing={submitManualCode}
                 placeholder="Enter SKU"
                 placeholderTextColor={theme.colors.tertiaryText}
                 returnKeyType="done"
@@ -1193,7 +1200,8 @@ function SkuScannerOverlay({
               <Button
                 label="Use SKU"
                 fullWidth
-                onPress={() => onScanned(manualCode)}
+                onPress={submitManualCode}
+                disabled={!canUseManualCode}
                 leftIcon={<Icon name="barcode-outline" tone="onAccent" />}
                 testID="sku-scanner-use-code"
               />
@@ -1228,14 +1236,6 @@ function getSkuStatus({
       message: intent === "new" ? "Photo will be added to this product." : "Ready to save",
     };
   return { kind: "ok", message: "Ready to save" };
-}
-
-function formatDateKey(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}${month}${day}`;
 }
 
 function RoundIcon({
