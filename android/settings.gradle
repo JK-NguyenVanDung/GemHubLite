@@ -1,0 +1,67 @@
+pluginManagement {
+  // --- node binary resolution (auto-injected) -------------------------------
+  // Gradle providers.exec inherits the JVM PATH. On macOS, when Android Studio
+  // is launched from Finder/Dock the PATH lacks nvm/Homebrew. Resolve node to
+  // an absolute path here so the rest of settings.gradle does not rely on PATH.
+  def nodeBinary = {
+    def candidates = [
+      System.getenv('NODE_BINARY'),
+      '/usr/local/bin/node',
+      '/opt/homebrew/bin/node'
+    ]
+    def nvmAlias = new File(System.getProperty('user.home') + '/.nvm/alias/default')
+    if (nvmAlias.exists()) {
+      def ver = nvmAlias.text.trim().replaceAll(/^v/, '')
+      candidates << System.getProperty('user.home') + '/.nvm/versions/node/v' + ver + '/bin/node'
+    }
+    for (c in candidates) {
+      if (c && new File(c.toString()).canExecute()) return c.toString()
+    }
+    try {
+      def proc = ['/bin/zsh','-lc','command -v node'].execute()
+      proc.waitFor()
+      def out = proc.in.text.trim()
+      if (out && new File(out).canExecute()) return out
+    } catch (ignored) {}
+    return 'node'
+  }()
+  // --------------------------------------------------------------------------
+
+  def reactNativeGradlePlugin = new File(
+    providers.exec {
+      workingDir(rootDir)
+      commandLine(nodeBinary, "--print", "require.resolve('@react-native/gradle-plugin/package.json', { paths: [require.resolve('react-native/package.json')] })")
+    }.standardOutput.asText.get().trim()
+  ).getParentFile().absolutePath
+  includeBuild(reactNativeGradlePlugin)
+  
+  def expoPluginsPath = new File(
+    providers.exec {
+      workingDir(rootDir)
+      commandLine(nodeBinary, "--print", "require.resolve('expo-modules-autolinking/package.json', { paths: [require.resolve('expo/package.json')] })")
+    }.standardOutput.asText.get().trim(),
+    "../android/expo-gradle-plugin"
+  ).absolutePath
+  includeBuild(expoPluginsPath)
+}
+
+plugins {
+  id("com.facebook.react.settings")
+  id("expo-autolinking-settings")
+}
+
+extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
+  if (System.getenv('EXPO_USE_COMMUNITY_AUTOLINKING') == '1') {
+    ex.autolinkLibrariesFromCommand()
+  } else {
+    ex.autolinkLibrariesFromCommand(expoAutolinking.rnConfigCommand)
+  }
+}
+expoAutolinking.useExpoModules()
+
+rootProject.name = 'GemHub Lite'
+
+expoAutolinking.useExpoVersionCatalog()
+
+include ':app'
+includeBuild(expoAutolinking.reactNativeGradlePlugin)

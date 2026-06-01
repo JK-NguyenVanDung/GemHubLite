@@ -2,6 +2,7 @@
   "expo": {
     "name": "GemHub Lite",
     "slug": "gemhub-lite",
+    "scheme": "gemhublite",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,13 +11,26 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.gemhublite.app",
       "infoPlist": {
-        "NSCameraUsageDescription": "GemHub Lite needs camera access to capture jewelry product photos."
+        "NSCameraUsageDescription": "GemHub Lite needs camera access to capture jewelry product photos.",
+        "NSPhotoLibraryUsageDescription": "GemHub Lite needs photo library access to import existing jewelry product media.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "package": "com.gemhublite.app",
       "permissions": [
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "blockedPermissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.READ_MEDIA_AUDIO",
+        "android.permission.RECORD_AUDIO"
       ],
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -34,14 +48,31 @@
       "expo-sqlite",
       "expo-image",
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "GemHub Lite needs photo library access to import existing jewelry product media."
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "ios": {
             "buildReactNativeFromSource": true,
             "usePrecompiledModules": false
+          },
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "enableMinifyInReleaseBuilds": true
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "611877df-3750-46d4-8c79-9d208f3ac001"
+      }
+    }
   }
 }
