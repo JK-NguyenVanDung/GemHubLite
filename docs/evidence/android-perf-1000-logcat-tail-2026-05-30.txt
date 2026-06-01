@@ -1,0 +1,1210 @@
+--------- beginning of main
+05-30 20:58:20.662 12713 12713 I Choreographer: Skipped 108 frames!  The application may be doing too much work on its main thread.
+05-30 20:58:21.004 12778 12778 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: package
+05-30 20:58:21.164 12713 12764 I HWUI    : Davey! duration=1961ms; Flags=0, FrameTimelineVsyncId=1298874, IntendedVsync=12117811611218, Vsync=12117844944550, InputEventId=0, HandleInputStart=12117847315186, AnimationStart=12117847316561, PerformTraversalsStart=12117849062019, DrawStart=12117849269144, FrameDeadline=12117878277882, FrameStartTime=12117847308186, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12117853327478, SyncStart=12117853541019, IssueDrawCommandsStart=12117853662603, SwapBuffers=12119588521187, FrameCompleted=12119773278312, DequeueBufferDuration=6250, QueueBufferDuration=379625, GpuCompleted=12119773278312, SwapBuffersCompleted=12119655979395, DisplayPresentTime=0, CommandSubmissionCompleted=12119588521187, 
+05-30 20:58:21.315 12713 12739 I HWUI    : Davey! duration=2355ms; Flags=0, FrameTimelineVsyncId=1298910, IntendedVsync=12117878277882, Vsync=12119678277810, InputEventId=0, HandleInputStart=12119820308687, AnimationStart=12119820310187, PerformTraversalsStart=12119841476229, DrawStart=12119842261937, FrameDeadline=12120144944458, FrameStartTime=12119680968604, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12119858976354, SyncStart=12119938919729, IssueDrawCommandsStart=12119939153395, SwapBuffers=12120203696062, FrameCompleted=12120313633271, DequeueBufferDuration=2916, QueueBufferDuration=191500, GpuCompleted=12120313633271, SwapBuffersCompleted=12120245010562, DisplayPresentTime=0, CommandSubmissionCompleted=12120203696062, 
+05-30 20:58:21.319  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a80fb8) locale list changing from [] to [en-US]
+05-30 20:58:21.345  1441  1691 E TraceManagerImpl: Trace Broadcast to com.google.android.apps.wellbeing.common.receiver.coalescedreceivers.PackageFullyRemovedCoalescedBroadcast_Receiver android.intent.action.PACKAGE_FULLY_REMOVED timed out after 1158969 ms. Complete trace: # kxo@94dbb2cb
+05-30 20:58:21.345  1441  1691 E TraceManagerImpl: kxt: 
+05-30 20:58:21.345  1441  1691 E TraceManagerImpl: 	at tk_trace.execSQL: REPLACE INTO auxiliary_app_data(package_id,storage_id,data) VALUES (?, ?, ?)(Started After:17)
+05-30 20:58:21.345  1441  1691 E TraceManagerImpl: 	at tk_trace.Transaction(Started After:17)
+05-30 20:58:21.345  1441  1691 E TraceManagerImpl: 	at tk_trace.Processing on the broadcast queue workerId PACKAGE_FULLY_REMOVED_COALESCED_BROADCAST_WORKER_ID(Started After:0)
+05-30 20:58:21.345  1441  1691 E TraceManagerImpl: 	at tk_trace.handleBroadcast(Started After:0)
+05-30 20:58:21.345  1441  1691 E TraceManagerImpl: 	at tk_trace.Broadcast to com.google.android.apps.wellbeing.common.receiver.coalescedreceivers.PackageFullyRemovedCoalescedBroadcast_Receiver android.intent.action.PACKAGE_FULLY_REMOVED(Started After:0)
+--------- beginning of system
+05-30 20:58:21.372   693   802 D ActivityManager: freezing 4371 com.google.android.googlequicksearchbox:search
+05-30 20:58:21.390   693   802 D ActivityManager: freezing 2970 com.android.vending:background
+05-30 20:58:21.391   693   802 D ActivityManager: freezing 1918 com.android.vending
+05-30 20:58:21.433  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a7ea38) locale list changing from [] to [en-US]
+05-30 20:58:21.524  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a7ddb8) locale list changing from [] to [en-US]
+05-30 20:58:21.727  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a828b8) locale list changing from [] to [en-US]
+05-30 20:58:21.780  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a80658) locale list changing from [] to [en-US]
+05-30 20:58:21.815  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a7b1f8) locale list changing from [] to [en-US]
+05-30 20:58:21.835  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/base.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+05-30 20:58:21.878  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a7a258) locale list changing from [] to [en-US]
+05-30 20:58:21.931  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_AdsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:21.949  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a760b8) locale list changing from [] to [en-US]
+05-30 20:58:21.957  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a78638) locale list changing from [] to [en-US]
+05-30 20:58:21.968  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a766f8) locale list changing from [] to [en-US]
+05-30 20:58:21.991  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_CronetDynamite_installtime.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+05-30 20:58:22.020  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a67658) locale list changing from [] to [en-US]
+05-30 20:58:22.044  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteLoader_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:22.082  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a682d8) locale list changing from [] to [en-US]
+05-30 20:58:22.093  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteModulesA_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:22.126  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a73b38) locale list changing from [] to [en-US]
+05-30 20:58:23.347  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteModulesC_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:23.369   496   615 W EventThread: Faking VSYNC due to driver stall for thread app
+05-30 20:58:23.370 12713 12713 I Choreographer: Skipped 92 frames!  The application may be doing too much work on its main thread.
+05-30 20:58:23.415  1058  1290 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+05-30 20:58:23.443  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_GoogleCertificates_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:23.480  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a698b8) locale list changing from [] to [en-US]
+05-30 20:58:23.735 12713 12761 I HWUI    : Davey! duration=1191ms; Flags=2, FrameTimelineVsyncId=1299267, IntendedVsync=12121178277750, Vsync=12121178277750, InputEventId=0, HandleInputStart=12121178277750, AnimationStart=12121178277750, PerformTraversalsStart=12121178277750, DrawStart=12121178277750, FrameDeadline=12121161611084, FrameStartTime=12121178277750, FrameInterval=16666666, WorkloadTarget=-16666666, SyncQueued=12121189566979, SyncStart=12121189567479, IssueDrawCommandsStart=12121189935354, SwapBuffers=12121199431479, FrameCompleted=12122369528105, DequeueBufferDuration=7792, QueueBufferDuration=1082917, GpuCompleted=12122369430605, SwapBuffersCompleted=12122369528105, DisplayPresentTime=0, CommandSubmissionCompleted=12121199431479, 
+05-30 20:58:24.561  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_MapsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:24.574   953   953 I Choreographer: Skipped 46 frames!  The application may be doing too much work on its main thread.
+05-30 20:58:24.660   693   693 W Looper  : Slow dispatch took 101ms main app=system_server main=true group=FOREGROUND h=com.android.server.alarm.AlarmManagerService$AlarmHandler c=android.app.ActivityManager$2$$ExternalSyntheticLambda0@615d941 m=0
+05-30 20:58:24.675  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_MeasurementDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:24.676  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk has no usable artifacts
+05-30 20:58:24.678  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000010/dl-MlkitOcrCommon.optional_261934100400.apk has no usable artifacts
+05-30 20:58:24.692  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a6be38) locale list changing from [] to [en-US]
+05-30 20:58:24.702   953  1744 I HWUI    : Davey! duration=868ms; Flags=0, FrameTimelineVsyncId=1299304, IntendedVsync=12122811611018, Vsync=12123578277654, InputEventId=0, HandleInputStart=12123593707939, AnimationStart=12123593708814, PerformTraversalsStart=12123593709022, DrawStart=12123593754647, FrameDeadline=12122828277684, FrameStartTime=12123593507272, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12123593942814, SyncStart=12123593974522, IssueDrawCommandsStart=12123594752939, SwapBuffers=12123610671856, FrameCompleted=12123680081606, DequeueBufferDuration=5375, QueueBufferDuration=469042, GpuCompleted=12123680081606, SwapBuffersCompleted=12123652076522, DisplayPresentTime=0, CommandSubmissionCompleted=12123610671856, 
+05-30 20:58:24.703  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.apk has no usable artifacts
+05-30 20:58:24.707  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000005/GoogleCertificates.apk has no usable artifacts
+05-30 20:58:24.791   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:24.792   693   853 D InetDiagMessage: Destroyed 2 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:24.792   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10145} in 4ms
+05-30 20:58:24.818  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a74ad8) locale list changing from [] to [en-US]
+05-30 20:58:24.886 12713 12784 D ExifInterface: Invalid image: ExifInterface got an unsupported or corrupted image file
+05-30 20:58:24.886 12713 12784 D ExifInterface: java.io.IOException: Invalid marker:14
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at android.media.ExifInterface.getJpegAttributes(ExifInterface.java:2864)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at android.media.ExifInterface.loadAttributes(ExifInterface.java:1988)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at android.media.ExifInterface.initForFilename(ExifInterface.java:2584)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at android.media.ExifInterface.<init>(ExifInterface.java:1517)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer.g(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:19)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.l(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:9)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.c(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at N4.h.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:12)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at P5.B.b(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:16)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at P5.B.a(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at P5.A.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:5)
+05-30 20:58:24.886 12713 12784 D ExifInterface: 	at java.lang.Thread.run(Thread.java:1119)
+05-30 20:58:24.887 12713 12783 D ExifInterface: Invalid image: ExifInterface got an unsupported or corrupted image file
+05-30 20:58:24.887 12713 12783 D ExifInterface: java.io.IOException: Invalid marker:14
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at android.media.ExifInterface.getJpegAttributes(ExifInterface.java:2864)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at android.media.ExifInterface.loadAttributes(ExifInterface.java:1988)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at android.media.ExifInterface.initForFilename(ExifInterface.java:2584)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at android.media.ExifInterface.<init>(ExifInterface.java:1517)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer.g(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:19)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.l(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:9)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.c(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at N4.h.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:12)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at P5.B.b(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:16)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at P5.B.a(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at P5.A.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:5)
+05-30 20:58:24.887 12713 12783 D ExifInterface: 	at java.lang.Thread.run(Thread.java:1119)
+05-30 20:58:24.893  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a78318) locale list changing from [] to [en-US]
+05-30 20:58:24.894  9727 10834 I FusedLocation: (REDACTED) location delivery to %s blocked - too close
+05-30 20:58:24.900  9727 10834 I FusedLocation: (REDACTED) location delivery to %s blocked - too close
+05-30 20:58:24.904 12713 12783 D ExifInterface: Invalid image: ExifInterface got an unsupported or corrupted image file
+05-30 20:58:24.904 12713 12783 D ExifInterface: java.io.IOException: Invalid marker:14
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at android.media.ExifInterface.getJpegAttributes(ExifInterface.java:2864)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at android.media.ExifInterface.loadAttributes(ExifInterface.java:1988)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at android.media.ExifInterface.initForFilename(ExifInterface.java:2584)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at android.media.ExifInterface.<init>(ExifInterface.java:1517)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer.g(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:19)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.l(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:9)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.c(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at N4.h.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:12)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at P5.B.b(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:16)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at P5.B.a(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at P5.A.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:5)
+05-30 20:58:24.904 12713 12783 D ExifInterface: 	at java.lang.Thread.run(Thread.java:1119)
+05-30 20:58:24.904 12713 12784 D ExifInterface: Invalid image: ExifInterface got an unsupported or corrupted image file
+05-30 20:58:24.904 12713 12784 D ExifInterface: java.io.IOException: Invalid marker:14
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at android.media.ExifInterface.getJpegAttributes(ExifInterface.java:2864)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at android.media.ExifInterface.loadAttributes(ExifInterface.java:1988)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at android.media.ExifInterface.initForFilename(ExifInterface.java:2584)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at android.media.ExifInterface.<init>(ExifInterface.java:1517)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer.g(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:19)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.l(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:9)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.c(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at N4.h.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:12)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at P5.B.b(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:16)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at P5.B.a(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at P5.A.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:5)
+05-30 20:58:24.904 12713 12784 D ExifInterface: 	at java.lang.Thread.run(Thread.java:1119)
+05-30 20:58:24.939 12713 12784 D nativeloader: Load /data/app/~~-qE7q__wmbfBjP3JeBEVoA==/com.gemhublite.app-4upREusg_uV-vO4aN3XNzw==/base.apk!/lib/arm64-v8a/libimagepipeline.so using class loader ns clns-9 (caller=/data/app/~~-qE7q__wmbfBjP3JeBEVoA==/com.gemhublite.app-4upREusg_uV-vO4aN3XNzw==/base.apk!classes2.dex): ok
+05-30 20:58:24.947  9727 10834 I FusedLocation: (REDACTED) location delivery to %s blocked - too close
+05-30 20:58:24.951 12713 12784 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:24.972   693   711 W AlarmManager: No in-flight alarm for listener android.os.BinderProxy@8c57ee6
+05-30 20:58:24.983  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a80c98) locale list changing from [] to [en-US]
+05-30 20:58:25.017 12713 12784 D nativeloader: Load /data/app/~~-qE7q__wmbfBjP3JeBEVoA==/com.gemhublite.app-4upREusg_uV-vO4aN3XNzw==/base.apk!/lib/arm64-v8a/libnative-imagetranscoder.so using class loader ns clns-9 (caller=/data/app/~~-qE7q__wmbfBjP3JeBEVoA==/com.gemhublite.app-4upREusg_uV-vO4aN3XNzw==/base.apk!classes2.dex): ok
+05-30 20:58:25.058  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000009/dl-Appsearch.optional_250834100400.apk has no usable artifacts
+05-30 20:58:25.062 12713 12787 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:25.063 12713 12787 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:25.065 12713 12785 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:25.066 12713 12785 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:25.066 12713 12786 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:25.066 12713 12786 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:25.079  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000015/dl-IdentityCredentialsPlatform.optional_261934100400.apk has no usable artifacts
+05-30 20:58:25.085 12713 12788 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:25.085 12713 12788 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:25.096 12713 12785 W HWUI    : Image decoding logging dropped!
+05-30 20:58:25.097 12713 12786 W HWUI    : Image decoding logging dropped!
+05-30 20:58:25.097 12713 12787 W HWUI    : Image decoding logging dropped!
+05-30 20:58:25.102  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000c/dl-TfliteDynamiteDynamite.integ_260580502100400.apk has no usable artifacts
+05-30 20:58:25.136 12713 12788 W HWUI    : Image decoding logging dropped!
+05-30 20:58:25.156  2694  4736 I artd    : GetBestInfo: vdex next to the dex file (/data/user/0/com.google.android.gms/app_dg_cache/9D5BCED7935D64431BF672B8BBD597199833CA19/oat/arm64/the.vdex) is kOatUpToDate with filter 'verify' executable 'false'
+05-30 20:58:25.160  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000012/dl-MlkitBarcodeUi.optional_261934100400.apk has no usable artifacts
+05-30 20:58:25.215  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000a/dl-MlkitBarcodeUi.optional_250834100400.apk has no usable artifacts
+05-30 20:58:25.215  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a650d8) locale list changing from [] to [en-US]
+05-30 20:58:25.267  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000013/dl-Appsearch.optional_261934100400.apk has no usable artifacts
+05-30 20:58:25.275  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000e/dl-VisionOcr.optional_261934100000.apk has no usable artifacts
+05-30 20:58:25.290  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a734f8) locale list changing from [] to [en-US]
+05-30 20:58:25.294 12713 12713 I Choreographer: Skipped 114 frames!  The application may be doing too much work on its main thread.
+05-30 20:58:25.312 12713 12761 I HWUI    : Davey! duration=2432ms; Flags=0, FrameTimelineVsyncId=1299181, IntendedVsync=12120711611102, Vsync=12120711611102, InputEventId=0, HandleInputStart=12120712552938, AnimationStart=12120712554938, PerformTraversalsStart=12121036981396, DrawStart=12121037379063, FrameDeadline=12122394944368, FrameStartTime=12120712544854, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12121200410146, SyncStart=12122370168063, IssueDrawCommandsStart=12122371299813, SwapBuffers=12124293132356, FrameCompleted=12124313564231, DequeueBufferDuration=118709, QueueBufferDuration=2481709, GpuCompleted=12124313564231, SwapBuffersCompleted=12124310485356, DisplayPresentTime=0, CommandSubmissionCompleted=12124293132356, 
+05-30 20:58:25.335  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a77698) locale list changing from [] to [en-US]
+05-30 20:58:25.366 12713 12761 I HWUI    : Davey! duration=1615ms; Flags=0, FrameTimelineVsyncId=1299204, IntendedVsync=12120844944430, Vsync=12122378277702, InputEventId=0, HandleInputStart=12122396541522, AnimationStart=12122396542522, PerformTraversalsStart=12122409673688, DrawStart=12122409823897, FrameDeadline=12124344944290, FrameStartTime=12122389244438, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12122411612938, SyncStart=12124310575856, IssueDrawCommandsStart=12124310824648, SwapBuffers=12124314949231, FrameCompleted=12124359822939, DequeueBufferDuration=7189916, QueueBufferDuration=614042, GpuCompleted=12124359822939, SwapBuffersCompleted=12124331534106, DisplayPresentTime=0, CommandSubmissionCompleted=12124314949231, 
+05-30 20:58:25.373  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000007/MeasurementDynamite.apk has no usable artifacts
+05-30 20:58:25.384  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000014/dl-PlayCloudSearch.optional_261934100000.apk has no usable artifacts
+05-30 20:58:25.412  9727 11162 W GLSUser : [DeviceKeyStore] Cannot load key: Device key file not found.
+05-30 20:58:25.452  2542  2542 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:25.452  2542  2542 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:25.452  2542  2542 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:25.452  2542  2542 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:25.457   693   711 D ActivityManager: sync unfroze 2542 com.google.android.gms.unstable for 6
+05-30 20:58:25.473   693   905 D BackgroundInstallControlService: Package event received: 0
+05-30 20:58:25.477   693  1025 W FastPrintWriter: Write failure
+05-30 20:58:25.477   693  1025 W FastPrintWriter: java.io.IOException: write failed: EPIPE (Broken pipe)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at libcore.io.IoBridge.write(IoBridge.java:651)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.io.FileOutputStream.write(FileOutputStream.java:436)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.internal.util.FastPrintWriter.flushBytesLocked(FastPrintWriter.java:355)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.internal.util.FastPrintWriter.flushLocked(FastPrintWriter.java:378)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.internal.util.FastPrintWriter.appendLocked(FastPrintWriter.java:343)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.internal.util.FastPrintWriter.write(FastPrintWriter.java:601)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.io.PrintWriter.write(PrintWriter.java:507)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at android.util.IndentingPrintWriter.write(IndentingPrintWriter.java:239)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.io.PrintWriter.write(PrintWriter.java:507)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.art.IndentingPrintWriter.write(IndentingPrintWriter.java:114)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.art.IndentingPrintWriter.write(IndentingPrintWriter.java:89)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.io.PrintWriter.write(PrintWriter.java:559)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.io.PrintWriter.append(PrintWriter.java:1089)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.io.PrintWriter.append(PrintWriter.java:61)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.util.Formatter$FormatSpecifier.appendJustified(Formatter.java:3253)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.util.Formatter$FormatSpecifier.print(Formatter.java:3243)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.util.Formatter$FormatSpecifier.printString(Formatter.java:3216)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.util.Formatter$FormatSpecifier.print(Formatter.java:3093)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.util.Formatter.format(Formatter.java:2704)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.io.PrintWriter.format(PrintWriter.java:992)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at java.io.PrintWriter.printf(PrintWriter.java:889)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.art.DumpHelper.dumpPrimaryDex(DumpHelper.java:146)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.art.DumpHelper.dumpPackage(DumpHelper.java:127)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.art.ArtManagerLocal.dumpPackage(ArtManagerLocal.java:1030)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.pm.DexOptHelper.dumpDexoptState(DexOptHelper.java:522)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.pm.ComputerEngine.dump(ComputerEngine.java:3132)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.pm.DumpHelper.doDump(DumpHelper.java:529)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.dump(PackageManagerService.java:6720)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at android.os.Binder.doDump(Binder.java:1072)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at android.os.Binder.dump(Binder.java:1062)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at android.os.Binder.onTransact(Binder.java:932)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4729)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onTransact(PackageManagerService.java:6668)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at android.os.Binder.execTransactInternal(Binder.java:1426)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at android.os.Binder.execTransact(Binder.java:1365)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: Caused by: android.system.ErrnoException: write failed: EPIPE (Broken pipe)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at libcore.io.Linux.writeBytes(Native Method)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at libcore.io.Linux.write(Linux.java:336)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at libcore.io.ForwardingOs.write(ForwardingOs.java:948)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at libcore.io.BlockGuardOs.write(BlockGuardOs.java:448)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	at libcore.io.IoBridge.write(IoBridge.java:646)
+05-30 20:58:25.477   693  1025 W FastPrintWriter: 	... 34 more
+05-30 20:58:25.497   693  1025 W ProcessStats: Tracking association SourceState{9056510 com.google.android.gms.persistent/10147 BFgs #8115} whose proc state 4 is better than process ProcessState{df46745 com.google.android.gms.unstable/10147 pkg=com.google.android.gms} proc state 15 (1 skipped)
+05-30 20:58:25.569  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a76a18) locale list changing from [] to [en-US]
+05-30 20:58:25.574 12768 12768 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+05-30 20:58:25.574 12768 12768 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+05-30 20:58:25.575 12768 12768 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+05-30 20:58:25.591   496   574 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+05-30 20:58:25.591   496   574 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+05-30 20:58:25.623  1441  1506 I .apps.wellbeing: AssetManager2(0xb4000070b1a75758) locale list changing from [] to [en-US]
+05-30 20:58:25.786   693   711 D FileUtils: Rounded bytes from 2070470656 to 4000000000
+05-30 20:58:25.798  2542  3171 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+05-30 20:58:25.798  2542  3171 W libc    : Access denied finding property "service.adb.tls.port"
+05-30 20:58:25.796  2542  2542 W binder:2542_7: type=1400 audit(0.0:321): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=325 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+05-30 20:58:25.796  2542  2542 W binder:2542_7: type=1400 audit(0.0:322): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=50 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+05-30 20:58:25.962  9727 11162 W GmsUrlRequestImpl: [https://android.googleapis.com/auth/devicekey] Content-Type header is overwritten.
+05-30 20:58:26.593  9727 11162 W GLSUser : [AppCertManager] Exception while requesting key: 
+05-30 20:58:26.593  9727 11162 W GLSUser : java.util.concurrent.ExecutionException: davb: Parsing Exception
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at hlmu.j(:com.google.android.gms@261934035@26.19.34 (260400-919740205):21)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at hlnd.t(:com.google.android.gms@261934035@26.19.34 (260400-919740205):73)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at amwd.b(:com.google.android.gms@261934035@26.19.34 (260400-919740205):435)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at amwb.a(:com.google.android.gms@261934035@26.19.34 (260400-919740205):67)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at amvx.a(:com.google.android.gms@261934035@26.19.34 (260400-919740205):3)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at amvz.a(:com.google.android.gms@261934035@26.19.34 (260400-919740205):58)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at amvz.b(:com.google.android.gms@261934035@26.19.34 (260400-919740205):21)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at bkdz.m(:com.google.android.gms@261934035@26.19.34 (260400-919740205):13)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at bkeo.f(:com.google.android.gms@261934035@26.19.34 (260400-919740205):10)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at gssa.a(:com.google.android.gms@261934035@26.19.34 (260400-919740205):45)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at gsru.b(:com.google.android.gms@261934035@26.19.34 (260400-919740205):271)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at gtua.g(:com.google.android.gms@261934035@26.19.34 (260400-919740205):15)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at gtty.run(:com.google.android.gms@261934035@26.19.34 (260400-919740205):44)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at bklb.c(:com.google.android.gms@261934035@26.19.34 (260400-919740205):50)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at bklb.run(:com.google.android.gms@261934035@26.19.34 (260400-919740205):66)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at bkqs.run(:com.google.android.gms@261934035@26.19.34 (260400-919740205):8)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at java.lang.Thread.run(Thread.java:1119)
+05-30 20:58:26.593  9727 11162 W GLSUser : Caused by: davb: Parsing Exception
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at dawf.a(:com.google.android.gms@261934035@26.19.34 (260400-919740205):15)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at hlpn.run(:com.google.android.gms@261934035@26.19.34 (260400-919740205):56)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	... 6 more
+05-30 20:58:26.593  9727 11162 W GLSUser : Caused by: izpc: Protocol message end-group tag did not match expected tag.
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at izqy.a(:com.google.android.gms@261934035@26.19.34 (260400-919740205):57)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at izpw.l(:com.google.android.gms@261934035@26.19.34 (260400-919740205):60)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at izny.s(:com.google.android.gms@261934035@26.19.34 (260400-919740205):26)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at izlu.f(:com.google.android.gms@261934035@26.19.34 (260400-919740205):7)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at izlu.c(:com.google.android.gms@261934035@26.19.34 (260400-919740205):1)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at izlu.o(:com.google.android.gms@261934035@26.19.34 (260400-919740205):1)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at dawe.a(:com.google.android.gms@261934035@26.19.34 (260400-919740205):15)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at dawj.call(:com.google.android.gms@261934035@26.19.34 (260400-919740205):8)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+05-30 20:58:26.593  9727 11162 W GLSUser : 	... 6 more
+05-30 20:58:26.594  9727 11162 W GLSUser : [DeviceKeyStore] Cannot load key: Device key file not found.
+05-30 20:58:26.624  1533  1900 W MediaProvider: Ignoring param:deletedata post U for external apps
+05-30 20:58:26.646  1533  1900 I MediaProvider: Deleted 0 0 0 0 0 0 1 items on external_primary due to com.android.shell
+05-30 20:58:26.696  9727 10079 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+05-30 20:58:26.702  9727 10079 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@261934035@26.19.34 (260400-919740205):204)
+05-30 20:58:26.703  9727 10079 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@261934035@26.19.34 (260400-919740205):4)
+05-30 20:58:26.768  9727 10079 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+05-30 20:58:26.768  9727 10079 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@261934035@26.19.34 (260400-919740205):204)
+05-30 20:58:26.768  9727 10079 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@261934035@26.19.34 (260400-919740205):4)
+05-30 20:58:26.788 12799 12799 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+05-30 20:58:26.819 12799 12799 I AndroidRuntime: Using default boot image
+05-30 20:58:26.819 12799 12799 I AndroidRuntime: Leaving lock profiling enabled
+05-30 20:58:26.822 12799 12799 I app_process: Using CollectorTypeCMC GC.
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: Failed to fetch weather tile
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: jwes: INVALID_ARGUMENT: Application credential header not valid. Please fix the client to pass a valid application credential header.
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at bkeo.r(:com.google.android.gms@261934035@26.19.34 (260400-919740205):31)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at bkeo.f(:com.google.android.gms@261934035@26.19.34 (260400-919740205):90)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at gssa.a(:com.google.android.gms@261934035@26.19.34 (260400-919740205):45)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at gsru.b(:com.google.android.gms@261934035@26.19.34 (260400-919740205):271)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at gtua.g(:com.google.android.gms@261934035@26.19.34 (260400-919740205):15)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at gtty.run(:com.google.android.gms@261934035@26.19.34 (260400-919740205):44)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at bklb.c(:com.google.android.gms@261934035@26.19.34 (260400-919740205):50)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at bklb.run(:com.google.android.gms@261934035@26.19.34 (260400-919740205):66)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at bkqs.run(:com.google.android.gms@261934035@26.19.34 (260400-919740205):8)
+05-30 20:58:26.918  9727 11162 W GmsWeatherProviderContr: 	at java.lang.Thread.run(Thread.java:1119)
+05-30 20:58:26.956 12799 12799 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+05-30 20:58:26.978 12799 12799 D nativeloader: Load libicu_jni.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+05-30 20:58:26.982 12799 12799 D app_process: u_setTimeZoneFilesDirectory("/apex/com.android.tzdata/etc/tz/versioned/9/icu") succeeded. 
+05-30 20:58:26.983 12799 12799 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt76l.dat
+05-30 20:58:26.994 12799 12799 D nativeloader: Load libjavacore.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+05-30 20:58:26.997 12799 12799 D nativeloader: Load libopenjdk.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+05-30 20:58:27.007 12799 12799 W app_process: ClassLoaderContext shared library size mismatch. Expected=2, found=0 (PCL[]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]} | PCL[])
+05-30 20:58:27.010 12799 12799 W app_process: ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[]{PCL[/system/framework/android.test.runner.jar*895143020]#PCL[/system/framework/android.test.base.jar*2789897741]} | PCL[/system/framework/android.test.runner.jar*895143020])
+05-30 20:58:27.191 12799 12799 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+05-30 20:58:27.224 12799 12799 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+05-30 20:58:27.255 12799 12799 I AconfigPackage: android.media.swcodec.flags is mapped to com.android.media.swcodec
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.google.android.settings.simplemode.flags is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.google.android.systemui is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.google.android.apps.nexuslauncher is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.settings.accessibility is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.settings.flags is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.google.android.apps.miphone.aiai.matchmaker.overview.ui is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.google.android.settings.flags is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.launcher3 is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.wallpaper is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.settings.media_drm is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.systemui.accessibility.accessibilitymenu is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.settings.keyboard is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.server.policy.feature.flags is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.android.settings.factory_reset is mapped to system_ext
+05-30 20:58:27.258 12799 12799 I AconfigPackage: com.google.android.haptics.flags is mapped to system_ext
+05-30 20:58:27.259 12799 12799 I AconfigPackage: com.android.permission.flags is mapped to com.android.permission
+05-30 20:58:27.290 12799 12799 I AconfigPackage: com.android.icu is mapped to com.android.i18n
+05-30 20:58:27.292 12799 12799 I AconfigPackage: com.android.appsearch.flags is mapped to com.android.appsearch
+05-30 20:58:27.295 12799 12799 I AconfigPackage: android.uprobestats.mainline.flags is mapped to com.android.uprobestats
+05-30 20:58:27.298 12799 12799 I AconfigPackage: android.provider.flags is mapped to com.android.configinfrastructure
+05-30 20:58:27.298 12799 12799 I AconfigPackage: com.android.server.deviceconfig is mapped to com.android.configinfrastructure
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.nfc.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.admin.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.database.sqlite is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.providers.calendar is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.power.feature.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.media.performance.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.contextualsearch.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.ondeviceintelligence.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.media.projection.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.companion is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.service.controls.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.text.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.providers.contactkeys.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.intentresolver is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.companion.virtualdevice.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.uprobestats.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.net.thread.platform.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.view.contentprotection.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.dreams is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.graphics.surfaceflinger.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.hardware.input is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.sdk is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.input.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.tracing is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.biometrics is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.view.contentcapture.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.job is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.content.res is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.net.platform.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.aconfig.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.graphics.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.server.app is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.speech.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.stats is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.hardware.biometrics is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.car.feature is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.adpf is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.location.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.settingslib.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.managedprovisioning.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.assist.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.net is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.settingslib.widget.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.internal.camera.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.hardware.libsensor.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.internal.jank is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.providers.settings is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.multiuser is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.power.optimization is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.calllogbackup is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.media.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.graphics.libvulkan.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.appfunctions.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.smartspace.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.providers.contacts.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.shell.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.media.aaudio is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.hardware.radio is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.google.wear.services.infra.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: suspend_service.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.media.midi is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.libcore.readonly is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.settingslib.widget.selectorwithwidgetpreference.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.service.notification is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.systemui.shared is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.jank is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.wearable is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.media.audio is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.service.chooser is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.compat is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.alarm is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.apex.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.service.quickaccesswallet is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.usage is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.accessibility is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app.supervision.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.utils is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.chre.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.content.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.media.codec is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.internal.os is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.nfc.nci.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.app is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.security.keystore2 is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.crashrecovery.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.tradeinmode.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.hardware.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.telecom.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.settingslib.media.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.policy is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.media.audiopolicy is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.egg.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.internal.compat.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.security is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.service.autofill is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.example.android.aconfig.demo.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.view.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: android.companion.virtual.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.feature.flags is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.systemui is mapped to system
+05-30 20:58:27.300 12799 12799 I AconfigPackage: com.android.server.power.batterysaver is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.widget.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.media.editing.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.media.codec.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.powerstats is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.graphics.egl.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.media.audioserver is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.deviceidle is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.nfc is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.permission.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.service.voice.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.content.pm is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.power.hint is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.os is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.service.dreams is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.graphics.libgui.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.hardware.usb.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.provider is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.job is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.internal.foldables.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.internal.telephony.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.webkit is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.credentials.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.display.feature.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.notification is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.appwidget.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.frameworks.sensorservice.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.printspooler.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.window.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.adaptiveauth is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.net.wifi.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.media.tv.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.usb.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.os.vibrator is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.hardware.devicestate.feature.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.usage is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.server is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.wm.shell is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.view.inputmethod is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.graphics.hwui.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.backup is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.internal.pm.pkg.component.flags is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.view.accessibility is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.google.wear.sdk is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: android.media.audio is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.server.am is mapped to system
+05-30 20:58:27.301 12799 12799 I AconfigPackage: com.android.media.playback.flags is mapped to system
+05-30 20:58:27.303 12799 12799 I AconfigPackage: com.android.art.flags is mapped to com.android.art
+05-30 20:58:27.303 12799 12799 I AconfigPackage: com.android.libcore is mapped to com.android.art
+05-30 20:58:27.304 12799 12799 I AconfigPackage: com.android.media.extractor.flags is mapped to com.android.media
+05-30 20:58:27.304 12799 12799 I AconfigPackage: com.android.media.mainline.flags is mapped to com.android.media
+05-30 20:58:27.306 12799 12799 I AconfigPackage: com.android.wifi.flags is mapped to com.android.wifi
+05-30 20:58:27.308 12799 12799 I AconfigPackage: com.android.org.conscrypt.flags is mapped to com.android.conscrypt
+05-30 20:58:27.311 12799 12799 I AconfigPackage: com.android.healthfitness.flags is mapped to com.android.healthfitness
+05-30 20:58:27.314 12799 12799 I AconfigPackage: com.google.android.input.twoshay.flags is mapped to vendor
+05-30 20:58:27.314 12799 12799 I AconfigPackage: libgooglecamerahal.flags is mapped to vendor
+05-30 20:58:27.315 12799 12799 I AconfigPackage: com.android.ipsec.flags is mapped to com.android.ipsec
+05-30 20:58:27.316 12799 12799 I AconfigPackage: com.android.nfc.module.flags is mapped to com.android.nfcservices
+05-30 20:58:27.318 12799 12799 I AconfigPackage: com.android.adservices.ondevicepersonalization.flags is mapped to com.android.ondevicepersonalization
+05-30 20:58:27.320 12799 12799 I AconfigPackage: com.android.bluetooth.flags is mapped to com.android.bt
+05-30 20:58:27.321 12799 12799 I AconfigPackage: com.android.devicelock.flags is mapped to com.android.devicelock
+05-30 20:58:27.324 12799 12799 I AconfigPackage: android.os.profiling is mapped to com.android.profiling
+05-30 20:58:27.326 12799 12799 I AconfigPackage: com.android.os.statsd.flags is mapped to com.android.os.statsd
+05-30 20:58:27.327 12799 12799 I AconfigPackage: com.android.cellbroadcastreceiver.flags is mapped to com.android.cellbroadcast
+05-30 20:58:27.329 12799 12799 I AconfigPackage: com.android.adservices.flags is mapped to com.android.adservices
+05-30 20:58:27.329 12799 12799 I AconfigPackage: com.android.sdksandbox.flags is mapped to com.android.adservices
+05-30 20:58:27.330 12799 12799 I AconfigPackage: com.android.uwb.flags is mapped to com.android.uwb
+05-30 20:58:27.330 12799 12799 I AconfigPackage: com.android.ranging.flags is mapped to com.android.uwb
+05-30 20:58:27.331 12799 12799 I AconfigPackage: android.graphics.pdf.flags is mapped to com.android.mediaprovider
+05-30 20:58:27.331 12799 12799 I AconfigPackage: com.android.providers.media.flags is mapped to com.android.mediaprovider
+05-30 20:58:27.331 12799 12799 I AconfigPackage: android.graphics.pdf.flags.readonly is mapped to com.android.mediaprovider
+05-30 20:58:27.333 12799 12799 I AconfigPackage: com.android.net.ct.flags is mapped to com.android.tethering
+05-30 20:58:27.333 12799 12799 I AconfigPackage: com.android.net.flags is mapped to com.android.tethering
+05-30 20:58:27.333 12799 12799 I AconfigPackage: android.net.vcn is mapped to com.android.tethering
+05-30 20:58:27.333 12799 12799 I AconfigPackage: com.android.nearby.flags is mapped to com.android.tethering
+05-30 20:58:27.333 12799 12799 I AconfigPackage: android.net.http is mapped to com.android.tethering
+05-30 20:58:27.333 12799 12799 I AconfigPackage: com.android.net.thread.flags is mapped to com.android.tethering
+05-30 20:58:27.337 12799 12799 I AconfigPackage: com.android.system.virtualmachine.flags is mapped to com.android.virt
+05-30 20:58:27.340 12799 12799 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+05-30 20:58:27.345 12799 12799 D UiAutomationConnection: Created on user UserHandle{0}
+05-30 20:58:27.345 12799 12799 I UiAutomation: Initialized for user 0 on display 0
+05-30 20:58:27.345 12799 12799 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+05-30 20:58:27.348   693   711 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+05-30 20:58:27.349   693   711 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation, flags=0x0) when called by user 0
+05-30 20:58:27.351   693   711 V AccessibilityManagerService: onUserStateChangedLocked for userId: 0, forceUpdate: false
+05-30 20:58:27.358   693   711 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+05-30 20:58:27.367  1555  6310 I AiAiEcho: Settings changed for uri: content://settings/secure/accessibility_enabled
+05-30 20:58:27.371   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.371   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.372   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.372   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.372   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.372   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.372   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.376   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.377   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.377   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.377   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.377   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.378   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.382   693   711 V AccessibilityManagerService: onUserStateChangedLocked for userId: 0, forceUpdate: false
+05-30 20:58:27.384   693   711 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+05-30 20:58:27.391  1555  6316 I AiAiEcho: Settings changed for uri: content://settings/secure/accessibility_enabled
+05-30 20:58:27.403   693   693 D BatterySaverPolicy: accessibility changed to true, updating policy.
+05-30 20:58:27.403   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.404   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.404   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.404   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.404   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.404   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.404   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.406   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.407   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.407   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.407   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.407   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.407   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.409   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:27.426  1555  1780 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+05-30 20:58:27.426  1555  1780 I AiAiEcho: EchoTargets: 
+05-30 20:58:27.426  1555  1780 I AiAiEcho: Filtered by AiAi flag check: 
+05-30 20:58:27.426  1555  1780 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+05-30 20:58:27.430  1264  1375 D AccessibilitySourceService: enabled a11y services count 0
+05-30 20:58:27.430  1264  1375 D AccessibilitySourceService: a11y source sending 0 issue to sc
+05-30 20:58:27.432   693  1025 D SafetySourceDataValidat: No cert check requested for package com.google.android.permissioncontroller
+05-30 20:58:27.448  1555  1780 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+05-30 20:58:27.452  1555  1780 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+05-30 20:58:27.452  1555  1780 I AiAiEcho: EchoTargets: 
+05-30 20:58:27.452  1555  1780 I AiAiEcho: Filtered by AiAi flag check: 
+05-30 20:58:27.452  1555  1780 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+05-30 20:58:27.453  1555  1780 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+05-30 20:58:27.453  1555  1780 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+05-30 20:58:27.453  1555  1780 I AiAiEcho: EchoTargets: 
+05-30 20:58:27.453  1555  1780 I AiAiEcho: Filtered by AiAi flag check: 
+05-30 20:58:27.453  1555  1780 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+05-30 20:58:27.453  1555  1780 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+05-30 20:58:27.453  1555  1780 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+05-30 20:58:27.453  1555  1780 I AiAiEcho: EchoTargets: 
+05-30 20:58:27.453  1555  1780 I AiAiEcho: Filtered by AiAi flag check: 
+05-30 20:58:27.453  1555  1780 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+05-30 20:58:27.454  1555  1780 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+05-30 20:58:27.460  1555  1780 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+05-30 20:58:27.461  1555  1780 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+05-30 20:58:27.461  1555  1780 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+05-30 20:58:27.462  1555  1780 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+05-30 20:58:27.462  1106  1106 D SsBaseTemplateCard: No text view can be set up
+05-30 20:58:27.462  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:27.462  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:27.462  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:27.462  1106  1106 I SsBaseTemplateCard: Secondary card pane is null
+05-30 20:58:27.463  1106  1106 D SsBaseTemplateCard: No text view can be set up
+05-30 20:58:27.463  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:27.463  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:27.463  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:27.463  1106  1106 I SsBaseTemplateCard: Secondary card pane is null
+05-30 20:58:27.481   953   953 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+05-30 20:58:27.482   953   953 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+05-30 20:58:28.350  9808  9808 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+05-30 20:58:28.411  1533  1900 W MediaProvider: isAppCloneUserPair for user 0: false
+05-30 20:58:28.418 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@128b8; boundsInParent: Rect(0, 0 - 1080, 0); boundsInScreen: Rect(0, 0 - 1080, 0); boundsInWindow: Rect(0, 0 - 1080, 0); packageName: com.gemhublite.app; className: android.widget.LinearLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.418 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@124f7; boundsInParent: Rect(0, 0 - 1080, 0); boundsInScreen: Rect(0, 0 - 1080, 0); boundsInWindow: Rect(0, 0 - 1080, 0); packageName: com.gemhublite.app; className: android.view.ViewGroup; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.434  1533  1541 W FuseDaemon: Reducing the number of considered missed Gc histogram windows from 110 to 100
+05-30 20:58:28.446 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@21537; boundsInParent: Rect(0, 0 - 262, 63); boundsInScreen: Rect(87, 2263 - 349, 2219); boundsInWindow: Rect(87, 2263 - 349, 2219); packageName: com.gemhublite.app; className: android.view.ViewGroup; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.448 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@218f8; boundsInParent: Rect(0, 0 - 199, 42); boundsInScreen: Rect(118, 2273 - 317, 2219); boundsInWindow: Rect(118, 2273 - 317, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: PERF-000001; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.450 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@21cb9; boundsInParent: Rect(0, 0 - 390, 58); boundsInScreen: Rect(87, 2347 - 477, 2219); boundsInWindow: Rect(87, 2347 - 477, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: Performance sample 1; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.451 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@2207a; boundsInParent: Rect(0, 0 - 37, 39); boundsInScreen: Rect(87, 2427 - 124, 2219); boundsInWindow: Rect(87, 2427 - 124, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: ; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.452 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@2243b; boundsInParent: Rect(0, 0 - 186, 42); boundsInScreen: Rect(145, 2426 - 331, 2219); boundsInWindow: Rect(145, 2426 - 331, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: 1 media item; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.454 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@227fc; boundsInParent: Rect(0, 0 - 390, 42); boundsInScreen: Rect(87, 2489 - 477, 2219); boundsInWindow: Rect(87, 2489 - 477, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: Necklace; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.459 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@23ac1; boundsInParent: Rect(0, 0 - 262, 63); boundsInScreen: Rect(597, 2263 - 859, 2219); boundsInWindow: Rect(597, 2263 - 859, 2219); packageName: com.gemhublite.app; className: android.view.ViewGroup; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.461 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@23e82; boundsInParent: Rect(0, 0 - 199, 42); boundsInScreen: Rect(628, 2273 - 827, 2219); boundsInWindow: Rect(628, 2273 - 827, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: PERF-000002; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.462 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@24243; boundsInParent: Rect(0, 0 - 390, 58); boundsInScreen: Rect(597, 2347 - 987, 2219); boundsInWindow: Rect(597, 2347 - 987, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: Performance sample 2; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.464 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@24604; boundsInParent: Rect(0, 0 - 37, 39); boundsInScreen: Rect(597, 2427 - 634, 2219); boundsInWindow: Rect(597, 2427 - 634, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: ; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.465 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@249c5; boundsInParent: Rect(0, 0 - 186, 42); boundsInScreen: Rect(655, 2426 - 841, 2219); boundsInWindow: Rect(655, 2426 - 841, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: 1 media item; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.466 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@24d86; boundsInParent: Rect(0, 0 - 390, 42); boundsInScreen: Rect(597, 2489 - 987, 2219); boundsInWindow: Rect(597, 2489 - 987, 2219); packageName: com.gemhublite.app; className: android.widget.TextView; text: Earring; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.466 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@25147; boundsInParent: Rect(0, 0 - 478, 735); boundsInScreen: Rect(42, 2607 - 520, 2219); boundsInWindow: Rect(42, 2607 - 520, 2219); packageName: com.gemhublite.app; className: android.widget.Button; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: PERF-000003, Performance sample 3, , 1 media item, Bracelet; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: true; focused: false; selected: false; clickable: true; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_FOCUS - null, AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_CLICK - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.466 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@276d1; boundsInParent: Rect(0, 0 - 478, 735); boundsInScreen: Rect(552, 2607 - 1030, 2219); boundsInWindow: Rect(552, 2607 - 1030, 2219); packageName: com.gemhublite.app; className: android.widget.Button; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: PERF-000004, Performance sample 4, , 1 media item, Pendant; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: true; focused: false; selected: false; clickable: true; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_FOCUS - null, AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_CLICK - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.472 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@c71e; boundsInParent: Rect(0, 0 - 82, 74); boundsInScreen: Rect(67, 2254 - 149, 2328); boundsInWindow: Rect(67, 2254 - 149, 2328); packageName: com.gemhublite.app; className: android.view.ViewGroup; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.476 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@d622; boundsInParent: Rect(0, 0 - 82, 74); boundsInScreen: Rect(283, 2254 - 365, 2328); boundsInWindow: Rect(283, 2254 - 365, 2328); packageName: com.gemhublite.app; className: android.view.ViewGroup; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.479 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@e8e7; boundsInParent: Rect(0, 0 - 82, 74); boundsInScreen: Rect(499, 2254 - 581, 2328); boundsInWindow: Rect(499, 2254 - 581, 2328); packageName: com.gemhublite.app; className: android.view.ViewGroup; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.484 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@1032e; boundsInParent: Rect(0, 0 - 82, 74); boundsInScreen: Rect(715, 2254 - 797, 2328); boundsInWindow: Rect(715, 2254 - 797, 2328); packageName: com.gemhublite.app; className: android.view.ViewGroup; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.487 12799 12799 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@115f3; boundsInParent: Rect(0, 0 - 82, 74); boundsInScreen: Rect(931, 2254 - 1013, 2328); boundsInWindow: Rect(931, 2254 - 1013, 2328); packageName: com.gemhublite.app; className: android.view.ViewGroup; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+05-30 20:58:28.488 12799 12799 W AccessibilityNodeInfoDumper: Fetch time: 82ms
+05-30 20:58:28.489   693   711 V AccessibilityManagerService: onUserStateChangedLocked for userId: 0, forceUpdate: false
+05-30 20:58:28.490   693   711 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+05-30 20:58:28.490   693   711 D AccessibilityManagerService: restoreCurrentUserForTestAutomationIfNeededLocked(): ignoring because device doesn't support visible background users
+05-30 20:58:28.490  1555  6316 I AiAiEcho: Settings changed for uri: content://settings/secure/accessibility_enabled
+05-30 20:58:28.490   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.490   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.490   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.490   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.490   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491 12799 12799 D AndroidRuntime: Shutting down VM
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 W IPCThreadState: Sending oneway calls to frozen process.
+05-30 20:58:28.491   693   693 D BatterySaverPolicy: accessibility changed to false, updating policy.
+05-30 20:58:28.491  1555  1780 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+05-30 20:58:28.491  1555  1780 I AiAiEcho: EchoTargets: 
+05-30 20:58:28.491  1555  1780 I AiAiEcho: Filtered by AiAi flag check: 
+05-30 20:58:28.491  1555  1780 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+05-30 20:58:28.492  1555  1780 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+05-30 20:58:28.492  1555  1780 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+05-30 20:58:28.492  1555  1780 I AiAiEcho: EchoTargets: 
+05-30 20:58:28.492  1555  1780 I AiAiEcho: Filtered by AiAi flag check: 
+05-30 20:58:28.492  1555  1780 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+05-30 20:58:28.492  1555  1780 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+05-30 20:58:28.492 12799 12814 W IPCThreadState: call to talkWithDriver in joinThreadPool returned error: -9 (Bad file descriptor), FD: -1
+05-30 20:58:28.493  1555  1780 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+05-30 20:58:28.493 12799 12810 W IPCThreadState: call to talkWithDriver in joinThreadPool returned error: -9 (Bad file descriptor), FD: -1
+05-30 20:58:28.493 12799 12812 W IPCThreadState: call to talkWithDriver in joinThreadPool returned error: -9 (Bad file descriptor), FD: -1
+05-30 20:58:28.498  1106  1106 D SsBaseTemplateCard: No text view can be set up
+05-30 20:58:28.498  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:28.498  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:28.498  1106  1106 D SsBaseTemplateCard: Passed-in item info is null
+05-30 20:58:28.498  1106  1106 I SsBaseTemplateCard: Secondary card pane is null
+05-30 20:58:28.500  1555  1780 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+05-30 20:58:28.500   953   953 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+05-30 20:58:29.767 12816 12816 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: package
+05-30 20:58:29.857  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/base.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+05-30 20:58:29.860  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_AdsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:29.863  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_CronetDynamite_installtime.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+05-30 20:58:29.866  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteLoader_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:29.867 12819 12819 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: package
+05-30 20:58:29.869  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteModulesA_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:29.874  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteModulesC_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:29.875  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~-qE7q__wmbfBjP3JeBEVoA==/com.gemhublite.app-4upREusg_uV-vO4aN3XNzw==/oat/arm64/base.odex) is kOatUpToDate with filter 'verify' executable 'false'
+05-30 20:58:29.882  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_GoogleCertificates_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:29.886  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_MapsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:29.889  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_MeasurementDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:29.890  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk has no usable artifacts
+05-30 20:58:29.891  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000010/dl-MlkitOcrCommon.optional_261934100400.apk has no usable artifacts
+05-30 20:58:29.893  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.apk has no usable artifacts
+05-30 20:58:29.893  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000005/GoogleCertificates.apk has no usable artifacts
+05-30 20:58:29.896  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000009/dl-Appsearch.optional_250834100400.apk has no usable artifacts
+05-30 20:58:29.898  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000015/dl-IdentityCredentialsPlatform.optional_261934100400.apk has no usable artifacts
+05-30 20:58:29.899  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000c/dl-TfliteDynamiteDynamite.integ_260580502100400.apk has no usable artifacts
+05-30 20:58:29.902  2694  5363 I artd    : GetBestInfo: vdex next to the dex file (/data/user/0/com.google.android.gms/app_dg_cache/9D5BCED7935D64431BF672B8BBD597199833CA19/oat/arm64/the.vdex) is kOatUpToDate with filter 'verify' executable 'false'
+05-30 20:58:29.903  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000012/dl-MlkitBarcodeUi.optional_261934100400.apk has no usable artifacts
+05-30 20:58:29.904  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000a/dl-MlkitBarcodeUi.optional_250834100400.apk has no usable artifacts
+05-30 20:58:29.906  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000013/dl-Appsearch.optional_261934100400.apk has no usable artifacts
+05-30 20:58:29.907  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000e/dl-VisionOcr.optional_261934100000.apk has no usable artifacts
+05-30 20:58:29.908  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000007/MeasurementDynamite.apk has no usable artifacts
+05-30 20:58:29.910  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000014/dl-PlayCloudSearch.optional_261934100000.apk has no usable artifacts
+05-30 20:58:29.923 12822 12822 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: meminfo
+05-30 20:58:29.923   693   711 D ActivityManager: freezer override set to true
+05-30 20:58:29.925   693   711 D ActivityManager: sync unfroze 3234 com.android.managedprovisioning for 19
+05-30 20:58:29.925   693   711 D ActivityManager: sync unfroze 3390 com.google.android.cellbroadcastreceiver for 19
+05-30 20:58:29.927  3234  3234 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.927  3390  3390 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.927   693   711 D ActivityManager: sync unfroze 3464 com.google.android.marvin.talkback for 19
+05-30 20:58:29.927  3390  3390 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.927  3390  3390 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.930  3390  3390 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.931  3234  3234 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.932  3234  3234 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.935   693   711 D ActivityManager: sync unfroze 3426 com.google.android.healthconnect.controller for 19
+05-30 20:58:29.935  3426  3426 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.935  3234  3234 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.935   693   711 D ActivityManager: sync unfroze 3623 com.android.shell for 19
+05-30 20:58:29.936   693   711 D ActivityManager: sync unfroze 3726 com.google.android.federatedcompute for 19
+05-30 20:58:29.936   693   711 D ActivityManager: sync unfroze 3752 com.google.android.ondevicepersonalization.services for 19
+05-30 20:58:29.937  3426  3426 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.937   693   711 D ActivityManager: sync unfroze 3289 com.google.android.ext.services:modelDownloaderServiceProcess for 19
+05-30 20:58:29.938  3426  3426 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.938  3726  3726 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.942  3464  3464 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.942  3623  3623 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.942  3426  3426 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.942  3464  3464 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.942  3752  3752 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3623  3623 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3289  3289 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3623  3623 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3623  3623 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3289  3289 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3752  3752 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3752  3752 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3752  3752 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3289  3289 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.943  3289  3289 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.944  2061  2061 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.944  2061  2061 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.944  2061  2061 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.944  2061  2061 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.952  3464  3464 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.953  3464  3464 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.953  3726  3726 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.953  3726  3726 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.953   693   711 D ActivityManager: sync unfroze 2061 com.google.android.apps.wallpaper for 19
+05-30 20:58:29.953  3726  3726 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.953   693   711 D ActivityManager: sync unfroze 3941 com.android.vending:quick_launch for 19
+05-30 20:58:29.954   693   711 D ActivityManager: sync unfroze 4672 com.google.android.webview:webview_service for 19
+05-30 20:58:29.958   693   711 D ActivityManager: sync unfroze 3843 com.google.android.photopicker for 19
+05-30 20:58:29.958   693   711 D ActivityManager: sync unfroze 3673 com.google.android.configupdater for 19
+05-30 20:58:29.959   693   711 D ActivityManager: sync unfroze 2030 com.google.android.as.oss for 19
+05-30 20:58:29.959   693   711 D ActivityManager: sync unfroze 7535 com.google.android.apps.photos for 19
+05-30 20:58:29.959   693   711 D ActivityManager: sync unfroze 4400 com.google.android.apps.restore for 19
+05-30 20:58:29.959   693   711 D ActivityManager: sync unfroze 7863 com.google.android.apps.safetyhub for 19
+05-30 20:58:29.967  3843  3843 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.967  3843  3843 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.968  3843  3843 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.968  3843  3843 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.969  4672  4672 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.969  4672  4672 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.969  4672  4672 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.969  4672  4672 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.971  2030  2030 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.971  3941  3941 I Finsky:quick_launch: [2] Memory trim requested to level 40
+05-30 20:58:29.971  2030  2030 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.972   693   711 D ActivityManager: sync unfroze 2216 com.google.android.deskclock for 19
+05-30 20:58:29.972  2030  2030 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.972  2030  2030 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.973   693   711 D ActivityManager: sync unfroze 3555 com.google.android.rkpdapp for 19
+05-30 20:58:29.973   693   711 D ActivityManager: sync unfroze 7890 com.google.android.dialer for 19
+05-30 20:58:29.973   693   711 D ActivityManager: sync unfroze 3563 com.android.providers.calendar for 19
+05-30 20:58:29.973   693   711 D ActivityManager: sync unfroze 10784 com.android.carrierdefaultapp for 19
+05-30 20:58:29.973   693   711 D ActivityManager: sync unfroze 11227 com.android.chrome for 19
+05-30 20:58:29.973   693   711 D ActivityManager: sync unfroze 11320 android.process.media for 19
+05-30 20:58:29.973   693   711 D ActivityManager: sync unfroze 3784 com.google.android.packageinstaller for 19
+05-30 20:58:29.974   693   711 D ActivityManager: sync unfroze 3330 com.google.android.gms.ui for 19
+05-30 20:58:29.974   693   711 D ActivityManager: sync unfroze 3799 com.google.android.partnersetup for 19
+05-30 20:58:29.975   693   711 D ActivityManager: sync unfroze 1810 com.google.android.settings.intelligence for 19
+05-30 20:58:29.975   693   711 D ActivityManager: sync unfroze 5055 com.google.android.adservices.api for 19
+05-30 20:58:29.975   693   711 D ActivityManager: sync unfroze 2608 com.google.android.tts for 19
+05-30 20:58:29.976   693   711 D ActivityManager: sync unfroze 11287 com.google.android.documentsui for 19
+05-30 20:58:29.976   693   711 D ActivityManager: sync unfroze 1576 android.process.acore for 19
+05-30 20:58:29.977   693   711 D ActivityManager: sync unfroze 12275 com.android.externalstorage for 19
+05-30 20:58:29.977  3330  3330 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.983 12275 12275 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.988   693   711 D ActivityManager: sync unfroze 2384 com.google.android.apps.messaging for 19
+05-30 20:58:29.989 10784 10784 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.990 10784 10784 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.991  1576  1576 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.991 10784 10784 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.991 10784 10784 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.991  1576  1576 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.991  1576  1576 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.991  1576  1576 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.998 12275 12275 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:29.998   693   711 D ActivityManager: sync unfroze 1918 com.android.vending for 19
+05-30 20:58:30.002   693   711 D ActivityManager: sync unfroze 2970 com.android.vending:background for 19
+05-30 20:58:30.002 12275 12275 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.003   693   711 D ActivityManager: sync unfroze 4371 com.google.android.googlequicksearchbox:search for 19
+05-30 20:58:30.004 11287 11287 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.005  3563  3563 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.005 12275 12275 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.006  3330  3330 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.007  3330  3330 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.007  3941  3941 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.008  3941  3941 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.009  3563  3563 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.009  3941  3941 I Finsky:quick_launch: [2] Memory trim requested to level 40
+05-30 20:58:30.009  3941  3941 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.010  3941  3941 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.010  3563  3563 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.016 11287 11287 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.016  3330  3330 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.019 11287 11287 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.020 11227 11227 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.020 11287 11287 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.020 11227 11227 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.020  3673  3673 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.021 11227 11227 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.022 11227 11227 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.024  3563  3563 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.024  3555  3555 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.026  3555  3555 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.026  3555  3555 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.026  3555  3555 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.035  5055  5055 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.036  5055  5055 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.036  5055  5055 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.037  5055  5055 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.037  3784  3784 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.037  3784  3784 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.037  3784  3784 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.037  3784  3784 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.044  3673  3673 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.044  3673  3673 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.044  3673  3673 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.116  3799  3799 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.117  4400  4400 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.117  4400  4400 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.120  4400  4400 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.120  3799  3799 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.120  3799  3799 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.120  3799  3799 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.125  1810  1810 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.126  1810  1810 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.127  1810  1810 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.127  1810  1810 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.128 11320 11320 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.131 11320 11320 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.131 11320 11320 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.131 11320 11320 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.133  7890  7890 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.134  7890  7890 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.134  4400  4400 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.135  7890  7890 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.135  7890  7890 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.136  2216  2216 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.140  2216  2216 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.140  2216  2216 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.140  2216  2216 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.145 11287 11292 W oid.documentsui: Suspending all threads took: 10.751ms
+05-30 20:58:30.157  7863  7863 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.158  7863  7863 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.158  7863  7863 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.158  7863  7863 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.201  7863  7869 W .apps.safetyhub: Reducing the number of considered missed Gc histogram windows from 661 to 100
+05-30 20:58:30.203  2608  2608 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.204  2216  2221 W droid.deskclock: Reducing the number of considered missed Gc histogram windows from 690 to 100
+05-30 20:58:30.208  2608  2608 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.208  2608  2608 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.214  2608  2608 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.265 12713 12729 W .gemhublite.app: Cleared Reference was only reachable from finalizer (only reported once)
+05-30 20:58:30.284  7535  7535 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.285  7535  7535 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.285  7535  7535 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.286  7535  7535 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.290 12713 12729 I .gemhublite.app: Explicit concurrent mark compact GC freed 6529KB AllocSpace bytes, 16(876KB) LOS objects, 49% free, 6895KB/13MB, paused 240us,772us total 106.226ms
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: Cannot acquire BluetoothActivityEnergyInfo
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: java.util.concurrent.ExecutionException: java.lang.RuntimeException: error: 11
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:372)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2072)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.BluetoothPowerStatsCollector.collectBluetoothActivityInfo(BluetoothPowerStatsCollector.java:192)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.BluetoothPowerStatsCollector.collectStats(BluetoothPowerStatsCollector.java:155)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.PowerStatsCollector.collectAndDeliverStats(PowerStatsCollector.java:176)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.PowerStatsCollector$$ExternalSyntheticLambda0.run(R8$$SyntheticClass:0)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.os.Handler.handleCallback(Handler.java:995)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.os.Handler.dispatchMessage(Handler.java:103)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.os.Looper.loopOnce(Looper.java:248)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.os.Looper.loop(Looper.java:338)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: Caused by: java.lang.RuntimeException: error: 11
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.BluetoothPowerStatsCollector$1.onBluetoothActivityEnergyInfoError(BluetoothPowerStatsCollector.java:181)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothAdapter$OnBluetoothActivityEnergyInfoProxy.lambda$onBluetoothActivityEnergyInfoAvailable$0(BluetoothAdapter.java:1037)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothAdapter$OnBluetoothActivityEnergyInfoProxy$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothUtils.lambda$executeFromBinder$0(BluetoothUtils.java:343)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothUtils$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at com.android.server.SystemServerInitThreadPool$$ExternalSyntheticLambda0.execute(R8$$SyntheticClass:0)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothUtils.executeFromBinder(BluetoothUtils.java:343)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothAdapter$OnBluetoothActivityEnergyInfoProxy.onBluetoothActivityEnergyInfoAvailable(BluetoothAdapter.java:1035)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.bluetooth.IBluetoothActivityEnergyInfoListener$Stub.onTransact(IBluetoothActivityEnergyInfoListener.java:98)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.os.Binder.execTransactInternal(Binder.java:1426)
+05-30 20:58:30.292   693   740 E BluetoothPowerStatsCollector: 	at android.os.Binder.execTransact(Binder.java:1365)
+05-30 20:58:30.292  4371  4412 I amtp    : NGA disabled due to not being eligible.
+05-30 20:58:30.317  4371  4412 I amtp    : NGA disabled due to not being eligible.
+05-30 20:58:30.335   693   711 D ActivityManager: freezer override set to false
+05-30 20:58:30.344  3941  3941 I Finsky:quick_launch: [2] Memory trim requested to level 40
+05-30 20:58:30.352  2970  2970 I Finsky:background: [2] Memory trim requested to level 40
+05-30 20:58:30.357  1918  1918 I Finsky  : [2] Memory trim requested to level 40
+05-30 20:58:30.362  1918  1918 I Finsky  : [2] Flushing in-memory image cache
+05-30 20:58:30.372  3563  3570 W viders.calendar: Reducing the number of considered missed Gc histogram windows from 663 to 100
+05-30 20:58:30.403  2384  2384 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.405  2384  2384 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.406  2384  2384 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.407  2384  2448 I ForwardSyncCache: reclaimMemory: Clearing caches
+05-30 20:58:30.407  2384  2384 D ActivityThread: Package [com.gemhublite.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+05-30 20:58:30.418  2384  2448 W BugleSpam: trimming memory: closing msg model.
+05-30 20:58:30.431  2384  2448 W Bugle   : TextClassifierLibManagerImpl: Reclaiming memory at level: 40
+05-30 20:58:30.437  2384  2448 I ForwardSyncCache: reclaimMemory: Clearing caches
+05-30 20:58:30.437  2384  2448 W BugleSpam: trimming memory: closing msg model.
+05-30 20:58:30.437  2384  2800 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of cump@30d032
+05-30 20:58:30.438  2384  2448 W Bugle   : TextClassifierLibManagerImpl: Reclaiming memory at level: 40
+05-30 20:58:30.442  2384  2800 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of cump@30d032
+05-30 20:58:30.445  2384  2448 I ForwardSyncCache: reclaimMemory: Clearing caches
+05-30 20:58:30.445  2384  2448 W BugleSpam: trimming memory: closing msg model.
+05-30 20:58:30.446  2384  2448 W Bugle   : TextClassifierLibManagerImpl: Reclaiming memory at level: 40
+05-30 20:58:30.498   693   711 W AS.PlaybackActivityMon: No piid assigned for invalid/internal port id 16
+05-30 20:58:30.560   492   613 D AudioFlinger: mixer(0xb4000070bb6ee770) throttle end: throttle time(35)
+05-30 20:58:30.570 12713 12751 W HWUI    : Image decoding logging dropped!
+05-30 20:58:30.571 12713 12751 W HWUI    : Image decoding logging dropped!
+05-30 20:58:30.706   693   802 D ActivityManager: freezing 1264 com.google.android.permissioncontroller
+05-30 20:58:30.706   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:30.707   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:30.707   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10200} in 0ms
+05-30 20:58:32.543 12871 12871 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+05-30 20:58:32.543 12871 12871 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+05-30 20:58:32.543 12871 12871 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+05-30 20:58:32.544   496   574 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+05-30 20:58:32.544   496   574 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+05-30 20:58:33.335  1058  1290 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+05-30 20:58:33.599   455  5103 D android.hardware.audio@7.1-impl.ranchu: threadLoop: entering standby, frames: 960704
+05-30 20:58:33.599   455  5103 D android.hardware.audio@7.1-impl.ranchu: ~TinyalsaSink: joining consumeThread
+05-30 20:58:33.618   455 12868 D android.hardware.audio@7.1-impl.ranchu: consumeThread: exiting
+05-30 20:58:33.619   455  5103 D android.hardware.audio@7.1-impl.ranchu: ~TinyalsaSink: stopping PCM stream
+05-30 20:58:36.435 12713 12713 I Choreographer: Skipped 30 frames!  The application may be doing too much work on its main thread.
+05-30 20:58:37.292 12713 12713 I Choreographer: Skipped 39 frames!  The application may be doing too much work on its main thread.
+05-30 20:58:37.314 12713 12739 I HWUI    : Davey! duration=1053ms; Flags=0, FrameTimelineVsyncId=1305100, IntendedVsync=12134944943866, Vsync=12135444943846, InputEventId=-876100532, HandleInputStart=12135454351611, AnimationStart=12135464270111, PerformTraversalsStart=12135464721861, DrawStart=12135493272528, FrameDeadline=12135411610514, FrameStartTime=12135454185653, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12135512373153, SyncStart=12135520763611, IssueDrawCommandsStart=12135527306070, SwapBuffers=12135594802486, FrameCompleted=12136006817070, DequeueBufferDuration=20666, QueueBufferDuration=1311291, GpuCompleted=12135886582611, SwapBuffersCompleted=12136006817070, DisplayPresentTime=0, CommandSubmissionCompleted=12135594802486, 
+05-30 20:58:38.437 12713 12761 I HWUI    : Davey! duration=853ms; Flags=0, FrameTimelineVsyncId=1305184, IntendedVsync=12136478277138, Vsync=12136528277136, InputEventId=0, HandleInputStart=12136534114153, AnimationStart=12136534114403, PerformTraversalsStart=12136839184154, DrawStart=12136839376529, FrameDeadline=12136594943800, FrameStartTime=12136534112362, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12136839752070, SyncStart=12136854179987, IssueDrawCommandsStart=12136854486404, SwapBuffers=12136872625445, FrameCompleted=12137346686904, DequeueBufferDuration=45652167, QueueBufferDuration=135273792, GpuCompleted=12137346686904, SwapBuffersCompleted=12137317765612, DisplayPresentTime=0, CommandSubmissionCompleted=12136872625445, 
+05-30 20:58:38.839 12914 12914 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+05-30 20:58:38.840 12914 12914 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+05-30 20:58:38.840 12914 12914 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+05-30 20:58:38.847   496   572 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+05-30 20:58:38.847   496   572 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+05-30 20:58:40.244   693  1650 W AS.PlaybackActivityMon: No piid assigned for invalid/internal port id 16
+05-30 20:58:40.246   492   613 D AudioFlinger: mixer(0xb4000070bb6ee770) throttle end: throttle time(33)
+05-30 20:58:40.257 12923 12923 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: package
+05-30 20:58:40.279  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/base.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+05-30 20:58:40.280  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_AdsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:40.281  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_CronetDynamite_installtime.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+05-30 20:58:40.282  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteLoader_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:40.283  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteModulesA_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:40.283  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteModulesC_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:40.284  2694  5363 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_GoogleCertificates_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:40.284  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_MapsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:40.285  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_MeasurementDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:40.285  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk has no usable artifacts
+05-30 20:58:40.286  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000010/dl-MlkitOcrCommon.optional_261934100400.apk has no usable artifacts
+05-30 20:58:40.286  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.apk has no usable artifacts
+05-30 20:58:40.286  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000005/GoogleCertificates.apk has no usable artifacts
+05-30 20:58:40.291  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000009/dl-Appsearch.optional_250834100400.apk has no usable artifacts
+05-30 20:58:40.292  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000015/dl-IdentityCredentialsPlatform.optional_261934100400.apk has no usable artifacts
+05-30 20:58:40.294  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000c/dl-TfliteDynamiteDynamite.integ_260580502100400.apk has no usable artifacts
+05-30 20:58:40.297  2694  5363 I artd    : GetBestInfo: vdex next to the dex file (/data/user/0/com.google.android.gms/app_dg_cache/9D5BCED7935D64431BF672B8BBD597199833CA19/oat/arm64/the.vdex) is kOatUpToDate with filter 'verify' executable 'false'
+05-30 20:58:40.297  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000012/dl-MlkitBarcodeUi.optional_261934100400.apk has no usable artifacts
+05-30 20:58:40.299  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000a/dl-MlkitBarcodeUi.optional_250834100400.apk has no usable artifacts
+05-30 20:58:40.301  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000013/dl-Appsearch.optional_261934100400.apk has no usable artifacts
+05-30 20:58:40.302  2694  5363 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000e/dl-VisionOcr.optional_261934100000.apk has no usable artifacts
+05-30 20:58:40.304  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000007/MeasurementDynamite.apk has no usable artifacts
+05-30 20:58:40.305  2694  4736 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000014/dl-PlayCloudSearch.optional_261934100000.apk has no usable artifacts
+05-30 20:58:40.350 12713 12783 D ExifInterface: Invalid image: ExifInterface got an unsupported or corrupted image file
+05-30 20:58:40.350 12713 12783 D ExifInterface: java.io.IOException: Invalid marker:14
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at android.media.ExifInterface.getJpegAttributes(ExifInterface.java:2864)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at android.media.ExifInterface.loadAttributes(ExifInterface.java:1988)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at android.media.ExifInterface.initForFilename(ExifInterface.java:2584)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at android.media.ExifInterface.<init>(ExifInterface.java:1517)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer.g(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:19)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.l(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:9)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at com.facebook.imagepipeline.producers.LocalExifThumbnailProducer$a.c(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at N4.h.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:12)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at P5.B.b(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:16)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at P5.B.a(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:1)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at P5.A.run(r8-map-id-32d56e7f8e3015d37229bfb6064dbccd34ae21dab1de11a30eb6d823f8baa2b0:5)
+05-30 20:58:40.350 12713 12783 D ExifInterface: 	at java.lang.Thread.run(Thread.java:1119)
+05-30 20:58:40.350 12713 12783 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:40.352 12713 12787 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:40.352 12713 12787 D skia    : libjpeg error 116 <Corrupt JPEG data: 4 extraneous bytes before marker 0xc0> from output_message
+05-30 20:58:40.353 12713 12787 W HWUI    : Image decoding logging dropped!
+05-30 20:58:40.377   693   802 D ActivityManager: freezing 3234 com.android.managedprovisioning
+05-30 20:58:40.377   693   802 D ActivityManager: freezing 3390 com.google.android.cellbroadcastreceiver
+05-30 20:58:40.378   693   802 D ActivityManager: freezing 3464 com.google.android.marvin.talkback
+05-30 20:58:40.378   693   802 D ActivityManager: freezing 3426 com.google.android.healthconnect.controller
+05-30 20:58:40.378   693   802 D ActivityManager: freezing 3623 com.android.shell
+05-30 20:58:40.378   693   802 D ActivityManager: freezing 3726 com.google.android.federatedcompute
+05-30 20:58:40.378   693   802 D ActivityManager: freezing 3752 com.google.android.ondevicepersonalization.services
+05-30 20:58:40.379   693   802 D ActivityManager: freezing 3289 com.google.android.ext.services:modelDownloaderServiceProcess
+05-30 20:58:40.379   693   802 D ActivityManager: freezing 2061 com.google.android.apps.wallpaper
+05-30 20:58:40.379   693   802 D ActivityManager: freezing 3941 com.android.vending:quick_launch
+05-30 20:58:40.379   693   802 D ActivityManager: freezing 4672 com.google.android.webview:webview_service
+05-30 20:58:40.380   693   802 D ActivityManager: freezing 3843 com.google.android.photopicker
+05-30 20:58:40.380   693   802 D ActivityManager: freezing 3673 com.google.android.configupdater
+05-30 20:58:40.380   693   802 D ActivityManager: freezing 2030 com.google.android.as.oss
+05-30 20:58:40.380   693   802 D ActivityManager: freezing 7535 com.google.android.apps.photos
+05-30 20:58:40.381   693   802 D ActivityManager: freezing 4400 com.google.android.apps.restore
+05-30 20:58:40.381   693   802 D ActivityManager: freezing 7863 com.google.android.apps.safetyhub
+05-30 20:58:40.381   693   802 D ActivityManager: freezing 2216 com.google.android.deskclock
+05-30 20:58:40.381   693   802 D ActivityManager: freezing 3555 com.google.android.rkpdapp
+05-30 20:58:40.382   693   802 D ActivityManager: freezing 7890 com.google.android.dialer
+05-30 20:58:40.383   693   802 D ActivityManager: freezing 3563 com.android.providers.calendar
+05-30 20:58:40.383   693   802 D ActivityManager: freezing 10784 com.android.carrierdefaultapp
+05-30 20:58:40.383   693   802 D ActivityManager: freezing 11227 com.android.chrome
+05-30 20:58:40.383   693   802 D ActivityManager: freezing 11320 android.process.media
+05-30 20:58:40.383   693   802 D ActivityManager: freezing 3784 com.google.android.packageinstaller
+05-30 20:58:40.383   693   802 D ActivityManager: freezing 3330 com.google.android.gms.ui
+05-30 20:58:40.384   693   802 D ActivityManager: freezing 3799 com.google.android.partnersetup
+05-30 20:58:40.385   693   802 D ActivityManager: freezing 1810 com.google.android.settings.intelligence
+05-30 20:58:40.385   693   802 D ActivityManager: freezing 5055 com.google.android.adservices.api
+05-30 20:58:40.385   693   802 D ActivityManager: freezing 2608 com.google.android.tts
+05-30 20:58:40.385   693   802 D ActivityManager: freezing 12275 com.android.externalstorage
+05-30 20:58:40.386   693   802 D ActivityManager: freezing 1918 com.android.vending
+05-30 20:58:40.386   693   802 D ActivityManager: freezing 2970 com.android.vending:background
+05-30 20:58:40.387   693   802 D ActivityManager: freezing 4371 com.google.android.googlequicksearchbox:search
+05-30 20:58:40.387   693   802 D ActivityManager: freezing 11287 com.google.android.documentsui
+05-30 20:58:40.387   693   802 D ActivityManager: freezing 1576 android.process.acore
+05-30 20:58:40.387   693   802 D ActivityManager: freezing 2384 com.google.android.apps.messaging
+05-30 20:58:40.388   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.388   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.388   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10109} in 0ms
+05-30 20:58:40.388   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.388   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.388   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10195} in 0ms
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10173} in 0ms
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10196} in 0ms
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={2000} in 1ms
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10212} in 0ms
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10211} in 0ms
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.389   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10186} in 0ms
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10167} in 1ms
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10191} in 0ms
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10132} in 0ms
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10133} in 0ms
+05-30 20:58:40.396   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.397   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.397   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10170} in 0ms
+05-30 20:58:40.397   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.397   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.397   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10138} in 1ms
+05-30 20:58:40.397   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.397   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.397   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10143} in 0ms
+05-30 20:58:40.406   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10163} in 0ms
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10201} in 0ms
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10142} in 1ms
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.407   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10096} in 0ms
+05-30 20:58:40.413   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.413   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.413   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10119} in 0ms
+05-30 20:58:40.413   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.413   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10150} in 0ms
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10101} in 0ms
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10106} in 1ms
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10140} in 0ms
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10144} in 0ms
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10193} in 0ms
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10152} in 0ms
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.414   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10102} in 0ms
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10145} in 0ms
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10103} in 0ms
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+05-30 20:58:40.428   693   853 D InetDiagMessage: Destroyed live tcp sockets for uids={10095} in 0ms
+05-30 20:58:40.926   693   802 D ActivityManager: freezing 2542 com.google.android.gms.unstable
+05-30 20:58:41.828 12929 12929 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+05-30 20:58:41.828 12929 12929 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+05-30 20:58:41.828 12929 12929 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+05-30 20:58:41.830   496   574 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+05-30 20:58:41.830   496   574 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+05-30 20:58:43.057   693   802 D ActivityManager: freezing 9808 com.google.android.gms
+05-30 20:58:43.092   693   790 D ActivityManager: sync unfroze 1918 com.android.vending for 6
+05-30 20:58:43.092   693   790 D ActivityManager: sync unfroze 2970 com.android.vending:background for 6
+05-30 20:58:43.109  1918  1918 I Finsky  : [2] SCH: job service start with id 9415.
+05-30 20:58:43.120  1918 12949 I Finsky  : [269] SCH: Satisfied jobs for 9415 are: 12-1
+05-30 20:58:43.123  1918 12948 I Finsky  : [268] SCH: Job 12-1 starting
+05-30 20:58:43.123  1918  1918 I Finsky  : [2] WM::SCH: Logging work start for 12-1
+05-30 20:58:43.131  1918  1918 I Finsky  : [2] [ContentSync] job started
+05-30 20:58:43.158  1918 12951 I Finsky  : [271] App states replicator found 5 unowned apps
+05-30 20:58:43.167  1918  2332 I Finsky  : [59] Completed 0 account content syncs with 0 successful.
+05-30 20:58:43.167  1918  1918 I Finsky  : [2] [ContentSync] Installation state replication succeeded.
+05-30 20:58:43.167  1918  1918 I Finsky  : [2] SCH: jobFinished: 12-1. TimeElapsed: 44ms.
+05-30 20:58:43.168  1918  1918 I Finsky  : [2] WM::SCH: Logging work end for 12-1
+05-30 20:58:43.174  1918  2326 I Finsky  : [57] SCH: Scheduling phonesky job Id: 1-1337, CT: 1780125877767, Constraints: [{ L: 27463978, D: 70663978, C: CHARGING_NONE, I: IDLE_NONE, N: NET_ANY, B: BATTERY_ANY }]
+05-30 20:58:43.176  1918  2324 I Finsky  : [56] SCH: Scheduling 1 system job(s)
+05-30 20:58:43.176  1918  2324 I Finsky  : [56] SCH: Scheduling system job Id: 9418, L: 3818569, D: 47018569, C: false, I: false, N: 1
+05-30 20:58:43.179  1918 12948 I Finsky  : [268] SCH: job service finished with id 9415.
+05-30 20:58:43.181  1918  1918 I Finsky  : [2] Memory trim requested to level 40
+05-30 20:58:43.181  1918  1918 I Finsky  : [2] Flushing in-memory image cache
+05-30 20:58:43.181  2970  2970 I Finsky:background: [2] Memory trim requested to level 40
+05-30 20:58:43.284   455  5103 D android.hardware.audio@7.1-impl.ranchu: threadLoop: entering standby, frames: 1109760
+05-30 20:58:43.284   455  5103 D android.hardware.audio@7.1-impl.ranchu: ~TinyalsaSink: joining consumeThread
+05-30 20:58:43.299   455 12924 D android.hardware.audio@7.1-impl.ranchu: consumeThread: exiting
+05-30 20:58:43.299   455  5103 D android.hardware.audio@7.1-impl.ranchu: ~TinyalsaSink: stopping PCM stream
+05-30 20:58:43.341  1058  1290 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+05-30 20:58:46.973 12713 12723 I .gemhublite.app: Background concurrent mark compact GC freed 16MB AllocSpace bytes, 4(112KB) LOS objects, 49% free, 15MB/31MB, paused 30.018ms,10.667ms total 1.132s
+05-30 20:58:47.299 12713 12732 I HWUI    : Davey! duration=1423ms; Flags=0, FrameTimelineVsyncId=1309160, IntendedVsync=12144678276810, Vsync=12144678276810, InputEventId=0, HandleInputStart=12144690340657, AnimationStart=12144690340907, PerformTraversalsStart=12145951892200, DrawStart=12145952623450, FrameDeadline=12144744943474, FrameStartTime=12144690339074, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12146015269741, SyncStart=12146017938533, IssueDrawCommandsStart=12146018240575, SwapBuffers=12146030732366, FrameCompleted=12146104509241, DequeueBufferDuration=3208, QueueBufferDuration=191917, GpuCompleted=12146104509241, SwapBuffersCompleted=12146088557200, DisplayPresentTime=0, CommandSubmissionCompleted=12146030732366, 
+05-30 20:58:48.319 12983 12983 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+05-30 20:58:48.327 12983 12983 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+05-30 20:58:48.350 12983 12983 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+05-30 20:58:48.392   496   572 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+05-30 20:58:48.402   496   572 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+05-30 20:58:49.037   693   802 D ActivityManager: freezing 4509 com.android.keychain
+05-30 20:58:49.043   693   802 D ActivityManager: freezing 1193 com.android.settings
+05-30 20:58:49.075   693   802 D ActivityManager: freezing 3224 com.android.dynsystem:dynsystem
+05-30 20:58:49.189 12713 12732 I HWUI    : Davey! duration=2188ms; Flags=0, FrameTimelineVsyncId=1309169, IntendedVsync=12145978276758, Vsync=12146028276756, InputEventId=0, HandleInputStart=12146036145241, AnimationStart=12146036145908, PerformTraversalsStart=12148142848201, DrawStart=12148142960742, FrameDeadline=12146128276752, FrameStartTime=12146036141991, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=12148147473326, SyncStart=12148148330201, IssueDrawCommandsStart=12148148998451, SwapBuffers=12148152125451, FrameCompleted=12148167293242, DequeueBufferDuration=3916, QueueBufferDuration=469833, GpuCompleted=12148167293242, SwapBuffersCompleted=12148157173492, DisplayPresentTime=0, CommandSubmissionCompleted=12148152125451, 
+05-30 20:58:49.852 12986 12986 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: package
+05-30 20:58:50.108  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/base.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+05-30 20:58:50.149 12989 12989 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: meminfo
+05-30 20:58:50.150   693   710 D ActivityManager: freezer override set to true
+05-30 20:58:50.150   693   710 D ActivityManager: sync unfroze 3224 com.android.dynsystem:dynsystem for 19
+05-30 20:58:50.150   693   710 D ActivityManager: sync unfroze 3234 com.android.managedprovisioning for 19
+05-30 20:58:50.151   693   710 D ActivityManager: sync unfroze 3390 com.google.android.cellbroadcastreceiver for 19
+05-30 20:58:50.151   693   710 D ActivityManager: sync unfroze 3464 com.google.android.marvin.talkback for 19
+05-30 20:58:50.151   693   710 D ActivityManager: sync unfroze 3426 com.google.android.healthconnect.controller for 19
+05-30 20:58:50.151   693   710 D ActivityManager: sync unfroze 3623 com.android.shell for 19
+05-30 20:58:50.154   693   710 D ActivityManager: sync unfroze 3726 com.google.android.federatedcompute for 19
+05-30 20:58:50.183   693   710 D ActivityManager: sync unfroze 3752 com.google.android.ondevicepersonalization.services for 19
+05-30 20:58:50.183   693   710 D ActivityManager: sync unfroze 3289 com.google.android.ext.services:modelDownloaderServiceProcess for 19
+05-30 20:58:50.183   693   710 D ActivityManager: sync unfroze 2061 com.google.android.apps.wallpaper for 19
+05-30 20:58:50.184   693   710 D ActivityManager: sync unfroze 3941 com.android.vending:quick_launch for 19
+05-30 20:58:50.184   693   710 D ActivityManager: sync unfroze 4672 com.google.android.webview:webview_service for 19
+05-30 20:58:50.184   693   710 D ActivityManager: sync unfroze 3843 com.google.android.photopicker for 19
+05-30 20:58:50.189   693   710 D ActivityManager: sync unfroze 3673 com.google.android.configupdater for 19
+05-30 20:58:50.192   693   710 D ActivityManager: sync unfroze 2030 com.google.android.as.oss for 19
+05-30 20:58:50.192   693   710 D ActivityManager: sync unfroze 7535 com.google.android.apps.photos for 19
+05-30 20:58:50.193   693   710 D ActivityManager: sync unfroze 4400 com.google.android.apps.restore for 19
+05-30 20:58:50.193   693   710 D ActivityManager: sync unfroze 7863 com.google.android.apps.safetyhub for 19
+05-30 20:58:50.193   693   710 D ActivityManager: sync unfroze 2216 com.google.android.deskclock for 19
+05-30 20:58:50.193   693   710 D ActivityManager: sync unfroze 3555 com.google.android.rkpdapp for 19
+05-30 20:58:50.193   693   710 D ActivityManager: sync unfroze 7890 com.google.android.dialer for 19
+05-30 20:58:50.194   693   710 D ActivityManager: sync unfroze 3563 com.android.providers.calendar for 19
+05-30 20:58:50.194   693   710 D ActivityManager: sync unfroze 10784 com.android.carrierdefaultapp for 19
+05-30 20:58:50.194   693   710 D ActivityManager: sync unfroze 1193 com.android.settings for 19
+05-30 20:58:50.195   693   710 D ActivityManager: sync unfroze 11227 com.android.chrome for 19
+05-30 20:58:50.195   693   710 D ActivityManager: sync unfroze 11320 android.process.media for 19
+05-30 20:58:50.195   693   710 D ActivityManager: sync unfroze 3784 com.google.android.packageinstaller for 19
+05-30 20:58:50.195   693   710 D ActivityManager: sync unfroze 3330 com.google.android.gms.ui for 19
+05-30 20:58:50.196   693   710 D ActivityManager: sync unfroze 3799 com.google.android.partnersetup for 19
+05-30 20:58:50.196   693   710 D ActivityManager: sync unfroze 1810 com.google.android.settings.intelligence for 19
+05-30 20:58:50.196   693   710 D ActivityManager: sync unfroze 5055 com.google.android.adservices.api for 19
+05-30 20:58:50.196   693   710 D ActivityManager: sync unfroze 2608 com.google.android.tts for 19
+05-30 20:58:50.196   693   710 D ActivityManager: sync unfroze 12275 com.android.externalstorage for 19
+05-30 20:58:50.196   693   710 D ActivityManager: sync unfroze 4509 com.android.keychain for 19
+05-30 20:58:50.210   693   710 D ActivityManager: sync unfroze 4371 com.google.android.googlequicksearchbox:search for 19
+05-30 20:58:50.212   693   710 D ActivityManager: sync unfroze 1264 com.google.android.permissioncontroller for 19
+05-30 20:58:50.212   693   710 D ActivityManager: sync unfroze 11287 com.google.android.documentsui for 19
+05-30 20:58:50.213   693   710 D ActivityManager: sync unfroze 1576 android.process.acore for 19
+05-30 20:58:50.214   693   710 D ActivityManager: sync unfroze 2384 com.google.android.apps.messaging for 19
+05-30 20:58:50.215   693   710 D ActivityManager: sync unfroze 2542 com.google.android.gms.unstable for 19
+05-30 20:58:50.215   693   710 D ActivityManager: sync unfroze 9808 com.google.android.gms for 19
+05-30 20:58:50.255  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_AdsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:50.311  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_CronetDynamite_installtime.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+05-30 20:58:50.401  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteLoader_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:50.434 12713 12732 I .gemhublite.app: Explicit concurrent mark compact GC freed 5672KB AllocSpace bytes, 2(52KB) LOS objects, 49% free, 14MB/28MB, paused 4.370ms,1.883ms total 181.384ms
+05-30 20:58:50.544  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteModulesA_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:50.560   693   710 D ActivityManager: freezer override set to false
+05-30 20:58:50.591  3941  3941 I Finsky:quick_launch: [2] Memory trim requested to level 40
+05-30 20:58:50.680  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_DynamiteModulesC_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:50.749  2694  4736 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~xtmiQYQCmH6y9KZRtRp03w==/com.google.android.gms-Axd_vYzfZDoVi52FAiUC_g==/oat/arm64/split_GoogleCertificates_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+05-30 20:58:50.756  2384  2924 I ForwardSyncCache: reclaimMemory: Clearing caches
+05-30 20:58:50.768  2384  2924 W BugleSpam: trimming memory: closing msg model.
+05-30 20:58:50.787  2384  2924 W Bugle   : TextClassifierLibManagerImpl: Reclaiming memory at level: 40

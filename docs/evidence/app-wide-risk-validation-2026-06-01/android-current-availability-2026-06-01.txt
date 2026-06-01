@@ -1,0 +1,12 @@
+## android availability check 2026-06-01
+Mon Jun  1 16:22:56 +07 2026
+
+$ adb devices -l
+List of devices attached
+
+
+$ android emulator list
+Pixel_API34
+Pixel_9
+Resizable_Experimental
+LowRam_API36

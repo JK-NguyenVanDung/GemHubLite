@@ -1,0 +1,22 @@
+Samsung-style large-phone Android API36 emulator blocker — 2026-05-31
+
+Goal: validate large Samsung-style Android phone behavior with a 1440x3088 / high-density viewport and release APK.
+
+Planned flow:
+- Boot known-stable Pixel_9 API36 AVD.
+- Override display with `adb shell wm size 1440x3088` and `adb shell wm density 500`.
+- Install release APK and capture Home/Products/Media screenshots plus layout and logcat.
+
+Observed:
+- Pixel_9 API36 emulator booted and adb briefly reported emulator-5554 as a device.
+- Immediately after boot completion, emulator disappeared from adb and the qemu/emulator process exited before viewport override/install could run.
+- This happened after low-disk cleanup, even though host disk had ~18 GiB free.
+- No app install/start happened, so this is not app-crash evidence.
+
+Impact:
+- Samsung-style large-phone runtime proof remains missing.
+- Existing resize evidence remains available from earlier compact/default/expanded captures, but those are generic Android viewport proofs, not Samsung-provider proof.
+
+Recommended next action:
+- Launch Pixel_9 or a Samsung-like device profile from Android Studio Device Manager UI, keep the emulator window attached, then retry viewport override and release APK capture.
+- Alternatively use a physical Samsung device or cloud device for true provider coverage.

@@ -1,0 +1,25 @@
+Expo Atlas Android export summary — 2026-05-30
+
+Command:
+EXPO_UNSTABLE_ATLAS=true npx expo export --platform android --source-maps
+
+Result:
+Success. Output exported to dist/ and Atlas JSONL captured at docs/evidence/expo-atlas-android-2026-05-30.jsonl.
+
+Export output:
+- Hermes bundle: dist/_expo/static/js/android/entry-e14d4655b3aa07012d4957ed02ee456d.hbc (~3.7 MB)
+- Source map: dist/_expo/static/js/android/entry-e14d4655b3aa07012d4957ed02ee456d.hbc.map (~8.5 MB)
+- dist size: ~17 MB
+- Atlas JSONL size: ~17 MB
+
+Atlas parsed top entries:
+- node_modules/expo/virtual/streams.js — 97,505 bytes
+- node_modules/@react-native/js-polyfills/console.js — 19,315 bytes
+- node_modules/expo/node_modules/@expo/cli/build/metro-require/require.js — 6,043 bytes
+- node_modules/@react-native/js-polyfills/error-guard.js — 1,631 bytes
+
+Review:
+- Atlas evidence is captured, but Hermes bytecode export exposes limited module-level granularity in the parsed JSONL (7 modules), so this should be treated as a baseline rather than a full tree-shaking report.
+- Largest asset weights remain icon/font assets from Expo vector icons, especially MaterialCommunityIcons and MaterialSymbols.
+- No removed direct dependencies (`expo-dev-client`, `expo-haptics`, `expo-status-bar`, `react-native-mmkv`, direct `react-native-nitro-image`) are present in package.json.
+- VisionCamera/Nitro native weight is expected for the camera requirement.

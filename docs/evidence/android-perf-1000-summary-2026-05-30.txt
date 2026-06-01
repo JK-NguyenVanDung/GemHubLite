@@ -1,0 +1,11 @@
+Seeded rows: 1000 products, 1000 media rows
+Seed DB path: files/SQLite/gemhub-lite.db
+Seed path: debug run-as DB copy, then release APK install -r preserving data
+Release install: Performing Streamed Install Success 
+Android API: 36
+Android release: 16
+Window size: Physical size: 1080x2424
+Package flags:
+    versionCode=1 minSdk=24 targetSdk=36
+    versionName=1.0.0
+Artifacts: home/products/media screenshots, before/after meminfo, logcat tail

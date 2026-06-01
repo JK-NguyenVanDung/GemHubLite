@@ -6,7 +6,7 @@ Account state observed: logged-in free account with cloud storage and one captur
 
 ## Purpose
 
-This file documents what GemIQ actually does and what matters for the GemHub Lite take-home. It is not a mandate to clone the production app. It is a source-of-truth for product behavior, feature hierarchy, visual language, and take-home scope decisions.
+This file documents what GemIQ actually does and what matters for the GemHub Lite project. It is not a mandate to clone the production app. It is a source-of-truth for product behavior, feature hierarchy, visual language, and current scope decisions.
 
 ## Evidence Limits
 
@@ -49,7 +49,7 @@ Important product signal:
 - Camera is central, but SKU/product identity is what turns a photo into inventory.
 - Media and Products are separate browsing modes over related data.
 - The app helps merchants move from raw jewelry photo to sellable catalog asset.
-- Production GemIQ includes many advanced tools, but take-home should prove the core loop first.
+- Production GemIQ includes many advanced tools, but project should prove the core loop first.
 
 ## Navigation Structure
 
@@ -144,7 +144,7 @@ Production implications:
 
 - GemIQ is built for controlled jewelry photography, not generic snapshots.
 - The app expects square, marketplace-friendly output.
-- The take-home should include still capture and square-preview thinking, but not replicate GemLightbox controls unless required.
+- The project should include still capture and square-preview thinking, but not replicate GemLightbox controls unless required.
 - Hardware/Bluetooth controls are production-specific and should be out of scope for GemHub Lite.
 
 ## Post-Capture Save Flow
@@ -257,8 +257,8 @@ Associated Collections section:
 
 Product behavior implications:
 
-- Production product model is much richer than take-home minimum.
-- Take-home should not implement every field, but should reflect the core hierarchy: identity, title/type/description, media, pricing/inventory if time permits.
+- Production product model is much richer than project minimum.
+- project should not implement every field, but should reflect the core hierarchy: identity, title/type/description, media, pricing/inventory if time permits.
 - Product type taxonomy matters for jewelry domain feel.
 - SKU/title/media count/thumbnail are must-have browse signals.
 
@@ -300,8 +300,8 @@ Select mode:
 Media implications:
 
 - Media can exist as its own library item and can be assigned/linked to SKU.
-- Bulk/select action model is important in production but can be simplified in take-home.
-- For take-home, implement clear media browsing, SKU context, and add-to-existing-SKU path before export/share/delete.
+- Bulk/select action model is important in production but can be simplified in project.
+- For project, implement clear media browsing, SKU context, and add-to-existing-SKU path before export/share/delete.
 
 ## Products Library
 
@@ -323,8 +323,8 @@ Implications:
 - Products are catalog entities; media are assets attached to catalog entities.
 - Product grid must stay in sync with captured media.
 - Cover image should default from first/selected media.
-- Media count is useful and low-cost for take-home.
-- Cloud/sync state is a production signal; take-home with Supabase should show simple sync status if implemented.
+- Media count is useful and low-cost for project.
+- Cloud/sync state is a production signal; project with Supabase should show simple sync status if implemented.
 
 ## Collections
 
@@ -344,7 +344,7 @@ Observed Collections screen:
 Implications:
 
 - Collections are merchandising/share units over product/media.
-- Collections are not core to first take-home pass unless explicitly required.
+- Collections are not core to first project pass unless explicitly required.
 - A collection-ready schema can be considered, but UI should not distract from capture/SKU/catalog flow.
 
 ## Integrations
@@ -359,7 +359,7 @@ More -> Integrations observed:
 Implications:
 
 - GemIQ product value extends to commerce channel publishing.
-- For take-home, this supports why product data quality matters.
+- For project, this supports why product data quality matters.
 - Do not implement Shopify unless requested.
 
 ## Profile, Account, Sync
@@ -372,12 +372,12 @@ Observed profile:
 - Storage card also shows photo/video count, observed as `1 Photos, 0 Videos`.
 - Profile has personal, organization, business, account/security sections.
 
-Implications for Supabase take-home:
+Implications for Supabase project:
 
 - Supabase should model ownership explicitly, even if demo auth is simple.
 - Cloud sync should be visible as product/media persistence, not hidden implementation detail.
 - Avoid hard-coded secrets.
-- Keep demo account/single-user flow simple unless assignment demands org membership.
+- Keep demo account/single-user flow simple unless brief demands org membership.
 
 ## AI / GemStudio / GemAI
 
@@ -395,9 +395,9 @@ Observed AI surfaces:
 Implications:
 
 - AI assists catalog content after capture; it is not required for basic save.
-- Take-home AI, if included, should be optional and editable.
+- project AI, if included, should be optional and editable.
 - Do not require AI to save product/media.
-- Do not overbuild GemStudio; it is a production feature outside core exercise.
+- Do not overbuild GemStudio; it is a production feature outside core scope.
 
 ## Visual Language
 
@@ -429,7 +429,7 @@ Design implications for GemHub Lite:
 - Product detail should feel like an editable inventory form, not a content page.
 - Use empty states only where they help start capture/import.
 
-## Take-Home Requirement Interpretation
+## product requirements Interpretation
 
 Must build:
 
@@ -442,7 +442,7 @@ Must build:
 - Media library with image and SKU/product context.
 - Product detail with editable fields and attached media.
 - Add more media from product detail with SKU prefilled.
-- Supabase-backed sync if assignment asks backend sync.
+- Supabase-backed sync if brief asks backend sync.
 - iOS and Android parity for RN implementation.
 
 Should build if time:
@@ -528,10 +528,10 @@ These are high-leverage questions, not implementation trivia:
 2. Is the strongest signal reliable capture-to-SKU sync, or accurate modeling of GemIQ product metadata?
 3. Should Supabase sync be visible to the user as status/progress, or only demonstrated through persistence across sessions/devices?
 4. Should the demo prioritize merchant speed, e.g. repeated capture for many SKUs, or product completeness for each SKU?
-5. Which real GemIQ mistake would be worse in the take-home: weak camera flow, weak SKU discipline, weak product detail, or weak sync reliability?
+5. Which real GemIQ mistake would be worse in the project: weak camera flow, weak SKU discipline, weak product detail, or weak sync reliability?
 6. Should product type/specification fields be simplified, or should the jewelry taxonomy be represented enough to show domain understanding?
 7. Should a captured image be allowed to exist unassigned, then assigned later, or should GemHub Lite enforce SKU at save time only?
 
 ## Final Product Read
 
-GemIQ is a jewelry inventory media system with camera at the center. Its product truth is not the full five-tab shell, hardware controls, AI editor, or Shopify integration. The take-home should show that the candidate understands the hard part: every capture becomes durable, searchable, synced product inventory through SKU discipline and clear media/product linking.
+GemIQ is a jewelry inventory media system with camera at the center. Its product truth is not the full five-tab shell, hardware controls, AI editor, or Shopify integration. The project should show that the candidate understands the hard part: every capture becomes durable, searchable, synced product inventory through SKU discipline and clear media/product linking.

@@ -4,11 +4,13 @@
 
 GemHub Lite uses the real GemHub/GemIQ screenshots as product-design evidence, then adapts only safe Lite patterns: camera prominence, SKU-first inventory, compact image cards, and clean merchant forms. It must not copy GemHub/GemIQ branding, assets, credit systems, profile surfaces, collections, video, AI studio, hardware, auth, cloud, or paid workflows.
 
-Navigation stays focused on three required surfaces:
+Navigation keeps the required workflow centered while allowing the current Lite shell tabs:
 
+- `Home`: Lite local summary and shortcuts back into catalog flows.
 - `Camera`: primary capture route.
 - `Media`: gallery over saved product photos.
 - `Products`: SKU-first inventory browser.
+- `More`: Lite support/status rows that route back into local catalog flows.
 
 ## Evidence Source
 
@@ -58,10 +60,16 @@ Spacing scale (semantic, 4-pt base):
 
 Applied rules:
 
-- Page padding `md`.
-- Card padding `sm`.
-- Field gap `sm`.
-- Section gap `lg`.
+- Page padding is responsive: `12` below 360 pt width, `16` on phones, `20` on midsize/tablets, `24` on expanded layouts.
+- Medium and expanded layouts center content and cap main page width at `720`-`960` pt so cards, forms, and CTAs do not stretch edge-to-edge on tablets.
+- List grid gutters are responsive: `12` on phones, `14` on midsize and larger layouts.
+- Vertical content gaps stay consistent at `16`, compressing to `12` on short-height devices under 720 pt.
+- Card padding is responsive: `10` below 360 pt width, `12` on phones, `18` on expanded layouts.
+- Field label-to-control gap is `10`, compressing to `8` on short-height devices.
+- Native-stack screens must not add another top safe-area inset below the header; tab screens keep top safe-area padding.
+- Scrollable tab screens add `104`-`112` pt bottom content padding so final content clears the floating tab bar on short and tall devices.
+- Product and media thumbnails fill the available grid column with a square aspect ratio; avoid fixed-width image tiles in grids.
+- SKU chips stay single-line and truncate with ellipsis to prevent card height jumps.
 - Bottom CTA safe-area padding `md`.
 - Card radius `16`, thumbnail radius `12`, button radius `12`, chip radius `999`, sheet radius `24`.
 - Elevation is border plus subtle shadow only.
@@ -91,4 +99,4 @@ Applied rules:
 - Run `npm run typecheck` after component/screen work.
 - Run `npm run lint` after typecheck passes.
 - Manually verify Camera, Media, Products, Capture Preview, and Product Detail on iOS and Android when native run gates are available.
-- Confirm no Home, profile, credits, collections, video, AI studio, auth, or cloud surfaces appear in v1 UI.
+- Confirm no production dashboard, profile/account, credits, collections, video studio, AI studio, auth, or cloud surfaces appear in v1 UI. Lite Home and More may appear only as local navigation/support surfaces.

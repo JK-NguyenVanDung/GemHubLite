@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Capture real-app product logic and design-system lessons before implementing GemHub Lite. This file should guide a production-inspired take-home app without copying proprietary branding, exact assets, paid features, or hardware/cloud surfaces.
+Capture real-app product logic and design-system lessons before implementing GemHub Lite. This file should guide a production-inspired app without copying proprietary branding, exact assets, paid features, or hardware/cloud surfaces.
 
 ## Research Rules
 
-- Use the take-home brief as the required scope boundary.
+- Use the product brief as the required scope boundary.
 - Inspect real app behavior conservatively through iPhone Mirroring/Computer Use.
 - Use `CONTEXT.md` glossary terms when recording observations.
 - Prefer screenshots and written observations over assumptions.
@@ -44,10 +44,10 @@ Store screenshots in `docs/research/screenshots/` and list them here.
 - Observed visual/design pattern: GemStudio card uses before/after jewelry/model imagery, a small arrow badge, centered title text, muted explainer copy, and a teal-to-purple gradient CTA.
 - Safe Lite adaptation: Make Camera primary in bottom navigation, keep Media and Products as sibling tabs, and provide fast home actions for capture/upload/create flows.
 - Safe Lite adaptation: Use neutral cards, teal accent, rounded thumbnails, and concise labels without copying production branding/assets.
-- Safe Lite adaptation: If using a Home/dashboard, show one value card beneath quick actions; for take-home, avoid AI/GemStudio scope unless framed as static placeholder/future enhancement.
+- Safe Lite adaptation: If using a Home/dashboard, show one value card beneath quick actions; for project, avoid AI/GemStudio scope unless framed as static placeholder/backlog enhancement.
 - Do not copy: GemIQ/GemHub branding, overview video asset, credit economy, account/org surfaces, production imagery.
 - Do not copy: GemStudio AI/lifestyle-generation feature; it is outside required camera-to-catalog flow.
-- Open question: Whether Lite needs Home at all, or can start on Camera/Products because take-home required flow is capture -> SKU -> library -> detail.
+- Open question: Whether Lite needs Home at all, or can start on Camera/Products because project required flow is capture -> SKU -> library -> detail.
 
 ### Interaction Reliability Notes
 
@@ -150,4 +150,4 @@ Record production surfaces seen during research that must not distract v1.
 - Does an existing SKU append media or show a conflict/merge UI?
 - What fields appear when `AI Auto-Fill` is expanded?
 - Can Media and Products tabs be opened safely from current post-capture state without saving production data?
-- Should GemHub Lite include a Home tab, or should it prioritize required take-home flows with Camera, Media, Products only?
+- Should GemHub Lite include a Home tab, or should it prioritize required project flows with Camera, Media, Products only?

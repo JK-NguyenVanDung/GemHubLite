@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "GemHub Lite UI Graph",
+  "version": "1.0.0",
+  "updated": "2026-05-28",
+  "purpose": "Machine-readable map of GemHub Lite UI for AI agents to replace screens while keeping flows + invariants.",
+  "scope": {
+    "keep": [
+      "Camera capture",
+      "SKU save gate",
+      "Product Detail SKU workspace",
+      "Products inventory",
+      "Media gallery",
+      "Add Photo to existing SKU"
+    ],
+    "drop": [
+      "Home dashboard",
+      "More/Profile",
+      "Collections",
+      "Auth/org/account",
+      "Cloud sync",
+      "Credits/billing",
+      "Hardware/BLE/lightbox/turntable",
+      "Video/editor/360",
+      "AI studio/background tools",
+      "Shopify/integrations",
+      "Production assets/branding/copy"
+    ]
+  },
+  "evidence": {
+    "research": "docs/research/GemHubApp.md",
+    "design": "DESIGN.md",
+    "prp": "PRP.MD",
+    "context": "CONTEXT.md",
+    "screenshotsDir": "docs/research/screenshots",
+    "mainCreationDir": "docs/research/screenshots/main-creation",
+    "routes": ["app/_layout.tsx", "app/(tabs)/_layout.tsx", "app/index.tsx"],
+    "themeTokens": "src/theme/tokens.ts"
+  },
+  "theme": {
+    "colors": {
+      "background": "#F7FAFA",
+      "surface": "#FFFFFF",
+      "surfaceMuted": "#F2F5F5",
+      "text": "#111827",
+      "secondaryText": "#6B7280",
+      "tertiaryText": "#9CA3AF",
+      "border": "#E5ECEC",
+      "accent": "#18B8B8",
+      "accentDark": "#079999",
+      "accentSoft": "#E8FAFA",
+      "danger": "#EF4444",
+      "cameraPanel": "#F5F7F7",
+      "black": "#050505"
+    },
+    "spacing": { "xxs": 4, "xs": 8, "sm": 12, "md": 16, "lg": 20, "xl": 24, "xxl": 32 },
+    "radius": { "sm": 10, "md": 12, "lg": 16, "xl": 24, "pill": 999 },
+    "typography": {
+      "screenTitle": { "fontSize": 22, "fontWeight": "700", "lineHeight": 28 },
+      "sectionTitle": { "fontSize": 13, "fontWeight": "700", "lineHeight": 18, "letterSpacing": 0.4 },
+      "body": { "fontSize": 15, "fontWeight": "400", "lineHeight": 22 },
+      "bodyStrong": { "fontSize": 15, "fontWeight": "700", "lineHeight": 22 },
+      "metadata": { "fontSize": 12, "fontWeight": "500", "lineHeight": 16 },
+      "sku": { "fontSize": 12, "fontWeight": "700", "lineHeight": 16 },
+      "button": { "fontSize": 14, "fontWeight": "700", "lineHeight": 18 }
+    }
+  },
+  "routes": [
+    { "id": "index", "path": "/", "file": "app/index.tsx", "redirectsTo": "/(tabs)/camera" },
+    { "id": "tabs", "path": "/(tabs)", "file": "app/(tabs)/_layout.tsx", "headerShown": false },
+    { "id": "tab.media", "path": "/(tabs)/media", "file": "app/(tabs)/media.tsx", "tab": true, "icon": "images-outline" },
+    { "id": "tab.camera", "path": "/(tabs)/camera", "file": "app/(tabs)/camera.tsx", "tab": true, "icon": "camera", "center": true, "raised": true, "acceptsParams": ["sku"] },
+    { "id": "tab.products", "path": "/(tabs)/products", "file": "app/(tabs)/products.tsx", "tab": true, "icon": "diamond-outline" },
+    { "id": "capturePreview", "path": "/capture-preview", "file": "app/capture-preview.tsx", "acceptsParams": ["uri", "sku"] },
+    { "id": "productDetail", "path": "/product/[sku]", "file": "app/product/[sku].tsx", "acceptsParams": ["sku"] }
+  ],
+  "nodes": [
+    {
+      "id": "camera",
+      "label": "Camera",
+      "type": "screen",
+      "route": "/(tabs)/camera",
+      "components": ["Screen", "GemHubCameraView"],
+      "states": ["permissionPending", "permissionDenied", "ready", "capturing", "error", "simulatorPicker"],
+      "screenshots": ["docs/research/screenshots/18-camera-screen.png", "docs/research/screenshots/01-home.png"],
+      "replacementTarget": "Capture-first workbench. Full-height viewport, centered shutter, optional SKU context chip when launched from Product Detail.",
+      "doNotCopy": ["Hardware controls", "Lighting filters", "Background removal", "AI studio chrome"]
+    },
+    {
+      "id": "capturePreview",
+      "label": "Capture Preview / SKU Gate",
+      "type": "screen",
+      "route": "/capture-preview",
+      "components": ["Screen", "CaptureReview", "BottomSaveBar", "Field", "Picker", "ActionSheet"],
+      "states": ["missingUri", "missingSku", "draft", "saving", "saveError", "saved"],
+      "screenshots": [
+        "docs/research/screenshots/03-capture-product-info.png",
+        "docs/research/screenshots/09-new-sku-product-form.png",
+        "docs/research/screenshots/14-filled-product-form.png",
+        "docs/research/screenshots/main-creation/01-after-capture-creating-product.png",
+        "docs/research/screenshots/main-creation/02-input-product-info-empty.png",
+        "docs/research/screenshots/main-creation/03-input-description-move-to-full-screen.png"
+      ],
+      "replacementTarget": "Large image, thumbnail strip, required SKU, Generate SKU, optional Title/Type/Description, sticky Save Product.",
+      "doNotCopy": ["Production AI auto-fill branding", "Pricing/inventory fields", "Stone/jewelry appraisal fields"]
+    },
+    {
+      "id": "productTypeSheet",
+      "label": "Product Type Picker",
+      "type": "modal",
+      "openedFrom": ["capturePreview", "productDetail"],
+      "components": ["ActionSheet"],
+      "screenshots": [
+        "docs/research/screenshots/11-product-type-menu.png",
+        "docs/research/screenshots/12-product-type-selected.png",
+        "docs/research/screenshots/13-ring-type-selected.png",
+        "docs/research/screenshots/main-creation/04-select-product-type.png",
+        "docs/research/screenshots/main-creation/05-sub-menu-select-type.png"
+      ],
+      "replacementTarget": "Flat Lite picker: Ring, Necklace, Earring, Bracelet, Pendant, Other.",
+      "doNotCopy": ["Hierarchical jewelry taxonomy", "Searchable category tree"]
+    },
+    {
+      "id": "productDetail",
+      "label": "Product Detail",
+      "type": "screen",
+      "route": "/product/[sku]",
+      "components": ["Screen", "ProductHeader", "ProductFormSection", "AddPhotoButton", "MediaGrid"],
+      "states": ["loading", "loadError", "notFound", "ready", "saving", "saveError"],
+      "screenshots": [],
+      "notes": "Production detail not directly observed; mapped from capture flow + SKU model.",
+      "replacementTarget": "SKU-centered workspace: cover thumbnail, locked SKU chip, editable metadata, Add Photo, photo grid.",
+      "doNotCopy": ["Production AI/edit tools", "Cloud sync indicators"]
+    },
+    {
+      "id": "products",
+      "label": "Products",
+      "type": "screen",
+      "route": "/(tabs)/products",
+      "components": ["Screen", "EmptyStateCard", "FlatList", "ProductCard"],
+      "states": ["loading", "empty", "populated", "error"],
+      "screenshots": ["docs/research/screenshots/27-product-tab.png", "docs/research/screenshots/07-sku-does-not-exist.png"],
+      "replacementTarget": "Two-column ProductCard grid with InventoryHeader; empty state CTA routes to Camera.",
+      "doNotCopy": ["Tutorial video card", "Production CTA copy"]
+    },
+    {
+      "id": "media",
+      "label": "Media",
+      "type": "screen",
+      "route": "/(tabs)/media",
+      "components": ["Screen", "EmptyStateCard", "FlatList", "MediaTile"],
+      "states": ["loading", "empty", "populated", "error"],
+      "screenshots": [
+        "docs/research/screenshots/19-media-tab.png",
+        "docs/research/screenshots/20-select-media-in-media-tab.png",
+        "docs/research/screenshots/21-asign-SKU.png"
+      ],
+      "replacementTarget": "Two-column MediaTile grid with InventoryHeader; tap opens owning Product Detail.",
+      "doNotCopy": ["Video upload", "Editor controls", "Cloud quota chrome"]
+    }
+  ],
+  "edges": [
+    { "from": "index", "to": "tab.camera", "trigger": "appLaunch", "via": "Redirect" },
+    { "from": "tab.camera", "to": "capturePreview", "trigger": "photoCaptured", "params": ["uri", "sku?"], "via": "router.push" },
+    { "from": "capturePreview", "to": "productDetail", "trigger": "saveNewSku", "params": ["sku"], "via": "router.replace", "sideEffects": ["productCreated", "mediaAppended"] },
+    { "from": "capturePreview", "to": "productDetail", "trigger": "saveExistingSku", "params": ["sku"], "via": "router.replace", "sideEffects": ["mediaAppended"], "guard": "noDuplicateProduct" },
+    { "from": "tab.products", "to": "productDetail", "trigger": "tapProductCard", "params": ["sku"] },
+    { "from": "tab.media", "to": "productDetail", "trigger": "tapMediaTile", "params": ["sku"] },
+    { "from": "productDetail", "to": "tab.camera", "trigger": "addPhoto", "params": ["sku"], "guard": "skuLocked" },
+    { "from": "productDetail", "to": "productTypeSheet", "trigger": "openTypePicker" },
+    { "from": "capturePreview", "to": "productTypeSheet", "trigger": "openTypePicker" }
+  ],
+  "states": {
+    "captureGate": {
+      "initial": "cameraReady",
+      "transitions": [
+        { "from": "cameraReady", "to": "captureReview", "on": "photoCaptured" },
+        { "from": "captureReview", "to": "missingSku", "on": "skuEmpty" },
+        { "from": "missingSku", "to": "captureReview", "on": "skuEntered|skuGenerated" },
+        { "from": "captureReview", "to": "newProduct", "on": "saveValidUnknownSku" },
+        { "from": "captureReview", "to": "existingProduct", "on": "saveValidExistingSku" },
+        { "from": "newProduct", "to": "productDetail", "on": "createSuccess" },
+        { "from": "existingProduct", "to": "productDetail", "on": "appendSuccess" },
+        { "from": "productDetail", "to": "cameraReady", "on": "addPhoto" }
+      ]
+    }
+  },
+  "components": {
+    "AppShell": {
+      "file": "app/_layout.tsx",
+      "children": ["BottomTabs", "capturePreviewStack", "productDetailStack"]
+    },
+    "BottomTabs": {
+      "file": "app/(tabs)/_layout.tsx",
+      "order": ["tab.media", "tab.camera", "tab.products"],
+      "centerTab": "tab.camera",
+      "centerStyle": { "size": 58, "borderWidth": 4, "borderColor": "surface", "background": "accentDark|accent", "raised": -22 }
+    },
+    "InventoryHeader": {
+      "status": "toBuild",
+      "sharedBy": ["products", "media"],
+      "layout": [
+        { "row": 1, "left": "screenTitle", "right": "primaryAction(+New|Upload|Add)" },
+        { "row": 2, "left": "skuSearchField", "right": "filterChip" }
+      ],
+      "notes": "Filtering may be visual-only initially; must not block core flow."
+    },
+    "CaptureReview": {
+      "file": "src/features/camera/components/CaptureReview.tsx",
+      "fields": ["sku(required, autoCapitalize=characters)", "title", "productType", "description"],
+      "actions": ["Generate SKU", "Save Product"],
+      "skuPattern": "SKU-YYYYMMDD-###",
+      "invariants": ["uri required", "valid normalized SKU required"]
+    },
+    "ProductCard": {
+      "file": "src/features/products/components/ProductCard.tsx",
+      "parts": ["Thumbnail(lg)", "Chip(sku, accent)", "title|No title", "metadata(photoCount)"]
+    },
+    "MediaTile": {
+      "file": "src/features/media/components/MediaTile.tsx",
+      "parts": ["Thumbnail(square)", "Chip(sku) overlay", "productTitle|sku fallback"]
+    },
+    "ProductHeader": {
+      "file": "src/features/product-detail/components/ProductHeader.tsx",
+      "parts": ["Thumbnail(lg)", "Chip(sku, accent)", "screenTitle", "metadata(photoCount)"]
+    },
+    "ProductFormSection": {
+      "file": "src/features/product-detail/components/ProductFormSection.tsx",
+      "fields": ["title", "productType", "description"],
+      "actions": ["Save changes"],
+      "skuEditable": false
+    },
+    "AddPhotoButton": {
+      "file": "src/features/product-detail/components/AddPhotoButton.tsx",
+      "navigatesTo": "/(tabs)/camera",
+      "passes": ["sku"]
+    },
+    "MediaGrid": {
+      "file": "src/features/product-detail/components/MediaGrid.tsx",
+      "columns": 2,
+      "emptyAction": "AddPhotoButton"
+    },
+    "ui.primitives": {
+      "Screen": "src/components/ui/Screen",
+      "Card": "src/components/ui/Card",
+      "Button": "src/components/ui/Button",
+      "Field": "src/components/ui/Field",
+      "Picker": "src/components/ui/Picker",
+      "Chip": "src/components/ui/Chip",
+      "Thumbnail": "src/components/ui/Thumbnail",
+      "EmptyStateCard": "src/components/ui/EmptyStateCard",
+      "ActionSheet": "src/components/ui/ActionSheet",
+      "Spinner": "src/components/ui/Spinner",
+      "Icon": "src/components/ui/Icon",
+      "Text": "src/components/ui/Text"
+    }
+  },
+  "screenshotMap": [
+    { "file": "docs/research/screenshots/01-home.png", "use": "Camera prominence + bottom nav hierarchy", "doNotCopy": ["Home dashboard", "Profile/credits"] },
+    { "file": "docs/research/screenshots/02-after-camera-tap.png", "use": "Camera entry transition", "doNotCopy": ["Production permission copy"] },
+    { "file": "docs/research/screenshots/03-capture-product-info.png", "use": "Capture preview rhythm: image + form + save", "doNotCopy": ["AI labels", "Production copy"] },
+    { "file": "docs/research/screenshots/04-after-save.png", "use": "Post-save reset pattern", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/04-post-capture-un0002.png", "use": "Existing-SKU capture context", "doNotCopy": ["Production SKU values"] },
+    { "file": "docs/research/screenshots/05-after-save-un0002.png", "use": "Existing-SKU save outcome", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/06-choose-sku-loading.png", "use": "SKU selection loading state idea", "doNotCopy": ["Account data"] },
+    { "file": "docs/research/screenshots/07-sku-does-not-exist.png", "use": "Unknown SKU empty/create path", "doNotCopy": ["Exact wording"] },
+    { "file": "docs/research/screenshots/08-after-create-new-sku-click.png", "use": "Transition into new SKU form", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/09-new-sku-product-form.png", "use": "Product create form structure", "doNotCopy": ["Advanced production fields"] },
+    { "file": "docs/research/screenshots/10-after-save-product.png", "use": "Save success behavior", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/11-product-type-menu.png", "use": "Picker pattern", "doNotCopy": ["Full taxonomy"] },
+    { "file": "docs/research/screenshots/12-product-type-selected.png", "use": "Selected type state", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/13-ring-type-selected.png", "use": "Subtype concept (not implemented in Lite)", "doNotCopy": ["Subtype hierarchy"] },
+    { "file": "docs/research/screenshots/14-filled-product-form.png", "use": "Filled form layout", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/15-after-final-save.png", "use": "Final save reset", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/16-second-capture-blank-sku.png", "use": "Add-photo SKU gating", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/17-second-capture-save-blank.png", "use": "Blank SKU save blocked proof", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/18-camera-screen.png", "use": "Camera viewport baseline", "doNotCopy": ["Hardware/lightbox controls"] },
+    { "file": "docs/research/screenshots/19-media-tab.png", "use": "Media header/gallery density", "doNotCopy": ["Video/editor/cloud controls"] },
+    { "file": "docs/research/screenshots/20-select-media-in-media-tab.png", "use": "Media selection affordance", "doNotCopy": ["Bulk production ops"] },
+    { "file": "docs/research/screenshots/21-asign-SKU.png", "use": "SKU association concept", "doNotCopy": ["Production-specific copy"] },
+    { "file": "docs/research/screenshots/22-generate-new-sku-conflict.png", "use": "SKU conflict UX consideration", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/23-filter-dropdown.png", "use": "Filter chip/sheet pattern", "doNotCopy": ["Complex filters before core passes"] },
+    { "file": "docs/research/screenshots/24-add-video-to-media.png", "use": "Out-of-scope reminder", "doNotCopy": ["Video upload"] },
+    { "file": "docs/research/screenshots/25-zoom-in-out.png", "use": "Out-of-scope reminder", "doNotCopy": ["Custom zoom controls"] },
+    { "file": "docs/research/screenshots/26-more-tab.png", "use": "Out-of-scope reminder", "doNotCopy": ["More/Profile tab"] },
+    { "file": "docs/research/screenshots/27-product-tab.png", "use": "Products grid/card shape", "doNotCopy": ["Tutorial video", "Production CTA copy"] },
+    { "file": "docs/research/screenshots/28-home-tab.png", "use": "Visual rhythm only", "doNotCopy": ["Home tab itself"] },
+    { "file": "docs/research/screenshots/29-top-right-toolbar-action-nav-to-profile.png", "use": "Top action placement only", "doNotCopy": ["Profile surface"] },
+    { "file": "docs/research/screenshots/30-more-of-profile.png", "use": "Out-of-scope reminder", "doNotCopy": ["Profile/account"] },
+    { "file": "docs/research/screenshots/31-click-on-new-collection.png", "use": "Out-of-scope reminder", "doNotCopy": ["Collections"] },
+    { "file": "docs/research/screenshots/32-click-on-create-collection.png", "use": "Out-of-scope reminder", "doNotCopy": ["Collections creation"] },
+    { "file": "docs/research/screenshots/33-create-automate-collection-based-on-filter.png", "use": "Out-of-scope reminder", "doNotCopy": ["Automated collections"] },
+    { "file": "docs/research/screenshots/34-leave-edit-screen.png", "use": "Edit exit pattern", "doNotCopy": ["Production edit dialog copy"] },
+    { "file": "docs/research/screenshots/main-creation/01-after-capture-creating-product.png", "use": "Post-capture create flow", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/main-creation/02-input-product-info-empty.png", "use": "Empty form rhythm", "doNotCopy": [] },
+    { "file": "docs/research/screenshots/main-creation/03-input-description-move-to-full-screen.png", "use": "Description full-screen consideration", "doNotCopy": ["Full-screen description editor (skip in Lite)"] },
+    { "file": "docs/research/screenshots/main-creation/04-select-product-type.png", "use": "Type picker entry", "doNotCopy": ["Hierarchical taxonomy"] },
+    { "file": "docs/research/screenshots/main-creation/05-sub-menu-select-type.png", "use": "Subtype concept", "doNotCopy": ["Subtypes"] },
+    { "file": "docs/research/screenshots/main-creation/06-specification-pricing-inventory-input.png", "use": "Backlog fields reference", "doNotCopy": ["Pricing/inventory v1"] },
+    { "file": "docs/research/screenshots/main-creation/07-select-currency.png", "use": "Out-of-scope reminder", "doNotCopy": ["Currency picker"] },
+    { "file": "docs/research/screenshots/main-creation/08-jewelry-details-extra-not-needed.png", "use": "Out-of-scope proof", "doNotCopy": ["Jewelry appraisal fields"] },
+    { "file": "docs/research/screenshots/main-creation/09-main-stone-detail-extra-not-needed.png", "use": "Out-of-scope proof", "doNotCopy": ["Stone detail forms"] }
+  ],
+  "acceptance": [
+    { "id": "A1", "step": "App opens to Camera tab" },
+    { "id": "A2", "step": "Capture produces image + routes to Capture Preview" },
+    { "id": "A3", "step": "Capture Preview blocks save without normalized SKU" },
+    { "id": "A4", "step": "Generate SKU produces SKU-YYYYMMDD-### and unblocks save" },
+    { "id": "A5", "step": "Save with new SKU opens Product Detail for that SKU" },
+    { "id": "A6", "step": "Saved photo appears in Media tab" },
+    { "id": "A7", "step": "Saved product appears in Products tab" },
+    { "id": "A8", "step": "Add Photo from Product Detail keeps SKU context" },
+    { "id": "A9", "step": "Save with existing SKU appends media only, no duplicate product" },
+    { "id": "A10", "step": "Tapping a Media tile opens owning Product Detail" }
+  ],
+  "invariants": [
+    "Every saved media row has a non-null SKU and an owning product.",
+    "SKU is immutable after product creation.",
+    "Existing SKU save appends media; never creates a duplicate product row.",
+    "Products and Media list refresh on focus, no manual reload required.",
+    "No orphan media files; saving copies into app media dir.",
+    "No secrets, no production API keys, no analytics.",
+    "AI features, if any, are optional, editable, and never block save."
+  ],
+  "buildOrder": [
+    "Preserve routes and data invariants",
+    "Confirm/extend shared UI primitives only if missing",
+    "Build InventoryHeader and use in Products + Media",
+    "Rework Camera into capture-first workbench",
+    "Rework Capture Preview matching screenshotMap",
+    "Rework Products grid + ProductCard",
+    "Rework Media grid + MediaTile",
+    "Rework Product Detail as SKU workspace",
+    "iOS + Android validation pass"
+  ]
+}

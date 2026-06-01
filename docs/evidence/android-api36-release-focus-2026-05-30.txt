@@ -1,0 +1,2 @@
+  mCurrentFocus=Window{53cddfe u0 com.gemhublite.app/com.gemhublite.app.MainActivity}
+  mFocusedApp=ActivityRecord{3045909 u0 com.gemhublite.app/.MainActivity t14}

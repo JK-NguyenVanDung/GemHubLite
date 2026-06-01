@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This harness keeps GemHub Lite implementation evidence-based, cross-platform, and focused on the take-home requirements. It should guide AI agents and human review through product, platform, implementation, QA, and security work without drifting into bonus scope too early.
+This harness keeps GemHub Lite implementation evidence-based, cross-platform, and focused on the product requirements. It should guide AI agents and human review through product, platform, implementation, QA, and security work without drifting into bonus scope too early.
 
 ## Operating Rules
 
@@ -45,7 +45,7 @@ Owns requirement fit and merchant usability.
 
 Responsibilities:
 
-- Compare each feature against the take-home brief.
+- Compare each feature against the product brief.
 - Confirm Camera -> SKU -> Products/Media -> Detail remains obvious.
 - Flag scope drift and missing empty/error states.
 - Review README honesty and demo narrative.
@@ -115,7 +115,7 @@ Owns adversarial verification against docs.
 
 Responsibilities:
 
-- Compare implementation with `PRP.MD`, `DESIGN.md`, and take-home brief.
+- Compare implementation with `PRP.MD`, `DESIGN.md`, and product brief.
 - Challenge missing required journeys.
 - Challenge README claims that lack evidence.
 - Confirm screenshots/walkthrough match implemented behavior.
@@ -142,7 +142,7 @@ Responsibilities:
 - Check no save without SKU.
 - Check no duplicate product rows for normalized SKU.
 - Check no orphan media.
-- Check optional AI/backend claims are documented as future scope unless implemented.
+- Check optional AI/backend claims are documented as out-of-scope backlog unless implemented.
 
 Report format:
 

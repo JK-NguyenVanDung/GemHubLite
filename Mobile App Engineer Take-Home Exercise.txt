@@ -1,8 +1,9 @@
+
 Picup Media — Mobile App
 Engineer Take-Home Exercise
-Role: Mobile App Engineer AI Driven Development
+Role: Mobile App Engineer AI Driven Development)
 Company: Picup Media — jewelry photography & digital solutions GemLightbox,
-GemCam, GemHub
+GemCam, GemHub)
 Time budget: A focused session — for many strong RN engineers this is a few hours with AI tools Cursor, Claude Code, etc.); others may need up to half a day depending on environment setup and camera-library friction. We do not expect this to take multiple days.
 Due: Within 5 business days of receiving this brief — work at your own pace, but sooner is better. We are moving quickly to fill this role and will review submissions as they arrive.
  
@@ -117,15 +118,15 @@ Browse
 Products and Media tabs stay in sync after saves; product list shows a thumbnail (first image is fine).
  
 Deliverables
-Submit the following English:
-Git repository GitHub/GitLab/Bitbucket — private link is fine with full source README including:
-Prerequisites Node version, Xcode/Android SDK, Expo if used
+Submit the following English):
+Git repository GitHub/GitLab/Bitbucket — private link is fine) with full source README including:
+Prerequisites Node version, Xcode/Android SDK, Expo if used)
 Install and run steps for iOS and Android
 Architecture overview (navigation, state, storage)
 Scope decisions (see Product sense)
 AI tooling: what you used, one example where you corrected or rejected AI output
  	Known gaps and what you would tackle next if this were a real sprint Demo evidence (at least one):
- 	Short screen recording 2 5 min walking through the journeys above (call out if any are not implemented), or
+ 	Short screen recording 2 5 min) walking through the journeys above (call out if any are not implemented), or
 	 	Screenshots + written walkthrough
 Optional: APK/IPA or TestFlight/Internal Testing link — only if easy for you
  
@@ -152,6 +153,6 @@ We simplified vs production: no unassigned / “No SKU” media bucket — every
 Questions?
 Reasonable clarifications are welcome — use the same channel weʼve been using to correspond.
 Your own work
-Submit work you did yourself. AI coding assistants Cursor, Claude Code, Copilot, etc. are expected and allowed — that is how we build. Help from other people is not (no co-developers, tutors, agencies, or code you cannot explain). In a follow-up, we will ask you to walk through your implementation and decisions.
+Submit work you did yourself. AI coding assistants Cursor, Claude Code, Copilot, etc.) are expected and allowed — that is how we build. Help from other people is not (no co-developers, tutors, agencies, or code you cannot explain). In a follow-up, we will ask you to walk through your implementation and decisions.
 Good luck — weʼre excited to see what you ship.
  

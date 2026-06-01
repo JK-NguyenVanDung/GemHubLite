@@ -1,0 +1,3 @@
+App loaded: com.gemhublite.app
+Debuggable: false
+No matching components found for type ACTIVITY with name com.gemhublite.app/.MainActivity

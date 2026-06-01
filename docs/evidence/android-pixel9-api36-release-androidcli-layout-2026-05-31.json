@@ -1,0 +1,484 @@
+[
+  {
+    "content-desc": ", Home",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[108,2319]",
+    "key": 3506402
+  },
+  {
+    "content-desc": ", Media",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "state": [
+      "selected"
+    ],
+    "center": "[324,2319]",
+    "key": 3506402
+  },
+  {
+    "content-desc": ", Camera",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[540,2319]",
+    "key": 3506402
+  },
+  {
+    "content-desc": ", Products",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[756,2319]",
+    "key": 3506402
+  },
+  {
+    "content-desc": ", More",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[972,2319]",
+    "key": 3506402
+  },
+  {
+    "text": "",
+    "center": "[107,2290]",
+    "key": 3506402
+  },
+  {
+    "text": "Home",
+    "center": "[108,2348]",
+    "key": 3506402
+  },
+  {
+    "text": "Media",
+    "state": [
+      "selected"
+    ],
+    "center": "[324,2348]",
+    "key": 3506402
+  },
+  {
+    "text": "",
+    "state": [
+      "selected"
+    ],
+    "center": "[323,2290]",
+    "key": 3506402
+  },
+  {
+    "text": "Camera",
+    "center": "[539,2348]",
+    "key": 3506402
+  },
+  {
+    "text": "",
+    "center": "[539,2267]",
+    "key": 3506402
+  },
+  {
+    "text": "",
+    "center": "[755,2290]",
+    "key": 3506402
+  },
+  {
+    "text": "Products",
+    "center": "[755,2348]",
+    "key": 3506402
+  },
+  {
+    "text": "",
+    "center": "[971,2290]",
+    "key": 3506402
+  },
+  {
+    "text": "More",
+    "center": "[972,2348]",
+    "key": 3506402
+  },
+  {
+    "interactions": [
+      "focusable",
+      "scrollable"
+    ],
+    "center": "[540,1180]",
+    "bounds": "[0,142][1080,2219]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000142, Performance sample 142",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[201,228]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000143, Performance sample 143",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[540,228]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000144, Performance sample 144",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[879,228]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000145, Performance sample 145",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[201,508]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000146, Performance sample 146",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[540,508]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000147, Performance sample 147",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[879,508]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000148, Performance sample 148",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[201,855]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000149, Performance sample 149",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[540,855]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000150, Performance sample 150",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[879,855]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000151, Performance sample 151",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[201,1201]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000152, Performance sample 152",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[540,1201]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000153, Performance sample 153",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[879,1201]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000154, Performance sample 154",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[201,1548]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000155, Performance sample 155",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[540,1548]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000156, Performance sample 156",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[879,1548]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000157, Performance sample 157",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[201,1894]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000158, Performance sample 158",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[540,1894]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "PERF-000159, Performance sample 159",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[879,1894]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "Performance sample 160",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[201,2154]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "Performance sample 161",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[540,2154]",
+    "key": 3506402
+  },
+  {
+    "content-desc": "Performance sample 162",
+    "interactions": [
+      "clickable",
+      "focusable"
+    ],
+    "center": "[879,2154]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 142",
+    "center": "[201,293]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 143",
+    "center": "[540,293]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 144",
+    "center": "[879,293]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 145",
+    "center": "[201,639]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 146",
+    "center": "[540,639]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 147",
+    "center": "[879,639]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 148",
+    "center": "[201,986]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 149",
+    "center": "[540,986]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 150",
+    "center": "[879,986]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 151",
+    "center": "[201,1332]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 152",
+    "center": "[540,1332]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 153",
+    "center": "[879,1332]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 154",
+    "center": "[201,1679]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 155",
+    "center": "[540,1679]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 156",
+    "center": "[879,1679]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 157",
+    "center": "[201,2025]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 158",
+    "center": "[540,2025]",
+    "key": 3506402
+  },
+  {
+    "text": "Performance sample 159",
+    "center": "[879,2025]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000142",
+    "center": "[167,185]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000143",
+    "center": "[506,185]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000144",
+    "center": "[845,185]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000145",
+    "center": "[167,531]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000146",
+    "center": "[506,531]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000147",
+    "center": "[845,531]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000148",
+    "center": "[167,878]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000149",
+    "center": "[506,878]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000150",
+    "center": "[845,878]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000151",
+    "center": "[167,1224]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000152",
+    "center": "[506,1224]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000153",
+    "center": "[845,1224]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000154",
+    "center": "[167,1571]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000155",
+    "center": "[506,1571]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000156",
+    "center": "[845,1571]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000157",
+    "center": "[167,1917]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000158",
+    "center": "[506,1917]",
+    "key": 3506402
+  },
+  {
+    "text": "PERF-000159",
+    "center": "[845,1917]",
+    "key": 3506402
+  }
+]

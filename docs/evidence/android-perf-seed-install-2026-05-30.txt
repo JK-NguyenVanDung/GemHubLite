@@ -1,0 +1,2 @@
+-rw------- 1 u0_a215 u0_a215 425984 2026-05-30 20:58 files/SQLite/gemhub-lite.db
+-rw-rw-rw- 1 u0_a215 u0_a215    250 2026-05-30 20:58 files/media/images/perf-fixture.jpg

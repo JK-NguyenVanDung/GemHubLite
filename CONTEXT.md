@@ -4,7 +4,7 @@
 
 ### GemHub Lite
 
-Simplified take-home app for jewelry capture and cataloging. It preserves the capture-to-SKU-to-library mental model without production GemHub hardware, cloud, auth, editor, or integration surfaces.
+Simplified app for jewelry capture and cataloging. It preserves the capture-to-SKU-to-library mental model without production GemHub hardware, cloud, auth, editor, or integration surfaces.
 
 ### Real App
 
@@ -44,5 +44,5 @@ Post-capture save gate where the user confirms or generates required SKU before 
 
 ### Safe Lite Adaptation
 
-Production-inspired pattern that improves GemHub Lite while staying inside take-home scope and avoiding proprietary assets, branding, hardware, cloud, or paid feature replication.
+Production-inspired pattern that improves GemHub Lite while staying inside current scope and avoiding proprietary assets, branding, hardware, cloud, or paid feature replication.
 

@@ -2,7 +2,7 @@
 
 ## Goal
 
-Build a focused Expo React Native take-home app for Picup Media: a jewelry merchant captures product photos, must bind every saved photo to a SKU, then manages the resulting inventory through Products, Media, and Product Detail.
+Build a focused Expo React Native app for Picup Media: a jewelry merchant captures product photos, must bind every saved photo to a SKU, then manages the resulting inventory through Products, Media, and Product Detail.
 
 Core model:
 
@@ -10,11 +10,11 @@ Core model:
 Camera capture -> required SKU confirmation -> create/update product -> Products and Media stay synced -> Product Detail manages metadata and images
 ```
 
-This app should feel production-inspired by GemHub/GemIQ, but it must remain a Lite take-home implementation. Replicate useful product patterns and broad UX structure, not proprietary branding, assets, hardware/cloud surfaces, or exact copy.
+This app should feel production-inspired by GemHub/GemIQ, but it must remain a Lite project implementation. Replicate useful product patterns and broad UX structure, not proprietary branding, assets, hardware/cloud surfaces, or exact copy.
 
 ## Source Truth
 
-1. Picup Media take-home brief pasted into this repo setup session.
+1. Picup Media product brief pasted into this repo setup session.
 2. Real GemHub/GemIQ app analysis captured in `docs/research/GemHubApp.md`.
 3. Expo, VisionCamera, SQLite, and platform docs used to validate technical feasibility.
 
@@ -58,7 +58,7 @@ This app should feel production-inspired by GemHub/GemIQ, but it must remain a L
 
 ## Non-Goals
 
-- No Home/dashboard tab.
+- No production Home/dashboard scope beyond the Lite local summary and shortcuts that route back into Camera, Products, Media, or More support rows.
 - No auth, organization, cloud sync, billing, or multi-tenant features.
 - No Picup production API integration.
 - No Bluetooth, GemLightbox, turntable, BLE, or UVC camera support.
@@ -132,7 +132,7 @@ Rules:
 - Block save when normalized SKU is empty.
 - Generated SKU format: `SKU-YYYYMMDD-###`.
 - Sequence is per local day and must not collide with existing products.
-- Existing SKU save appends media to current product instead of creating duplicate product.
+- Existing SKU save appends media to the current product and may update non-empty metadata instead of creating a duplicate product.
 - SKU editing is out of scope for v1 to avoid relinking complexity.
 
 ## UX States
@@ -266,4 +266,3 @@ If a gate cannot run, record the exact command, error, environment reason, and n
 - File URI behavior must be tested after app restart.
 - SKU normalization must be centralized to prevent duplicate rows.
 - README must not claim unsupported iOS/Android evidence.
-

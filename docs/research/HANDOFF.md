@@ -55,7 +55,7 @@ Do not re-document what is already in `GemHubApp.md`; use these files as evidenc
 
 ## Scope Filter
 
-Care only about screens/features that implement the take-home flow:
+Care only about screens/features that implement the project flow:
 
 - Camera preview and capture entry.
 - Capture Preview / SKU binding.
@@ -79,6 +79,6 @@ Last known visible state was Camera screen. User said actual shutter capture is 
 ## Suggested Skills
 
 - `caveman`: terse progress updates.
-- `mobile-harness-skill`: keep GemHub/GemIQ research aligned with PRP and take-home scope.
+- `mobile-harness-skill`: keep GemHub/GemIQ research aligned with PRP and current scope.
 - `computer-use`: iPhone Mirroring inspection.
 - `handoff`: compact transfer if session stops again.

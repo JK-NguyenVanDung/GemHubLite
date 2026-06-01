@@ -1,0 +1,6 @@
+Trim command: am send-trim-memory com.gemhublite.app RUNNING_CRITICAL
+Command output: 
+PID after trim: 12713
+Before TOTAL PSS: TOTAL PSS:   306668            TOTAL RSS:   373376       TOTAL SWAP PSS:      260
+After TOTAL PSS: TOTAL PSS:   287413            TOTAL RSS:   354204       TOTAL SWAP PSS:      260
+Screens: products before/after, media after

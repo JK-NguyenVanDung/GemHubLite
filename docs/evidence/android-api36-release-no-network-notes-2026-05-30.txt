@@ -1,0 +1,15 @@
+APK: android/app/build/outputs/apk/release/app-release.apk
+Android API: 36
+Android release: 16
+Window size: Physical size: 1080x2424
+Install output: Performing Streamed Install Success 
+Start output: Starting: Intent { cmp=com.gemhublite.app/.MainActivity } 
+Network disabled by adb svc wifi/data. Airplane broadcast is shell-restricted on this emulator.
+Package flags:
+    versionCode=1 minSdk=24 targetSdk=36
+    versionName=1.0.0
+    lastUpdateTime=2026-05-30 20:39:13
+      firstInstallTime=2026-05-30 20:39:13
+Focus:
+  mCurrentFocus=Window{53cddfe u0 com.gemhublite.app/com.gemhublite.app.MainActivity}
+  mFocusedApp=ActivityRecord{3045909 u0 com.gemhublite.app/.MainActivity t14}

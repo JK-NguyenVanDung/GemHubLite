@@ -1,0 +1,7 @@
+Attempted API37 Resizable_Experimental on 2026-05-30.
+System image exists: system-images/android-37.0/google_apis_ps16k/arm64-v8a.
+Observed emulator boot log reports Boot completed, Android API 37 / release 17 on first run.
+Blocking issue: after boot, device repeatedly disappeared from adb; adb devices returned empty while qemu stayed running.
+Mitigation: killed Resizable_Experimental process and restored Pixel_9 API36 emulator.
+Relevant logs: /tmp/gemhub-resizable37-solo.log and /tmp/gemhub-resizable37-emulator-5558.log.
+No app evidence captured for API37 because adb install/screencap could not attach.

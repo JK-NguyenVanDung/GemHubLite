@@ -1,0 +1,4 @@
+Pixel_9 API36 release recapture via Android CLI — 2026-05-31
+Device: emulator-5554 (Pixel_9 AVD)
+Captured: install/start logs, Home/Products/Media/Home2 screenshots, no-network Home/Products/Media screenshots, layout JSON, meminfo, logcat.
+Fatal/ANR lines:

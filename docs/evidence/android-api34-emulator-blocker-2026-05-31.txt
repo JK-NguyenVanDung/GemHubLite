@@ -1,0 +1,39 @@
+Android 14 / API 34 emulator blocker — 2026-05-31
+
+Goal: capture release APK launch/layout/no-network evidence on Android 14/API 34 for OS coverage.
+
+Current host state:
+- API 34 system image installed at ~/Library/Android/sdk/system-images/android-34 (4.2G)
+- AVD created: Pixel_API34
+- Release APK built locally: android/app/build/outputs/apk/release/app-release.apk (128M)
+- Host disk free during attempt: ~7.2 GiB
+
+Commands attempted:
+- emulator -avd Pixel_API34 -port 5554 -no-window -no-snapshot -no-audio -gpu swiftshader_indirect
+- emulator -avd Pixel_API34 -port 5554 -no-window -no-snapshot -no-audio -gpu swiftshader_indirect -memory 3072
+- adb -s emulator-5554 install -r android/app/build/outputs/apk/release/app-release.apk
+
+Observed:
+- Emulator log reaches "Boot completed".
+- adb briefly reports emulator-5554 as device.
+- Before install can start, emulator disappears from adb and qemu/emulator process exits.
+- Reproduced after adb restart, qemu kill, no-snapshot boot, and larger memory boot.
+
+Impact:
+- Android 14/API 34 release evidence is not captured yet.
+- This is an emulator-host/runtime blocker, not an app crash proof, because app install never begins.
+
+Recommended next action:
+- Free additional host disk (>20 GiB), start Pixel_API34 from Android Studio UI once, then retry adb install/screenshot capture.
+- If still unstable, use a physical Android 14 device or a Google/Samsung cloud device for API 34 coverage.
+
+Update later in the same day (2026-05-31):
+- Host disk freed to ~18 GiB by clearing Xcode DerivedData, Yarn cache, and gradle transform/daemon caches.
+- Emulator was retried with -no-window and again with a visible window (-gpu swiftshader_indirect).
+- After cache cleanup, emulator now boots fully but logs:
+    "Failed to make display surface context current: 12299"
+    "Failed to bind to post worker context."
+    "Failed to create window surface for DisplaySurfaceGl."
+  After `Boot completed`, ADB reports `device offline`, then the qemu process exits before any install can run.
+- Root cause is the host swiftshader/Qt display-surface stack, not the app or the AVD config. This same pattern reproduces for `Pixel_9`, `Pixel_API34`, `LowRam_API36`, and `Resizable_Experimental`.
+- This is now a host-environment blocker. Resolution path: launch the AVD from Android Studio Device Manager (uses a Qt host stack already initialized by Studio) and reuse the resulting adb device for install/screenshot capture.

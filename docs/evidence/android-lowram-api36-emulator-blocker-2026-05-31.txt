@@ -1,0 +1,28 @@
+Low-RAM Android API 36 emulator blocker — 2026-05-31
+
+Goal: validate small/low-memory Android behavior with a constrained emulator.
+
+AVD created:
+- Name: LowRam_API36
+- System image: Android 16 / API 36 Google APIs Play Store arm64-v8a
+- Configured display: 720x1280 @ 320dpi
+- Configured hw.ramSize: 1024
+- Configured vm.heapSize: 192
+
+Observed:
+- Host disk was initially too low; freed cache space from Xcode DerivedData/Yarn/Gradle to reach ~18 GiB free.
+- Emulator then booted successfully and reported:
+  - Physical size: 720x1280
+  - Physical density: 320
+  - Android release: 16
+  - dalvik.vm.heapsize: 512m
+  - MemTotal: ~2,021,944 kB (emulator raised effective RAM to ~2 GiB)
+- Immediately after boot, the emulator process exited and adb lost emulator-5554 before release APK install could start.
+
+Impact:
+- True low-RAM release runtime evidence is not captured yet.
+- Existing trim-memory evidence on API 36 release APK remains the strongest local memory-pressure proof.
+
+Recommended next action:
+- Launch LowRam_API36 from Android Studio UI with snapshots disabled and keep the emulator window open, then retry install/screenshot capture.
+- If it still exits, use a physical low-memory Android phone or a managed cloud device profile.
