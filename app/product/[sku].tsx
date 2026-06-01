@@ -1,5 +1,5 @@
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ScrollView } from "react-native";
 
 import { EmptyStateCard, Screen, Spinner } from "@/src/components/ui";
@@ -13,10 +13,9 @@ export default function ProductDetailScreen() {
   const layout = useResponsiveLayout();
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    setSelectedId((current) => (current && media.some((item) => item.id === current) ? current : media[0]?.id ?? null));
-  }, [media]);
-
+  // Derive the active media: honor the user's selection when it still exists,
+  // otherwise fall back to the first item. Keeping this derived (instead of
+  // syncing state in an effect) avoids cascading renders when `media` changes.
   const selected = useMemo(() => media.find((item) => item.id === selectedId) ?? media[0] ?? null, [media, selectedId]);
 
   if (loading) {
