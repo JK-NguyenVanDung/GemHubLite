@@ -24,7 +24,9 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const MemoMediaTile = memo(MediaTile);
 
 export default function MediaScreen() {
-  const columns = useResponsiveColumns({ compact: 3, medium: 4, expanded: 6 });
+  const baseColumns = useResponsiveColumns({ compact: 3, medium: 4, expanded: 6 });
+  const [dense, setDense] = useState(false);
+  const columns = dense ? baseColumns + 1 : baseColumns;
   const layout = useResponsiveLayout();
   const { data, error, loading, refresh } = useMedia();
   const [query, setQuery] = useState("");
@@ -127,11 +129,13 @@ export default function MediaScreen() {
     <View style={{ gap: layout.contentGap }}>
       <InventoryHeader
         title="Media"
-        actionLabel="+ Add Photo"
+        actionLabel="Add Photo"
         searchPlaceholder="Search by SKU"
         searchValue={query}
         onSearchChange={setQuery}
         filterLabel={filterLabel}
+        dense={dense}
+        onToggleDensity={() => setDense((value) => !value)}
         onAction={() => setSourceSheetOpen(true)}
         onFilterPress={() => setFilterSheetOpen(true)}
       />
@@ -141,7 +145,7 @@ export default function MediaScreen() {
         <EmptyStateCard icon="search-outline" title="No matching media" body="Try another SKU, type, or date." actionLabel="Reset filters" onAction={() => { setQuery(""); setTypeFilter("all"); setRange("all"); setSort("newest"); }} />
       ) : null}
     </View>
-  ), [data.length, error?.message, filterLabel, filteredData.length, layout.contentGap, query]);
+  ), [data.length, dense, error?.message, filterLabel, filteredData.length, layout.contentGap, query]);
 
   if (loading && data.length === 0) {
     return <Screen testID="media-screen"><Spinner /></Screen>;

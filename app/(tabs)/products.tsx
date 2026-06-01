@@ -27,7 +27,9 @@ const SORT_LABEL: Record<SortMode, string> = {
 };
 
 export default function ProductsScreen() {
-  const columns = useResponsiveColumns({ compact: 2, medium: 3, expanded: 4 });
+  const baseColumns = useResponsiveColumns({ compact: 2, medium: 3, expanded: 4 });
+  const [dense, setDense] = useState(false);
+  const columns = dense ? baseColumns + 1 : baseColumns;
   const layout = useResponsiveLayout();
   const { data, error, loading, refresh } = useProducts();
   const [query, setQuery] = useState("");
@@ -119,11 +121,13 @@ export default function ProductsScreen() {
     <View style={{ gap: layout.contentGap }}>
       <InventoryHeader
         title="Products"
-        actionLabel="+ Add"
+        actionLabel="Add"
         searchPlaceholder="Search by SKU"
         searchValue={query}
         onSearchChange={setQuery}
         filterLabel={filterLabel}
+        dense={dense}
+        onToggleDensity={() => setDense((value) => !value)}
         onAction={() => setSourceSheetOpen(true)}
         onFilterPress={() => setFilterSheetOpen(true)}
       />
@@ -133,7 +137,7 @@ export default function ProductsScreen() {
         <EmptyStateCard icon="search-outline" title="No matching products" body="Try another SKU, type, or sort." actionLabel="Reset filters" onAction={() => { setQuery(""); setTypeFilter("all"); setSort("newest"); }} />
       ) : null}
     </View>
-  ), [data.length, error?.message, filterLabel, filteredData.length, layout.contentGap, query]);
+  ), [data.length, dense, error?.message, filterLabel, filteredData.length, layout.contentGap, query]);
 
   if (loading && data.length === 0) {
     return <Screen testID="products-screen"><Spinner /></Screen>;

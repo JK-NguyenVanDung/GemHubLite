@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import { useCallback, useMemo } from "react";
 import { Pressable, View } from "react-native";
 
-import { Button, Card, Chip, EmptyStateCard, Icon, Screen, Spinner, Text } from "@/src/components/ui";
+import { Button, Card, EmptyStateCard, Icon, Screen, Spinner, Text } from "@/src/components/ui";
 import { ProductCard } from "@/src/features/products/components";
 import { useProducts } from "@/src/features/products/store";
 import { useMedia } from "@/src/features/media/store";
@@ -75,10 +75,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={{ gap: theme.spacing.sm }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-          <Text variant="sectionTitle">Recent products</Text>
-          <Chip label="On device" tone="accent" />
-        </View>
+        <Text variant="sectionTitle">Recent products</Text>
         {recentProducts.length === 0 ? (
           <EmptyStateCard icon="sparkles-outline" title="No products yet" body="Add your first product photo to get started." actionLabel="Open Camera" onAction={() => router.push("/camera")} />
         ) : (

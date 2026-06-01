@@ -33,7 +33,7 @@ export default function ProductDetailScreen() {
   return (
     <Screen testID="product-detail-screen" scroll={false} safeAreaEdges={["left", "right"]} contentStyle={{ padding: 0, gap: 0 }}>
       <Stack.Screen options={{ title: product.sku }} />
-      <ScrollView contentContainerStyle={{ alignSelf: "center", gap: layout.contentGap, maxWidth: layout.contentMaxWidth, padding: layout.pagePadding, width: "100%" }}>
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ alignSelf: "center", gap: layout.contentGap, maxWidth: layout.contentMaxWidth, padding: layout.pagePadding, width: "100%" }}>
         <ProductHero uri={selected?.uri ?? null} kind={selected?.kind ?? null} />
         <MediaStrip media={media} selectedId={selected?.id ?? null} onSelect={setSelectedId} sku={product.sku} />
         <ProductFormSection key={`${product.sku}-${product.updatedAt}`} initialTitle={product.title} initialType={product.type} initialDescription={product.description} saving={saving} error={saveError} onSave={mutate} />
