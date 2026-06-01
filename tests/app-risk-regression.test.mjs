@@ -76,13 +76,10 @@ test("Lite shell avoids production-only profile and collection surfaces", () => 
 
 test("capture preview and SKU scanner use mobile-safe inputs and cached image rendering", () => {
   const captureReview = read("src/features/camera/components/CaptureReview.tsx");
-  const mediaGrid = read("src/features/product-detail/components/MediaGrid.tsx");
 
   assert.match(captureReview, /<Image[\s\S]*?cachePolicy="memory-disk"/);
   assert.match(captureReview, /Field[\s\S]*?label="Prefix"[\s\S]*?autoCorrect=\{false\}/);
   assert.match(captureReview, /TextInput[\s\S]*autoCapitalize="characters"[\s\S]*autoCorrect=\{false\}/);
-  assert.match(mediaGrid, /<AddPhotoButton sku=\{sku\} \/>/);
-  assert.doesNotMatch(mediaGrid, /!media\.length \? <AddPhotoButton/);
 });
 
 test("product cards announce SKU title count and type", () => {

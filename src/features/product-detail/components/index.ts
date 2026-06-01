@@ -1,4 +1,3 @@
-export { AddPhotoButton } from "@/src/features/product-detail/components/AddPhotoButton";
-export { MediaGrid } from "@/src/features/product-detail/components/MediaGrid";
+export { MediaStrip } from "@/src/features/product-detail/components/MediaStrip";
 export { ProductFormSection } from "@/src/features/product-detail/components/ProductFormSection";
-export { ProductHeader } from "@/src/features/product-detail/components/ProductHeader";
+export { ProductHero } from "@/src/features/product-detail/components/ProductHero";

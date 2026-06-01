@@ -42,3 +42,12 @@ test("product detail route uses hero + strip and SKU header title", () => {
   assert.doesNotMatch(src, /MediaGrid/);
   assert.doesNotMatch(src, /from "@\/src\/features\/media\/components"/);
 });
+
+test("product-detail barrel exports new components and drops retired ones", () => {
+  const src = read("src/features/product-detail/components/index.ts");
+  assert.match(src, /ProductHero/);
+  assert.match(src, /MediaStrip/);
+  assert.doesNotMatch(src, /ProductHeader/);
+  assert.doesNotMatch(src, /AddPhotoButton/);
+  assert.doesNotMatch(src, /MediaGrid/);
+});
