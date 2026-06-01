@@ -1,5 +1,5 @@
 import { useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import type { MediaListItem } from "@/src/domain";
 import { mediaRepo } from "@/src/lib/db";
@@ -16,23 +16,37 @@ export function useMedia(): UseMediaResult {
   const [data, setData] = useState<MediaListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const refreshIdRef = useRef(0);
 
   const refresh = useCallback(async () => {
+    const refreshId = refreshIdRef.current + 1;
+    refreshIdRef.current = refreshId;
     setLoading(true);
     setError(null);
 
     try {
-      setData(await mediaRepo.listAll());
+      const media = await mediaRepo.listAll();
+      if (refreshId === refreshIdRef.current) {
+        setData(media);
+      }
     } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError : new Error("Failed to load media."));
+      if (refreshId === refreshIdRef.current) {
+        setError(caughtError instanceof Error ? caughtError : new Error("Failed to load media."));
+      }
     } finally {
-      setLoading(false);
+      if (refreshId === refreshIdRef.current) {
+        setLoading(false);
+      }
     }
   }, []);
 
   useFocusEffect(
     useCallback(() => {
       void refresh();
+      return () => {
+        refreshIdRef.current += 1;
+        setLoading(false);
+      };
     }, [refresh]),
   );
 

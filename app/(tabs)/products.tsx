@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 
 import {
@@ -11,13 +11,14 @@ import {
   Spinner,
 } from "@/src/components/ui";
 import type { ActionSheetOption, FilterGroup } from "@/src/components/ui";
-import { productTypeLabel, productTypes, type ProductType } from "@/src/domain";
+import { productTypeLabel, productTypes, type ProductListItem, type ProductType } from "@/src/domain";
 import { usePhotoImport } from "@/src/features/camera/hooks/usePhotoImport";
 import { ProductCard } from "@/src/features/products/components";
 import { useProducts } from "@/src/features/products/store";
-import { useTheme } from "@/src/theme";
+import { useResponsiveColumns, useResponsiveLayout } from "@/src/lib/layout/useResponsiveColumns";
 
 type SortMode = "newest" | "oldest" | "most-photos";
+const MemoProductCard = memo(ProductCard);
 
 const SORT_LABEL: Record<SortMode, string> = {
   newest: "Newest",
@@ -26,14 +27,25 @@ const SORT_LABEL: Record<SortMode, string> = {
 };
 
 export default function ProductsScreen() {
-  const theme = useTheme();
+  const columns = useResponsiveColumns({ compact: 2, medium: 3, expanded: 4 });
+  const layout = useResponsiveLayout();
   const { data, error, loading, refresh } = useProducts();
   const [query, setQuery] = useState("");
   const [sourceSheetOpen, setSourceSheetOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [typeFilter, setTypeFilter] = useState<"all" | ProductType>("all");
   const [sort, setSort] = useState<SortMode>("newest");
   const { importPhoto } = usePhotoImport();
+
+  const refreshFromPull = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await refresh();
+    } finally {
+      setRefreshing(false);
+    }
+  }, [refresh]);
 
   const filteredData = useMemo(() => {
     const needle = query.trim().toUpperCase();
@@ -59,7 +71,7 @@ export default function ProductsScreen() {
   }, [data, query, sort, typeFilter]);
 
   const sourceOptions: ActionSheetOption[] = useMemo(() => [
-    { label: "Open Camera", icon: "camera-outline", onPress: () => router.push("/(tabs)/camera"), testID: "new-product-camera" },
+    { label: "Open Camera", icon: "camera-outline", onPress: () => router.push("/camera"), testID: "new-product-camera" },
     { label: "Choose from Library", icon: "images-outline", onPress: importPhoto, testID: "new-product-library" },
   ], [importPhoto]);
 
@@ -93,15 +105,21 @@ export default function ProductsScreen() {
     return parts.length ? parts.join(" · ") : "All SKUs";
   }, [filteredData.length, query, sort, typeFilter]);
 
-  if (loading && data.length === 0) {
-    return <Screen testID="products-screen"><Spinner /></Screen>;
-  }
+  const openProduct = useCallback((sku: string) => {
+    router.push({ pathname: "/product/[sku]", params: { sku } });
+  }, []);
 
-  return (
-    <Screen testID="products-screen">
+  const renderProduct = useCallback(({ item }: { item: ProductListItem }) => (
+    <View style={{ flex: 1 / columns }}>
+      <MemoProductCard product={item} onPress={openProduct} />
+    </View>
+  ), [columns, openProduct]);
+
+  const listHeader = useMemo(() => (
+    <View style={{ gap: layout.contentGap }}>
       <InventoryHeader
         title="Products"
-        actionLabel="+ New"
+        actionLabel="+ Add"
         searchPlaceholder="Search by SKU"
         searchValue={query}
         onSearchChange={setQuery}
@@ -110,26 +128,35 @@ export default function ProductsScreen() {
         onFilterPress={() => setFilterSheetOpen(true)}
       />
       {data.length === 0 ? (
-        <EmptyStateCard icon="diamond-outline" title="No products yet" body={error?.message ?? "Capture photo, assign SKU, and build catalog."} actionLabel="Add Product" onAction={() => setSourceSheetOpen(true)} />
+        <EmptyStateCard icon="diamond-outline" title="No products yet" body={error?.message ?? "Add a product photo to start your catalog."} actionLabel="Add Product" onAction={() => setSourceSheetOpen(true)} />
       ) : filteredData.length === 0 ? (
         <EmptyStateCard icon="search-outline" title="No matching products" body="Try another SKU, type, or sort." actionLabel="Reset filters" onAction={() => { setQuery(""); setTypeFilter("all"); setSort("newest"); }} />
-      ) : (
+      ) : null}
+    </View>
+  ), [data.length, error?.message, filterLabel, filteredData.length, layout.contentGap, query]);
+
+  if (loading && data.length === 0) {
+    return <Screen testID="products-screen"><Spinner /></Screen>;
+  }
+
+  return (
+    <Screen testID="products-screen" scroll={false} contentStyle={{ padding: 0, gap: 0 }}>
         <FlatList
+          ListHeaderComponent={listHeader}
           data={filteredData}
           keyExtractor={(product) => product.sku}
-          numColumns={2}
-          scrollEnabled={false}
-          refreshing={loading}
-          onRefresh={refresh}
-          columnWrapperStyle={{ gap: theme.spacing.sm }}
-          contentContainerStyle={{ gap: theme.spacing.md }}
-          renderItem={({ item }) => (
-            <View style={{ flex: 1 }}>
-              <ProductCard product={item} onPress={(sku) => router.push({ pathname: "/product/[sku]", params: { sku } })} />
-            </View>
-          )}
+          key={columns}
+          numColumns={columns}
+          refreshing={refreshing}
+          onRefresh={refreshFromPull}
+          columnWrapperStyle={columns > 1 ? { gap: layout.gridGap } : undefined}
+          contentContainerStyle={{ alignSelf: "center", gap: layout.contentGap, maxWidth: layout.contentMaxWidth, padding: layout.pagePadding, paddingBottom: layout.tabBarBottomPadding, width: "100%" }}
+          initialNumToRender={12}
+          maxToRenderPerBatch={12}
+          removeClippedSubviews
+          renderItem={renderProduct}
+          windowSize={7}
         />
-      )}
       <ActionSheet visible={sourceSheetOpen} title="New product" options={sourceOptions} onClose={() => setSourceSheetOpen(false)} />
       <FilterSheet
         visible={filterSheetOpen}

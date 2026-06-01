@@ -9,7 +9,7 @@ export function AddPhotoButton({ sku }: { sku: string }) {
   const [sourceSheetOpen, setSourceSheetOpen] = useState(false);
   const { importPhoto } = usePhotoImport(sku);
   const options: ActionSheetOption[] = useMemo(() => [
-    { label: "Open Camera", icon: "camera-outline", onPress: () => router.push({ pathname: "/(tabs)/camera", params: { sku } }), testID: "add-photo-camera" },
+    { label: "Open Camera", icon: "camera-outline", onPress: () => router.push({ pathname: "/camera", params: { sku } }), testID: "add-photo-camera" },
     { label: "Choose from Library", icon: "images-outline", onPress: importPhoto, testID: "add-photo-library" },
   ], [importPhoto, sku]);
 

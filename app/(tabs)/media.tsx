@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 
 import {
@@ -11,28 +11,40 @@ import {
   Spinner,
 } from "@/src/components/ui";
 import type { ActionSheetOption, FilterGroup } from "@/src/components/ui";
-import { productTypeLabel, productTypes, type ProductType } from "@/src/domain";
+import { productTypeLabel, productTypes, type Media, type MediaListItem, type ProductType } from "@/src/domain";
 import { usePhotoImport } from "@/src/features/camera/hooks/usePhotoImport";
 import { MediaTile } from "@/src/features/media/components";
 import { useMedia } from "@/src/features/media/store";
-import { useTheme } from "@/src/theme";
+import { useResponsiveColumns, useResponsiveLayout } from "@/src/lib/layout/useResponsiveColumns";
 
 type SortMode = "newest" | "oldest";
 type Range = "all" | "today" | "week";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
+const MemoMediaTile = memo(MediaTile);
 
 export default function MediaScreen() {
-  const theme = useTheme();
+  const columns = useResponsiveColumns({ compact: 3, medium: 4, expanded: 6 });
+  const layout = useResponsiveLayout();
   const { data, error, loading, refresh } = useMedia();
   const [query, setQuery] = useState("");
   const [sourceSheetOpen, setSourceSheetOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [typeFilter, setTypeFilter] = useState<"all" | ProductType>("all");
   const [range, setRange] = useState<Range>("all");
   const [sort, setSort] = useState<SortMode>("newest");
   const [filterNow] = useState(() => Date.now());
   const { importPhoto } = usePhotoImport();
+
+  const refreshFromPull = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await refresh();
+    } finally {
+      setRefreshing(false);
+    }
+  }, [refresh]);
 
   const filteredData = useMemo(() => {
     const needle = query.trim().toUpperCase();
@@ -56,7 +68,7 @@ export default function MediaScreen() {
   }, [data, filterNow, query, range, sort, typeFilter]);
 
   const sourceOptions: ActionSheetOption[] = useMemo(() => [
-    { label: "Open Camera", icon: "camera-outline", onPress: () => router.push("/(tabs)/camera"), testID: "new-media-camera" },
+    { label: "Open Camera", icon: "camera-outline", onPress: () => router.push("/camera"), testID: "new-media-camera" },
     { label: "Choose from Library", icon: "images-outline", onPress: importPhoto, testID: "new-media-library" },
   ], [importPhoto]);
 
@@ -101,15 +113,21 @@ export default function MediaScreen() {
     return parts.length ? parts.join(" · ") : "All SKUs";
   }, [filteredData.length, query, range, sort, typeFilter]);
 
-  if (loading && data.length === 0) {
-    return <Screen testID="media-screen"><Spinner /></Screen>;
-  }
+  const openMediaProduct = useCallback((media: Media | MediaListItem) => {
+    router.push({ pathname: "/product/[sku]", params: { sku: media.sku } });
+  }, []);
 
-  return (
-    <Screen testID="media-screen">
+  const renderMedia = useCallback(({ item }: { item: MediaListItem }) => (
+    <View style={{ flex: 1 / columns }}>
+      <MemoMediaTile media={item} size="md" onPress={openMediaProduct} />
+    </View>
+  ), [columns, openMediaProduct]);
+
+  const listHeader = useMemo(() => (
+    <View style={{ gap: layout.contentGap }}>
       <InventoryHeader
         title="Media"
-        actionLabel="+ New Media"
+        actionLabel="+ Add Photo"
         searchPlaceholder="Search by SKU"
         searchValue={query}
         onSearchChange={setQuery}
@@ -118,26 +136,35 @@ export default function MediaScreen() {
         onFilterPress={() => setFilterSheetOpen(true)}
       />
       {data.length === 0 ? (
-        <EmptyStateCard icon="images-outline" title="No media yet" body={error?.message ?? "Capture first product photo and assign SKU."} actionLabel="Add Media" onAction={() => setSourceSheetOpen(true)} />
+        <EmptyStateCard icon="images-outline" title="No photos yet" body={error?.message ?? "Add your first product photo to get started."} actionLabel="Add Photo" onAction={() => setSourceSheetOpen(true)} />
       ) : filteredData.length === 0 ? (
         <EmptyStateCard icon="search-outline" title="No matching media" body="Try another SKU, type, or date." actionLabel="Reset filters" onAction={() => { setQuery(""); setTypeFilter("all"); setRange("all"); setSort("newest"); }} />
-      ) : (
+      ) : null}
+    </View>
+  ), [data.length, error?.message, filterLabel, filteredData.length, layout.contentGap, query]);
+
+  if (loading && data.length === 0) {
+    return <Screen testID="media-screen"><Spinner /></Screen>;
+  }
+
+  return (
+    <Screen testID="media-screen" scroll={false} contentStyle={{ padding: 0, gap: 0 }}>
         <FlatList
+          ListHeaderComponent={listHeader}
           data={filteredData}
           keyExtractor={(media) => media.id}
-          numColumns={3}
-          scrollEnabled={false}
-          refreshing={loading}
-          onRefresh={refresh}
-          columnWrapperStyle={{ gap: theme.spacing.xs }}
-          contentContainerStyle={{ gap: theme.spacing.md }}
-          renderItem={({ item }) => (
-            <View style={{ flex: 1 }}>
-              <MediaTile media={item} size="md" onPress={(media) => router.push({ pathname: "/product/[sku]", params: { sku: media.sku } })} />
-            </View>
-          )}
+          key={columns}
+          numColumns={columns}
+          refreshing={refreshing}
+          onRefresh={refreshFromPull}
+          columnWrapperStyle={columns > 1 ? { gap: layout.gridGap } : undefined}
+          contentContainerStyle={{ alignSelf: "center", gap: layout.contentGap, maxWidth: layout.contentMaxWidth, padding: layout.pagePadding, paddingBottom: layout.tabBarBottomPadding, width: "100%" }}
+          initialNumToRender={18}
+          maxToRenderPerBatch={18}
+          removeClippedSubviews
+          renderItem={renderMedia}
+          windowSize={7}
         />
-      )}
       <ActionSheet visible={sourceSheetOpen} title="New media" options={sourceOptions} onClose={() => setSourceSheetOpen(false)} />
       <FilterSheet
         visible={filterSheetOpen}
