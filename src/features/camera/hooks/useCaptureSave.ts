@@ -18,7 +18,7 @@ export type CaptureMediaMetadata = {
 };
 
 export function useCaptureSave(uri: string | null) {
-  async function save(input: { sku: string; title: string; type: ProductType | null; description: string; media?: CaptureMediaMetadata }) {
+  async function save(input: { sku: string; title: string; type: ProductType | null; description: string; media?: CaptureMediaMetadata | (CaptureMediaMetadata & { uri: string })[] }) {
     if (!uri) {
       throw new Error("Captured image missing.");
     }
@@ -28,17 +28,24 @@ export function useCaptureSave(uri: string | null) {
       throw new Error("SKU is required.");
     }
 
+    const mediaItems = Array.isArray(input.media) ? input.media : [{ uri, ...input.media }];
     let result;
 
     try {
-      result = await saveCaptureAtomically({ sku: normalized, uri, title: input.title, type: input.type, description: input.description, ...input.media });
+      for (const item of mediaItems) {
+        result = await saveCaptureAtomically({ sku: normalized, title: input.title, type: input.type, description: input.description, ...item, uri: item.uri });
+      }
     } catch (error) {
-      deleteMediaFile(uri);
+      mediaItems.forEach((item) => deleteMediaFile(item.uri));
       throw toUserFacingError(error, "Save failed. Your photo was not added; please retry.");
     }
 
+    if (!result) {
+      throw new Error("Save failed. Add a photo and try again.");
+    }
+
     if (!result.created) {
-      Alert.alert("Photo added", "This product now has a new photo.");
+      Alert.alert("Photo added", mediaItems.length > 1 ? "This product now has new photos." : "This product now has a new photo.");
     }
 
     router.replace({ pathname: "/product/[sku]", params: { sku: result.product.sku } });

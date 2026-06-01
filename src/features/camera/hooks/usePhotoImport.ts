@@ -1,7 +1,7 @@
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 
 import { getPowerSaveWarning } from "@/src/lib/device/power";
 import { toUserFacingError } from "@/src/lib/errors/userFacing";
@@ -27,11 +27,10 @@ export function usePhotoImport(sku?: string) {
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: false,
-        mediaTypes: ["images", "videos"],
+        allowsMultipleSelection: false,
+        allowsEditing: Platform.OS === "ios",
+        mediaTypes: ["images"],
         quality: 1,
-        videoExportPreset: ImagePicker.VideoExportPreset.H264_1280x720,
-        videoQuality: ImagePicker.UIImagePickerControllerQualityType.High,
       });
 
       const asset = result.canceled ? null : result.assets[0];
