@@ -16,3 +16,16 @@ test("ProductHero renders full-width media with photo and video branches", () =>
   assert.match(src, /kind === "video"/);
   assert.match(src, /play-circle/);
 });
+
+test("MediaStrip is a horizontal selector with an inline add tile", () => {
+  const src = read("src/features/product-detail/components/MediaStrip.tsx");
+  assert.match(src, /ScrollView/);
+  assert.match(src, /horizontal/);
+  assert.match(src, /testID="media-strip-add"/);
+  assert.match(src, /usePhotoImport/);
+  assert.match(src, /pathname: "\/camera"/);
+  assert.match(src, /ActionSheet/);
+  // active thumbnail gets an accent border
+  assert.match(src, /active \? theme\.colors\.accent/);
+  assert.match(src, /onSelect\(item\.id\)/);
+});
