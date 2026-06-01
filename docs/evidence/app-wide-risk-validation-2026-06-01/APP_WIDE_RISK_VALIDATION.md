@@ -6,6 +6,8 @@ This pass treats the pasted advice catalog as consulting input for the whole app
 
 ## Corrections From Prior Pass
 
+> **Superseded (final state):** the 3-tab "scope correction" recorded in this file was itself reversed. The shipped app is a five-tab shell — Home, Media, Camera, Products, More — where Home and More are deliberate local-only additions beyond the brief's required Media / Camera / Products scope, and `app/index.tsx` redirects to Home. The bullets below are kept for history; treat README.md as authoritative.
+
 - Scope corrected after review: Home and More are out-of-scope; the required shell is Media / Camera / Products and launch redirects to Camera.
 - Earlier evidence that showed Home/More is now marked historical only and no longer represents current scope.
 - The app-wide validation now records which advice areas were applied, already covered, not applicable, blocked, or fixed.

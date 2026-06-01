@@ -1,6 +1,6 @@
 # GemHub Lite
 
-GemHub Lite is a local-first Expo inventory app for the project camera-to-SKU catalog flow. It keeps Home, Media, Products, and More tabs with a fullscreen camera overlay while preserving the required SKU-first catalog behavior locally.
+GemHub Lite is a local-first Expo inventory app for the project camera-to-SKU catalog flow. It ships a five-tab bottom shell — Home, Media, Camera (center), Products, and More — preserving the required SKU-first catalog behavior locally.
 
 ## Local Media Storage
 
@@ -28,6 +28,9 @@ GemHub Lite is a local-first Expo inventory app for the project camera-to-SKU ca
 - Generated SKUs use `SKU-YYYYMMDD-###`.
 - Existing SKU saves append media to the product and may update non-empty metadata instead of creating a duplicate.
 - SKU is treated as immutable after product creation.
+- There is no save-without-SKU path: every saved media item is bound to a SKU (typed, picked from an existing product, or generated).
+
+Bonus capabilities present beyond the required flow: photo-library import (also the simulator capture fallback) and a barcode/QR scanner that fills the SKU field.
 
 ## Run
 
@@ -77,9 +80,19 @@ app/ routes
 - `src/features/` owns Camera, Products, Media, Product Detail, startup maintenance, and local asset lifecycle UI.
 - `src/components/ui/` owns reusable theme-driven primitives.
 
-## Scope Cuts
+## Scope And UX Divergence
 
-GemHub Lite intentionally excludes production-only GemHub/GemIQ systems: auth/orgs, cloud sync, billing, Shopify integrations, hardware controls, 360/editor tools, appraisal/stone-detail forms, production dashboard, and account/profile surfaces. Lite Home and More stay local-only and route back into catalog/support flows.
+The brief's required catalog shell is Camera, Media, and Products. GemHub Lite ships those plus two deliberate local-only additions — a Home tab and a More tab — for a five-tab bottom shell (Home, Media, Camera, Products, More). `app/index.tsx` redirects to Home on launch.
+
+- Home is a light local summary: an Add-Product CTA, product/media counts, and recent products.
+- More is a set of quick links into Products and Media.
+- Both are local-only and perform no network calls. They are a documented UX divergence beyond the required scope, not part of the brief's mandated screens.
+
+GemHub Lite intentionally excludes production-only GemHub/GemIQ systems: auth/orgs, cloud sync, billing, Shopify integrations, hardware controls, 360/editor tools, appraisal/stone-detail forms, production dashboard, and account/profile surfaces.
+
+## Secrets
+
+GemHub Lite is offline-first and ships with no hard-coded secrets. `.env.example` at the repo root documents that no environment variables are required to build or run the app; the only keys listed are optional placeholders for bonus work and are unset by default.
 
 ## Validation Evidence
 
@@ -88,7 +101,7 @@ Screenshots live in `docs/research/screenshots/validation/` and `docs/evidence/`
 ## Known Gaps
 
 - Real-device live-camera capture remains unverified; simulator validation uses the photo-library fallback because iOS Simulator exposes no rear camera.
-- Repository unit tests are still deferred; manual iOS flow validated product upsert and existing-SKU append behavior.
+- Automated tests run on the Node test runner (`node --test`, not Jest) and cover SKU flow, the product-detail redesign, and app-wide regression guards; dedicated repository unit tests are still deferred, and manual iOS flow validated product upsert and existing-SKU append behavior.
 - AI metadata extraction is out-of-scope backlog; save never depends on AI.
 
 ## Submission Readiness (2026-05-30)

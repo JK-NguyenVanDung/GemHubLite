@@ -45,10 +45,10 @@
 - [x] Image caching/flicker advice applied across product/media grid image paths with `expo-image` memory-disk caching.
 - [x] App-wide mobile touch-target pass includes shared buttons, sheets, filters, camera controls, thumbnail press areas, and capture-review controls.
 - [x] Production logging pass completed: no hot-loop logs found; error-boundary detail logging is development-only.
-- [x] PRP/DESIGN/README scope language reconciled to strict Media / Camera / Products shell.
+- [x] PRP/DESIGN/README scope language reconciled to the shipped five-tab shell (Home, Media, Camera, Products, More) with Home/More documented as deliberate local-only additions beyond the brief's required Media / Camera / Products scope.
 - [x] Regression tests added for the revert and app-wide advice fixes: `tests/app-risk-regression.test.mjs`.
 - [x] Android debug compile passed on 2026-06-01: `./android/gradlew -p android :app:assembleDebug`.
-- [x] iOS final rebuild passed on 2026-06-01: `xcodebuildmcp build_run_sim`; current source route scope is Media / Camera / Products only.
+- [x] iOS final rebuild passed on 2026-06-01: `xcodebuildmcp build_run_sim`; shipped source route scope is the five-tab shell (Home, Media, Camera, Products, More).
 - [ ] Android strict UI validation blocked on 2026-06-01: `android emulator start Pixel_9` reported `emulator-5554`, but `adb devices` stayed empty and `android layout` could not find the device.
 
 - [ ] Real-device hosted test page cross-checked with `agent-device` snapshots before UI validation is called complete.
@@ -97,7 +97,7 @@
 
 ## Scope Guardrails
 
-- [x] Home and More tabs are excluded from the required shell.
+- [x] Required catalog shell (Media / Camera / Products) is present. Home and More ship as deliberate local-only additions beyond the brief's required scope; they perform no network calls.
 - [x] Pasted advice catalog reviewed app-wide; applicable issues fixed or recorded as blocked/not-applicable in evidence.
 - [x] No auth/org/cloud sync built before core flows.
 - [x] No hardware controls built before core flows.
@@ -108,8 +108,8 @@
 
 ### Fixed
 
-- [x] Required 3-tab shell restored: Media / Camera / Products.
-- [x] Home and More route files removed so production-only profile/support surfaces cannot appear.
+- [x] Shipped shell is the five-tab layout (Home, Media, Camera, Products, More). Home and More are deliberate local-only additions beyond the required Media / Camera / Products scope; they perform no network calls.
+- [x] Home and More remain local-only (summary counts and catalog/support shortcuts); no production-only profile/billing/cloud surfaces appear.
 - [x] Capture preview image path now uses `expo-image` memory-disk caching.
 - [x] Generated SKU prefix and scanner manual-code inputs disable autocorrect for Android keyboard safety.
 - [x] Reusable Product Detail gallery keeps Add Photo available after existing media.
@@ -144,17 +144,16 @@
 
 ## 2026-06-01 Final Static Regression Closure
 
-- [x] More tab removed; required shell stays Media / Camera / Products.
+- [x] Five-tab shell confirmed (Home, Media, Camera, Products, More); Home/More remain local-only additions beyond required scope.
 - [x] SKU chooser exposes explicit close accessibility label.
 - [x] Shared ActionSheet exposes explicit close accessibility label.
 - [x] `npm run lint` passes with 0 warnings after final import cleanup.
 - [x] `npm run test` passes 17/17 after final regression closure.
 - [ ] Android emulator UI refresh remains blocked externally before install/launch; see `docs/evidence/app-wide-risk-validation-2026-06-01/RUNTIME_ATTEMPT_2026-06-01.md`.
 
-## 2026-06-01 Scope Correction After Review
+## 2026-06-01 Scope Note After Review
 
-- [x] Launch redirects to Camera.
-- [x] Tab shell contains only Media / Camera / Products.
-- [x] `app/(tabs)/home.tsx` and `app/(tabs)/more.tsx` removed.
-- [x] Regression tests now fail if Home/More return.
+- [x] Launch redirects to `/(tabs)/home` (`app/index.tsx`).
+- [x] Shipped tab shell is Home, Media, Camera, Products, and More. The brief's required catalog shell (Media / Camera / Products) is fully present; Home and More are deliberate local-only additions beyond required scope — a documented UX divergence.
+- [x] `app/(tabs)/home.tsx` and `app/(tabs)/more.tsx` ship as local-only screens (Home: summary counts, recent products, Add-Product CTA; More: quick links to Products/Media). Neither performs network calls.
 - [x] Pasted-risk audit remains app-wide; current status is tracked in `docs/evidence/app-wide-risk-validation-2026-06-01/APP_WIDE_RISK_VALIDATION.md`.

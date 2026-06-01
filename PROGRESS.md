@@ -3,7 +3,8 @@
 ## Current Status
 
 - Phase: Strict validation pass in progress; Android debug build passes, emulator UI evidence blocked by host ADB.
-- Repo state: Expo TypeScript app, UI primitives, SKU/domain persistence, camera capture/save flow, strict Media/Camera/Products tabs, responsive virtualized Products/Media/Product Detail lists, storage preflight, orphan cleanup, error boundary, and editable Product Detail.
+- Repo state: Expo TypeScript app, UI primitives, SKU/domain persistence, camera capture/save flow, five-tab shell (Home, Media, Camera, Products, More — Home/More are deliberate local-only additions beyond the required Media/Camera/Products scope), responsive virtualized Products/Media/Product Detail lists, storage preflight, orphan cleanup, error boundary, and editable Product Detail.
+- Shell note: earlier log entries below describe a transient 3-tab revert (Media/Camera/Products) that was itself reverted. The shipped shell is the five-tab layout above, and the Media tab lists every media item (not one cover per SKU). Authoritative scope lives in README.md.
 - Current blockers: real-device VisionCamera capture, Android emulator/device UI evidence in `adb devices`, App Store / Play Store metadata + signing, Android 13/14/provider matrix rows, and large-catalog iOS perf evidence remain unresolved.
 - Next slice: real-device camera evidence, then store metadata/signing/screenshots.
 

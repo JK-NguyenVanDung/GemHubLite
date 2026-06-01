@@ -76,12 +76,16 @@ This app should feel production-inspired by GemHub/GemIQ, but it must remain a L
 | Camera permission | `NSCameraUsageDescription` | `android.permission.CAMERA` | Permission screenshots/log notes |
 | Photo capture | VisionCamera v5 still capture | VisionCamera v5 still capture | Capture happy path proof |
 | Metadata storage | `expo-sqlite` | `expo-sqlite` | Repository tests |
-| Preferences/cache | MMKV | MMKV | Smoke check only |
+| Preferences/cache | MMKV (aspirational) | MMKV (aspirational) | Smoke check only |
+
+> Note: MMKV was an early plan and is **not** installed in the shipped app. There is no separate preferences/cache layer; the app stores all data in on-device SQLite (`expo-sqlite`) plus `expo-file-system` for media files, and uses no state-management library.
 | Media files | App document storage URI | App document storage URI | Image loads after restart |
 | Safe areas | iPhone small/large | Android small/large | Simulator/emulator screenshots |
 | Build | `npx expo run:ios` | `npx expo run:android` | Command result or exact blocker |
 
 ## Data Model
+
+> Note: the TypeScript shapes below are the original planning sketch. The shipped SQLite schema differs: **SKU is the primary key** for products (there is no separate string `id`), media rows key off SKU, and timestamps are stored as **integers** (epoch milliseconds) rather than strings. Treat the shapes here as intent, not the exact persisted schema.
 
 ### Product
 
@@ -139,10 +143,12 @@ Rules:
 
 ### Navigation
 
-- Use three bottom tabs: Camera, Media, Products.
+- The required catalog shell is three bottom tabs: Camera, Media, Products.
 - Use stack routes for Capture Preview and Product Detail.
 - Keep Camera prominent because capture is the main workflow.
 - Keep Media and Products as two views over the same inventory truth.
+
+> Shipped reality: the app ships a five-tab shell — Home, Media, Camera (center), Products, More — where Home (a local summary) and More (local quick links) are deliberate local-only additions beyond this required scope. `app/index.tsx` redirects to Home on launch. This is a documented UX divergence; the required Camera / Media / Products screens are all present and unchanged in behavior.
 
 ### Camera
 
@@ -175,7 +181,6 @@ Rules:
 - Expo Router for tabs and stack routes.
 - VisionCamera v5 for maintained still-photo capture.
 - `expo-sqlite` for local durable metadata.
-- MMKV for lightweight preferences/cache only.
 - Expo filesystem/document storage for persisted image URIs.
 - React Native safe-area handling via `react-native-safe-area-context`.
 
