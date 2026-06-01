@@ -1,0 +1,64 @@
+
+> gemhub-lite@1.0.0 verify:submission
+> bash scripts/verify-submission.sh
+
+[1mGemHub Lite — submission verifier[0m
+
+[1mHost environment[0m
+  [32m✓[0m host has at least 5 GB free for native builds
+  [32m✓[0m native ios/android folders are not globally ignored
+
+[1mExpo config[0m
+  [32m✓[0m app.json declares stable scheme gemhublite
+  [32m✓[0m Node version files align with package engines
+  [32m✓[0m iOS export-compliance flag is false
+  [32m✓[0m Android blockedPermissions covers network/storage/media/audio
+
+[1mNative iOS[0m
+  [32m✓[0m Info.plist export-compliance flag is false
+  [32m✓[0m Info.plist URL scheme is gemhublite
+  [32m✓[0m iOS native project has no dev-client/local-network residue
+
+[1mNative Android[0m
+  [32m✓[0m release manifest excludes network/storage/media/audio permissions
+  [32m✓[0m release manifest keeps camera permission
+  [32m✓[0m Android backup disabled
+  [32m✓[0m Android data extraction rules configured
+  [32m✓[0m Android deep link scheme is gemhublite
+  [32m✓[0m Android backup/data-extraction XML files exist
+
+[1mStore assets and privacy[0m
+  [32m✓[0m Expo app icon is 1024x1024
+  [32m✓[0m iOS App Store icon is 1024x1024
+  [32m✓[0m Android adaptive icon foreground/background/monochrome assets exist
+  [32m✓[0m iOS privacy manifest exists
+  [32m✓[0m iOS privacy manifest declares tracking false
+  [32m✓[0m iOS privacy manifest has collected-data section
+
+[1mBuild artifacts[0m
+  [32m✓[0m Android release AAB exists
+  [32m✓[0m Android release JS bundle exists
+  [32m✓[0m completion audit exists
+  [32m✓[0m screenshot evidence manifest exists
+  [32m✓[0m Android device matrix exists
+  [32m✓[0m performance runbook exists
+  [32m✓[0m bundle analysis artifact exists
+  [32m✓[0m Android API34 emulator blocker is documented
+  [32m✓[0m Android low-RAM emulator blocker is documented
+  [32m✓[0m Android Samsung-style emulator blocker is documented
+  [32m✓[0m Android host emulator regression is documented in the matrix
+  [32m✓[0m privacy/secret scan evidence is present
+  [32m✓[0m Android issues + fixes document is present
+  [32m✓[0m Android 1000-row performance evidence is present
+  [32m✓[0m Android trim-memory evidence is present
+  [32m✓[0m Android API37 emulator blocker is documented
+  [33m![0m real-device camera evidence is missing or still marked false
+  [32m✓[0m Expo Atlas bundle analysis is verified
+
+[1mCredentials[0m
+  [33m![0m Android release signing env vars are not all present; local AAB may be debug-signed
+  [32m✓[0m eas submit.production exists
+  [33m![0m EAS iOS submit values are placeholders/empty
+  [33m![0m EAS Android service account path is placeholder/empty
+
+[32m[1m✓ No local verifier blockers, 4 warning(s).[0m

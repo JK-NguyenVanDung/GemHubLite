@@ -1,0 +1,39 @@
+
+> gemhub-lite@1.0.0 test
+> node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.mjs
+
+✔ shell keeps current Home and More routes restored (1.192875ms)
+✔ scope docs allow restored Lite Home and More shell (0.315625ms)
+✔ product and media image grids use expo-image caching (0.668084ms)
+✔ production error boundary does not flood logs (0.196416ms)
+✔ touch target hardening covers known small controls (0.81425ms)
+✔ Lite shell avoids production-only profile and collection surfaces (0.286375ms)
+✔ capture preview and SKU scanner use mobile-safe inputs and cached image rendering (0.356291ms)
+✔ product cards announce SKU title count and type (0.106292ms)
+✔ focused SQLite refresh hooks ignore stale async results after blur (0.608792ms)
+✔ shared modal sheets expose close labels and selected filter state (0.363125ms)
+✔ image storage cleanup deletes manipulation temp file even when copy fails (0.320208ms)
+✔ generated SKU sequence uses max existing suffix instead of row count (0.08775ms)
+✔ camera route params normalize and reject invalid SKU handoff (0.312667ms)
+✔ existing SKU saves can update metadata without creating duplicate rows (0.16475ms)
+✔ Media gallery lists every media item, not one cover per SKU (0.098625ms)
+✔ shared interactive components avoid tiny unlabeled press targets (0.319375ms)
+✔ Products and Media expose a grid density toggle (0.112041ms)
+✔ hot list item presses use stable callbacks (0.15175ms)
+✔ storage and input risks from advisory catalog stay covered app-wide (0.52375ms)
+✔ ProductHero renders full-width media with photo and video branches (0.921458ms)
+✔ MediaStrip is a horizontal selector with an inline add tile (0.351333ms)
+✔ product detail route uses hero + strip and SKU header title (0.150042ms)
+✔ product-detail barrel exports new components and drops retired ones (0.226041ms)
+✔ Products grid is 2-col and Media grid is 3-col on compact width (0.19325ms)
+✔ normalizeSku matches SKU field and scanner canonical form (0.628458ms)
+✔ manual and scanned SKUs use safe catalog identity characters (0.0925ms)
+✔ generated SKU is deterministic, padded, and parseable (0.621792ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 106.8595
