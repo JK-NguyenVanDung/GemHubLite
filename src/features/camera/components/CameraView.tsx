@@ -1,6 +1,7 @@
 import { router, useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   Camera,
   CommonResolutions,
@@ -9,6 +10,7 @@ import {
   usePhotoOutput,
 } from "react-native-vision-camera";
 import type { CameraDevice } from "react-native-vision-camera";
+import type { CameraRef } from "react-native-vision-camera/src/views/Camera";
 
 import { ActionSheet, Button, Card, Icon, Text } from "@/src/components/ui";
 import type { ActionSheetOption, IoniconName } from "@/src/components/ui";
@@ -18,6 +20,9 @@ import { useTheme } from "@/src/theme";
 import { usePhotoImport } from "@/src/features/camera/hooks/usePhotoImport";
 
 const CAMERA_MOUNT_DELAY_MS = 250;
+const ZOOM_PRESETS = [0.5, 1, 2, 3];
+const FOCUS_RING_SIZE = 68;
+const FOCUS_RING_DURATION_MS = 900;
 
 export function GemHubCameraView({ sku }: { sku?: string }) {
   const theme = useTheme();
@@ -75,23 +80,39 @@ export function GemHubCameraView({ sku }: { sku?: string }) {
 
 function SimulatorCaptureFallback({ sku }: { sku?: string }) {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const { importError, importing, importPhoto } = usePhotoImport(sku);
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background, justifyContent: "center", padding: theme.spacing.md }}>
-      <Card style={{ gap: theme.spacing.md, padding: theme.spacing.lg }}>
-        <Icon name="camera-outline" size={42} tone="accent" />
-        <Text variant="screenTitle">No camera device</Text>
-        <Text variant="body" tone="secondary">Simulator cannot expose a real rear camera. Use Photo Library here, or run on a real device for VisionCamera preview.</Text>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <View style={[styles.preview, { alignItems: "center", backgroundColor: theme.colors.black, justifyContent: "center" }]}> 
+        <View style={{ alignItems: "center", gap: theme.spacing.sm, padding: theme.spacing.lg }}>
+          <Icon name="camera-outline" size={42} tone="onAccent" />
+          <Text variant="bodyStrong" tone="onAccent">Camera unavailable</Text>
+          <Text variant="metadata" tone="onAccent" style={{ textAlign: "center" }}>Use Library to validate capture flow in Simulator.</Text>
+        </View>
+        <View style={{ position: "absolute", left: theme.spacing.md, right: theme.spacing.md, bottom: theme.spacing.xl, flexDirection: "row", justifyContent: "space-between" }}>
+          <RoundControl icon="flash-off" accessibilityLabel="Flash unavailable" />
+          <RoundControl label="1×" accessibilityLabel="Zoom unavailable" />
+          <RoundControl icon="settings-outline" onPress={importPhoto} accessibilityLabel="Choose from Library" />
+        </View>
+      </View>
+      <View style={{ backgroundColor: theme.colors.surface, borderTopLeftRadius: theme.radius.xl, borderTopRightRadius: theme.radius.xl, padding: theme.spacing.md, paddingBottom: Math.max(theme.spacing.md, insets.bottom + theme.spacing.xs), gap: theme.spacing.sm }}>
         {importError ? <Text variant="metadata" tone="danger">{importError}</Text> : null}
-        <Button label="Choose from Library" loading={importing} onPress={importPhoto} fullWidth leftIcon={<Icon name="images-outline" tone="onAccent" />} />
-      </Card>
+        <View style={{ alignItems: "center", gap: theme.spacing.xs }}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Choose from Library" disabled={importing} onPress={importPhoto} style={({ pressed }) => ({ alignItems: "center", backgroundColor: theme.colors.accent, borderColor: theme.colors.surface, borderRadius: theme.radius.pill, borderWidth: 4, height: 76, justifyContent: "center", opacity: pressed || importing ? 0.72 : 1, width: 76 })}>
+            {importing ? <ActivityIndicator color={theme.colors.surface} /> : <Icon name="images-outline" size={30} tone="onAccent" />}
+          </Pressable>
+        </View>
+      </View>
     </View>
   );
 }
 
 function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: string }) {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
+  const cameraRef = useRef<CameraRef>(null);
   const photoOutput = usePhotoOutput({
     targetResolution: CommonResolutions.FHD_4_3,
     qualityPrioritization: "balanced",
@@ -100,8 +121,15 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
   const [ready, setReady] = useState(false);
   const [capturing, setCapturing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [flashEnabled, setFlashEnabled] = useState(false);
+  const [zoom, setZoom] = useState(() => clampZoom(1, device.minZoom, device.maxZoom));
+  const [focusPoint, setFocusPoint] = useState<{ x: number; y: number } | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { importPhoto } = usePhotoImport(sku);
+  const availableZooms = useMemo(
+    () => ZOOM_PRESETS.filter((preset) => preset >= device.minZoom && preset <= device.maxZoom),
+    [device.maxZoom, device.minZoom],
+  );
   const settingsOptions: ActionSheetOption[] = useMemo(() => [
     { label: "Choose from Library", icon: "images-outline", onPress: importPhoto, testID: "camera-library" },
   ], [importPhoto]);
@@ -118,7 +146,7 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
         setError(powerWarning);
       }
 
-      const photo = await photoOutput.capturePhotoToFile({ flashMode: "off" }, {});
+      const photo = await photoOutput.capturePhotoToFile({ flashMode: flashEnabled && device.hasFlash ? "on" : "off" }, {});
       const stored = await storeMediaAsset({ uri: photo.filePath, kind: "image", mimeType: "image/jpeg" });
       router.push({
         pathname: "/capture-preview",
@@ -139,12 +167,69 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
     } finally {
       setCapturing(false);
     }
-  }, [capturing, photoOutput, ready, sku]);
+  }, [capturing, device.hasFlash, flashEnabled, photoOutput, ready, sku]);
+
+  const toggleFlash = useCallback(() => {
+    if (!device.hasFlash && !device.hasTorch) {
+      setError("Flash is not available on this camera.");
+      return;
+    }
+
+    setError(null);
+    setFlashEnabled((enabled) => !enabled);
+  }, [device.hasFlash, device.hasTorch]);
+
+  const cycleZoom = useCallback(() => {
+    setError(null);
+    setZoom((currentZoom) => {
+      const presets = availableZooms.length > 0 ? availableZooms : [clampZoom(1, device.minZoom, device.maxZoom)];
+      const currentIndex = presets.findIndex((preset) => Math.abs(preset - currentZoom) < 0.01);
+      const nextIndex = currentIndex === -1 || currentIndex === presets.length - 1 ? 0 : currentIndex + 1;
+      return presets[nextIndex];
+    });
+  }, [availableZooms, device.maxZoom, device.minZoom]);
+
+  const focusAt = useCallback(async (x: number, y: number) => {
+    setFocusPoint({ x, y });
+
+    if (!device.supportsFocusMetering && !device.supportsExposureMetering) {
+      setError("Tap focus is not available on this camera.");
+      return;
+    }
+
+    try {
+      setError(null);
+      await cameraRef.current?.focusTo(
+        { x, y },
+        {
+          adaptiveness: "continuous",
+          autoResetAfter: 4,
+          modes: getFocusModes(device),
+          responsiveness: "snappy",
+        },
+      );
+    } catch (focusError) {
+      setError(focusError instanceof Error ? focusError.message : "Tap focus failed.");
+    }
+  }, [device]);
+
+  useEffect(() => {
+    if (!focusPoint) return;
+
+    const timer = setTimeout(() => setFocusPoint(null), FOCUS_RING_DURATION_MS);
+    return () => clearTimeout(timer);
+  }, [focusPoint]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <View style={[styles.preview, { backgroundColor: theme.colors.black }]}> 
+      <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <Pressable
+        accessibilityLabel="Camera preview"
+        accessibilityRole="button"
+        onPress={(event) => focusAt(event.nativeEvent.locationX, event.nativeEvent.locationY)}
+        style={[styles.preview, { backgroundColor: theme.colors.black }]}
+      >
         <Camera
+          ref={cameraRef}
           device={device}
           isActive
           onStarted={() => setReady(true)}
@@ -153,13 +238,15 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
           onPreviewStopped={() => setReady(false)}
           outputs={outputs}
           resizeMode="cover"
+          torchMode={flashEnabled && device.hasTorch ? "on" : "off"}
+          zoom={zoom}
           enableNativeTapToFocusGesture
-          enableNativeZoomGesture
           style={StyleSheet.absoluteFill}
         />
-        <View style={{ position: "absolute", left: theme.spacing.md, right: theme.spacing.md, bottom: theme.spacing.md, flexDirection: "row", justifyContent: "space-between" }}>
-          <RoundControl icon="flash-off" accessibilityLabel="Torch Unavailable" />
-          <RoundControl label="1×" />
+        {focusPoint ? <View pointerEvents="none" style={[styles.focusRing, { borderColor: theme.colors.surface, left: focusPoint.x - FOCUS_RING_SIZE / 2, top: focusPoint.y - FOCUS_RING_SIZE / 2 }]} /> : null}
+        <View style={{ position: "absolute", left: theme.spacing.md, right: theme.spacing.md, bottom: theme.spacing.xl, flexDirection: "row", justifyContent: "space-between" }}>
+          <RoundControl active={flashEnabled} icon={flashEnabled ? "flash" : "flash-off"} onPress={toggleFlash} accessibilityLabel={flashEnabled ? "Turn flash off" : "Turn flash on"} />
+          <RoundControl label={`${formatZoom(zoom)}×`} onPress={cycleZoom} accessibilityLabel="Change zoom" />
           <RoundControl icon="settings-outline" onPress={() => setSettingsOpen(true)} accessibilityLabel="Camera Options" />
         </View>
         {!ready ? (
@@ -168,18 +255,13 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
             <Text variant="bodyStrong" tone="onAccent">Starting camera</Text>
           </View>
         ) : null}
-      </View>
-      <View style={{ backgroundColor: theme.colors.surface, borderTopLeftRadius: theme.radius.xl, borderTopRightRadius: theme.radius.xl, marginTop: -theme.spacing.md, padding: theme.spacing.md, gap: theme.spacing.md }}>
-        <View style={{ flexDirection: "row", gap: theme.spacing.sm }}>
-          <Pill label="Camera ready" icon="camera-outline" />
-          <Pill label="Photo mode" icon="image-outline" />
-        </View>
+      </Pressable>
+      <View style={{ backgroundColor: theme.colors.surface, borderTopLeftRadius: theme.radius.xl, borderTopRightRadius: theme.radius.xl, padding: theme.spacing.md, paddingBottom: Math.max(theme.spacing.md, insets.bottom + theme.spacing.xs), gap: theme.spacing.sm }}>
         {error ? <Text variant="metadata" tone="danger">{error}</Text> : null}
-        <View style={{ alignItems: "center", gap: theme.spacing.xs, paddingTop: theme.spacing.xs }}>
+        <View style={{ alignItems: "center", gap: theme.spacing.xs }}>
           <Pressable accessibilityRole="button" accessibilityLabel="Take photo" disabled={!ready || capturing} onPress={capture} style={({ pressed }) => ({ alignItems: "center", backgroundColor: theme.colors.accent, borderColor: theme.colors.surface, borderRadius: theme.radius.pill, borderWidth: 4, height: 76, justifyContent: "center", opacity: pressed || capturing ? 0.72 : 1, width: 76 })}>
             {capturing ? <ActivityIndicator color={theme.colors.surface} /> : <Icon name="camera" size={30} tone="onAccent" />}
           </Pressable>
-          <Text variant="metadata" tone="secondary">Photo</Text>
         </View>
       </View>
       <ActionSheet visible={settingsOpen} title="Camera options" options={settingsOptions} onClose={() => setSettingsOpen(false)} />
@@ -196,14 +278,20 @@ function RoundControl({ accessibilityLabel, active = false, icon, label, onPress
   );
 }
 
-function Pill({ icon, label }: { icon: IoniconName; label: string }) {
-  const theme = useTheme();
-  return (
-    <View style={{ alignItems: "center", backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.md, flex: 1, flexDirection: "row", gap: theme.spacing.xs, justifyContent: "center", padding: theme.spacing.sm }}>
-      <Icon name={icon} tone="secondary" size={16} />
-      <Text variant="metadata" tone="secondary">{label}</Text>
-    </View>
-  );
+function clampZoom(value: number, minZoom: number, maxZoom: number) {
+  return Math.min(Math.max(value, minZoom), maxZoom);
+}
+
+function formatZoom(value: number) {
+  return Number.isInteger(value) ? value.toString() : value.toFixed(1);
+}
+
+function getFocusModes(device: CameraDevice) {
+  return [
+    ...(device.supportsExposureMetering ? ["AE" as const] : []),
+    ...(device.supportsFocusMetering ? ["AF" as const] : []),
+    ...(device.supportsWhiteBalanceMetering ? ["AWB" as const] : []),
+  ];
 }
 
 const styles = StyleSheet.create({
@@ -222,6 +310,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
+  },
+  focusRing: {
+    borderRadius: FOCUS_RING_SIZE / 2,
+    borderWidth: 2,
+    height: FOCUS_RING_SIZE,
+    position: "absolute",
+    width: FOCUS_RING_SIZE,
   },
   preview: {
     flex: 1,
