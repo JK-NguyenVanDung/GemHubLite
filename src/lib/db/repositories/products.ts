@@ -1,4 +1,4 @@
-import { generateSku, isValidSku, normalizeSku } from "@/src/domain";
+import { generateSku, isValidSku, normalizeSku, parseGeneratedSku } from "@/src/domain";
 import type { Product, ProductListItem, ProductType } from "@/src/domain";
 
 import { getDb } from "../client";
@@ -61,13 +61,6 @@ function validateSku(input: string): string {
   }
 
   return normalizeSku(input);
-}
-
-function formatDateKey(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}${month}${day}`;
 }
 
 export const productsRepo = {
@@ -202,25 +195,24 @@ export const productsRepo = {
     return updated;
   },
 
-  /** Returns next generated SKU sequence for local date path `SKU-YYYYMMDD-`. */
-  async nextSequenceForDate(yyyymmdd: string): Promise<number> {
+  /** Returns next generated SKU sequence for local catalog path `GH-######`. */
+  async nextSequence(): Promise<number> {
     const db = await getDb();
     const rows = await db.getAllAsync<{ sku: string }>(
       "SELECT sku FROM products WHERE sku LIKE ?;",
-      `SKU-${yyyymmdd}-%`,
+      "GH-%",
     );
 
     const maxSequence = rows.reduce((max, row) => {
-      const match = row.sku.match(new RegExp(`^SKU-${yyyymmdd}-(\\d+)$`));
-      const sequence = match ? Number(match[1]) : 0;
+      const sequence = parseGeneratedSku(row.sku)?.sequence ?? 0;
       return Number.isFinite(sequence) && sequence > max ? sequence : max;
     }, 0);
 
     return maxSequence + 1;
   },
 
-  /** Builds next generated SKU for capture preview using local capture date. */
-  async generateNextSku(date = new Date()): Promise<string> {
-    return generateSku(date, await productsRepo.nextSequenceForDate(formatDateKey(date)));
+  /** Builds next generated SKU for capture preview without reserving a row. */
+  async generateNextSku(): Promise<string> {
+    return generateSku(await productsRepo.nextSequence());
   },
 };

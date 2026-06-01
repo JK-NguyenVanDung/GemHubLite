@@ -171,21 +171,14 @@ export const mediaRepo = {
     return mediaRepo.appendMedia(input);
   },
 
-  /** Lists all media newest-first with product title for gallery context. */
+  /** Lists every media item newest-first with product title for the gallery view. */
   async listAll(): Promise<MediaListItem[]> {
     const db = await getDb();
     const rows = await db.getAllAsync<MediaListRow>(
       `SELECT media.*, products.title AS product_title, products.type AS product_type
        FROM media
        INNER JOIN products ON products.sku = media.sku
-       WHERE media.id = (
-         SELECT latest_media.id
-         FROM media AS latest_media
-         WHERE latest_media.sku = media.sku
-         ORDER BY latest_media.created_at DESC, latest_media.id DESC
-         LIMIT 1
-       )
-       ORDER BY media.created_at DESC;`,
+       ORDER BY media.created_at DESC, media.id DESC;`,
     );
 
     return rows.map(mapMediaListItem);
