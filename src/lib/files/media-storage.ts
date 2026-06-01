@@ -27,6 +27,9 @@ export type StoredMediaAsset = {
 
 const IMAGE_MAX_EDGE = 1600;
 const IMAGE_JPEG_QUALITY = 0.86;
+const MAX_IMAGE_SOURCE_BYTES = 45 * 1024 * 1024;
+const MAX_VIDEO_SOURCE_BYTES = 220 * 1024 * 1024;
+const MIN_FREE_DISK_AFTER_WRITE_BYTES = 180 * 1024 * 1024;
 
 const mediaDirectory = new Directory(Paths.document, "media");
 const imageDirectory = new Directory(mediaDirectory, "images");
@@ -52,6 +55,8 @@ export function buildMediaUri(filename: string, kind: StoredAssetKind = "image")
 
 /** Stores a picked/captured asset in app-owned storage; images are downscaled + JPEG-compressed. */
 export async function storeMediaAsset(input: StoreMediaAssetInput): Promise<StoredMediaAsset> {
+  assertSupportedSize(input);
+
   if (input.kind === "video") {
     return storeVideoAsset(input);
   }
@@ -65,11 +70,41 @@ export async function copyIntoMediaDir(srcUri: string, _ext: string): Promise<st
   return stored.uri;
 }
 
+export function deleteMediaFile(uri: string | null | undefined): void {
+  if (!uri) return;
+
+  try {
+    const file = toFile(uri);
+    if (file.exists) {
+      file.delete();
+    }
+  } catch {
+    // Best-effort cleanup. Failed deletes must not hide the original save error.
+  }
+}
+
+export async function cleanupUnreferencedMediaFiles(referencedUris: ReadonlySet<string>): Promise<number> {
+  await ensureMediaDir();
+
+  let deleted = 0;
+  for (const directory of [imageDirectory, videoDirectory]) {
+    for (const entry of directory.list()) {
+      if (entry instanceof File && !referencedUris.has(entry.uri)) {
+        deleteMediaFile(entry.uri);
+        deleted += 1;
+      }
+    }
+  }
+
+  return deleted;
+}
+
 async function storeImageAsset(input: StoreMediaAssetInput): Promise<StoredMediaAsset> {
   await ensureMediaDir();
 
   const original = toFile(input.uri);
   const originalBytes = fileSize(original);
+  assertDiskSpace(originalBytes ?? MAX_IMAGE_SOURCE_BYTES);
   const actions = buildResizeActions(input.width, input.height);
   const compressed = await manipulateAsync(input.uri, actions, {
     compress: IMAGE_JPEG_QUALITY,
@@ -78,7 +113,11 @@ async function storeImageAsset(input: StoreMediaAssetInput): Promise<StoredMedia
   const tempFile = toFile(compressed.uri);
   const destination = new File(imageDirectory, buildFilename("image", "jpg", input.filenameHint));
 
-  await tempFile.copy(destination, { overwrite: false });
+  try {
+    await tempFile.copy(destination, { overwrite: false });
+  } finally {
+    deleteMediaFile(tempFile.uri);
+  }
 
   return {
     uri: destination.uri,
@@ -100,6 +139,7 @@ async function storeVideoAsset(input: StoreMediaAssetInput): Promise<StoredMedia
   const ext = extensionFromUri(input.uri, input.mimeType) || "mp4";
   const destination = new File(videoDirectory, buildFilename("video", ext, input.filenameHint));
   const originalBytes = fileSize(source);
+  assertDiskSpace(originalBytes ?? MAX_VIDEO_SOURCE_BYTES);
 
   await source.copy(destination, { overwrite: false });
 
@@ -114,6 +154,22 @@ async function storeVideoAsset(input: StoreMediaAssetInput): Promise<StoredMedia
     durationMs: input.durationMs ?? null,
     compressed: false,
   };
+}
+
+function assertSupportedSize(input: StoreMediaAssetInput): void {
+  const sourceBytes = fileSize(toFile(input.uri));
+  const limit = input.kind === "video" ? MAX_VIDEO_SOURCE_BYTES : MAX_IMAGE_SOURCE_BYTES;
+
+  if (sourceBytes && sourceBytes > limit) {
+    throw new Error(input.kind === "video" ? "Video is too large. Choose a shorter 720p clip." : "Photo is too large. Choose a smaller image.");
+  }
+}
+
+function assertDiskSpace(estimatedWriteBytes: number): void {
+  const available = Paths.availableDiskSpace;
+  if (typeof available === "number" && available > 0 && available - estimatedWriteBytes < MIN_FREE_DISK_AFTER_WRITE_BYTES) {
+    throw new Error("Storage is almost full. Free space, then try saving again.");
+  }
 }
 
 function buildResizeActions(width?: number | null, height?: number | null) {
