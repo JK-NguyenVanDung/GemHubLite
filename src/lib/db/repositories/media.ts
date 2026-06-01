@@ -1,4 +1,4 @@
-import { normalizeSku } from "@/src/domain";
+import { isValidSku, normalizeSku } from "@/src/domain";
 import type { Media, MediaKind, MediaListItem, ProductType } from "@/src/domain";
 
 import { getDb } from "../client";
@@ -89,52 +89,81 @@ function randomUuid(): string {
   return `${hex.slice(0, 4).join("")}-${hex.slice(4, 6).join("")}-${hex.slice(6, 8).join("")}-${hex.slice(8, 10).join("")}-${hex.slice(10, 16).join("")}`;
 }
 
+function validateSku(input: string): string {
+  const sku = normalizeSku(input);
+  if (!isValidSku(sku)) {
+    throw new Error("SKU is required.");
+  }
+
+  return sku;
+}
+
+function buildMedia(input: AppendMediaInput, sku: string, now = Date.now()): Media {
+  return {
+    id: randomUuid(),
+    sku,
+    uri: input.uri,
+    kind: input.kind ?? "image",
+    mimeType: input.mimeType ?? null,
+    originalBytes: input.originalBytes ?? null,
+    storedBytes: input.storedBytes ?? null,
+    width: input.width ?? null,
+    height: input.height ?? null,
+    durationMs: input.durationMs ?? null,
+    compressed: input.compressed ?? false,
+    createdAt: now,
+  };
+}
+
+async function insertMedia(input: AppendMediaInput): Promise<Media> {
+  const db = await getDb();
+  const sku = validateSku(input.sku);
+  const existing = await db.getFirstAsync<MediaRow>("SELECT * FROM media WHERE sku = ? AND uri = ? LIMIT 1;", sku, input.uri);
+
+  if (existing) {
+    await db.runAsync("UPDATE products SET updated_at = ? WHERE sku = ?;", Date.now(), sku);
+    return mapMedia(existing);
+  }
+
+  const media = buildMedia(input, sku);
+
+  await db.runAsync(
+    `INSERT INTO media (
+      id, sku, uri, kind, mime_type, original_bytes, stored_bytes, width, height, duration_ms, compressed, created_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+    media.id,
+    media.sku,
+    media.uri,
+    media.kind,
+    media.mimeType,
+    media.originalBytes,
+    media.storedBytes,
+    media.width,
+    media.height,
+    media.durationMs,
+    media.compressed ? 1 : 0,
+    media.createdAt,
+  );
+  await db.runAsync("UPDATE products SET updated_at = ? WHERE sku = ?;", media.createdAt, media.sku);
+
+  return media;
+}
+
 export const mediaRepo = {
   /** Appends copied media URI to an existing product, rejecting orphan rows before SQLite FK runs. */
   async appendMedia(input: AppendMediaInput): Promise<Media> {
-    const db = await getDb();
-    const sku = normalizeSku(input.sku);
+    const sku = validateSku(input.sku);
     const product = await productsRepo.getBySku(sku);
 
     if (!product) {
       throw new ProductNotFoundError(sku);
     }
 
-    const media: Media = {
-      id: randomUuid(),
-      sku,
-      uri: input.uri,
-      kind: input.kind ?? "image",
-      mimeType: input.mimeType ?? null,
-      originalBytes: input.originalBytes ?? null,
-      storedBytes: input.storedBytes ?? null,
-      width: input.width ?? null,
-      height: input.height ?? null,
-      durationMs: input.durationMs ?? null,
-      compressed: input.compressed ?? false,
-      createdAt: Date.now(),
-    };
+    return insertMedia({ ...input, sku });
+  },
 
-    await db.runAsync(
-      `INSERT INTO media (
-        id, sku, uri, kind, mime_type, original_bytes, stored_bytes, width, height, duration_ms, compressed, created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-      media.id,
-      media.sku,
-      media.uri,
-      media.kind,
-      media.mimeType,
-      media.originalBytes,
-      media.storedBytes,
-      media.width,
-      media.height,
-      media.durationMs,
-      media.compressed ? 1 : 0,
-      media.createdAt,
-    );
-    await db.runAsync("UPDATE products SET updated_at = ? WHERE sku = ?;", media.createdAt, media.sku);
-
-    return media;
+  async appendTrusted(input: AppendMediaInput): Promise<Media> {
+    return insertMedia(input);
   },
 
   /** Compatibility wrapper for product-detail/camera handoff naming. */
@@ -149,6 +178,13 @@ export const mediaRepo = {
       `SELECT media.*, products.title AS product_title, products.type AS product_type
        FROM media
        INNER JOIN products ON products.sku = media.sku
+       WHERE media.id = (
+         SELECT latest_media.id
+         FROM media AS latest_media
+         WHERE latest_media.sku = media.sku
+         ORDER BY latest_media.created_at DESC, latest_media.id DESC
+         LIMIT 1
+       )
        ORDER BY media.created_at DESC;`,
     );
 
@@ -161,6 +197,13 @@ export const mediaRepo = {
     const rows = await db.getAllAsync<MediaRow>("SELECT * FROM media WHERE sku = ? ORDER BY created_at DESC;", normalizeSku(sku));
 
     return rows.map(mapMedia);
+  },
+
+  async listStoredUris(): Promise<string[]> {
+    const db = await getDb();
+    const rows = await db.getAllAsync<{ uri: string }>("SELECT uri FROM media;");
+
+    return rows.map((row) => row.uri);
   },
 
   /** Delete stays outside v1 scope; detail/camera slices should not call it yet. */

@@ -110,14 +110,35 @@ export const productsRepo = {
     return rows.map(mapProductListItem);
   },
 
-  /** Creates product for new SKU or returns existing row without creating duplicates. */
+  /** Creates product for new SKU or updates non-empty metadata for an existing SKU without duplicating rows. */
   async upsertBySku(input: UpsertProductInput): Promise<UpsertProductResult> {
     const db = await getDb();
     const sku = validateSku(input.sku);
     const existing = await productsRepo.getBySku(sku);
 
     if (existing) {
-      return { product: existing, created: false };
+      const title = clean(input.title) ?? existing.title;
+      const type = input.type ?? existing.type;
+      const description = clean(input.description) ?? existing.description;
+
+      if (title === existing.title && type === existing.type && description === existing.description) {
+        return { product: existing, created: false };
+      }
+
+      const updatedAt = Date.now();
+      await db.runAsync(
+        "UPDATE products SET title = ?, type = ?, description = ?, updated_at = ? WHERE sku = ?;",
+        title,
+        type,
+        description,
+        updatedAt,
+        sku,
+      );
+
+      return {
+        product: { ...existing, title, type, description, updatedAt },
+        created: false,
+      };
     }
 
     const now = Date.now();
@@ -184,12 +205,18 @@ export const productsRepo = {
   /** Returns next generated SKU sequence for local date path `SKU-YYYYMMDD-`. */
   async nextSequenceForDate(yyyymmdd: string): Promise<number> {
     const db = await getDb();
-    const [{ count }] = await db.getAllAsync<{ count: number }>(
-      "SELECT COUNT(*) AS count FROM products WHERE sku LIKE ?;",
+    const rows = await db.getAllAsync<{ sku: string }>(
+      "SELECT sku FROM products WHERE sku LIKE ?;",
       `SKU-${yyyymmdd}-%`,
     );
 
-    return count + 1;
+    const maxSequence = rows.reduce((max, row) => {
+      const match = row.sku.match(new RegExp(`^SKU-${yyyymmdd}-(\\d+)$`));
+      const sequence = match ? Number(match[1]) : 0;
+      return Number.isFinite(sequence) && sequence > max ? sequence : max;
+    }, 0);
+
+    return maxSequence + 1;
   },
 
   /** Builds next generated SKU for capture preview using local capture date. */
