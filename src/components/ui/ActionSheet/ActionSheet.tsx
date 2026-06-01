@@ -1,5 +1,5 @@
 import { BottomSheet, RNHostView } from "@expo/ui";
-import { Fragment } from "react";
+import { Fragment, useCallback, useRef } from "react";
 import { Pressable, useWindowDimensions, View } from "react-native";
 
 import { Icon } from "@/src/components/ui/Icon/Icon";
@@ -23,9 +23,37 @@ export function ActionSheet({
   const theme = useTheme();
   const { width } = useWindowDimensions();
   const sheetWidth = Math.max(280, width - theme.spacing.xxl);
+  const pendingActionRef = useRef<(() => void) | null>(null);
+  const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const runPendingAction = useCallback(() => {
+    if (fallbackTimerRef.current) {
+      clearTimeout(fallbackTimerRef.current);
+      fallbackTimerRef.current = null;
+    }
+
+    const pendingAction = pendingActionRef.current;
+    pendingActionRef.current = null;
+    pendingAction?.();
+  }, []);
+
+  const handleDismiss = useCallback(() => {
+    onClose();
+    runPendingAction();
+  }, [onClose, runPendingAction]);
+
+  const handleSelect = useCallback(
+    (action: () => void) => {
+      pendingActionRef.current = action;
+      onClose();
+
+      fallbackTimerRef.current = setTimeout(runPendingAction, 400);
+    },
+    [onClose, runPendingAction],
+  );
 
   return (
-    <BottomSheet isPresented={visible} onDismiss={onClose} testID={testID}>
+    <BottomSheet isPresented={visible} onDismiss={handleDismiss} testID={testID}>
       <RNHostView matchContents testID={testID} style={{ width: sheetWidth }}>
         <View
           testID={testID}
@@ -69,7 +97,7 @@ export function ActionSheet({
           </View>
           {options.map((option, index) => (
             <Fragment key={`${option.label}-${index}`}>
-              <ActionSheetRow option={option} onClose={onClose} />
+              <ActionSheetRow option={option} onClose={onClose} onSelect={handleSelect} />
               {index < options.length - 1 ? (
                 <View
                   style={{ height: 1, backgroundColor: theme.colors.border }}
@@ -81,6 +109,7 @@ export function ActionSheet({
           <ActionSheetRow
             option={{ label: cancelLabel, onPress: onClose }}
             onClose={onClose}
+            onSelect={handleSelect}
             cancel
           />
         </View>
@@ -92,10 +121,12 @@ export function ActionSheet({
 function ActionSheetRow({
   cancel = false,
   onClose,
+  onSelect,
   option,
 }: {
   cancel?: boolean;
   onClose: () => void;
+  onSelect: (action: () => void) => void;
   option: ActionSheetOption;
 }) {
   const theme = useTheme();
@@ -105,10 +136,12 @@ function ActionSheetRow({
       accessibilityRole="button"
       accessibilityLabel={option.label}
       onPress={() => {
-        option.onPress();
-        if (!cancel) {
+        if (cancel) {
           onClose();
+          return;
         }
+
+        onSelect(option.onPress);
       }}
       testID={option.testID}
       style={({ pressed }) => ({

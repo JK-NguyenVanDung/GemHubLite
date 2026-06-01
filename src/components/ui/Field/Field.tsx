@@ -8,7 +8,7 @@ import { useTheme } from "@/src/theme";
 import type { FieldProps } from "@/src/components/ui/Field/Field.types";
 
 /** Field renders GemHub Lite form inputs with label, helper, and error text. */
-export function Field({ error, helperText, hideLabel = false, label, multiline, onBlur, onFocus, required, style, testID, ...props }: FieldProps) {
+export function Field({ accessibilityLabel, error, helperText, hideLabel = false, label, multiline, onBlur, onFocus, required, style, testID, ...props }: FieldProps) {
   const theme = useTheme();
   const layout = useResponsiveLayout();
   const hasError = Boolean(error);
@@ -18,6 +18,7 @@ export function Field({ error, helperText, hideLabel = false, label, multiline, 
     <View style={{ gap: layout.fieldGap }}>
       {hideLabel ? null : <Text variant="metadata" tone="secondary">{label}{required ? " *" : ""}</Text>}
       <TextInput
+        accessibilityLabel={accessibilityLabel ?? label}
         maxFontSizeMultiplier={1.3}
         multiline={multiline}
         onBlur={(event) => {

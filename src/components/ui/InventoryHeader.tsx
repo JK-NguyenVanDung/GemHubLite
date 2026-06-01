@@ -5,10 +5,12 @@ import { useTheme } from "@/src/theme";
 
 export function InventoryHeader({
   actionLabel,
+  dense = false,
   filterLabel = "All SKUs",
   onAction,
   onFilterPress,
   onSearchChange,
+  onToggleDensity,
   searchValue,
   searchPlaceholder,
   subtitle,
@@ -18,10 +20,12 @@ export function InventoryHeader({
   actionLabel: string;
   searchPlaceholder: string;
   subtitle?: string;
+  dense?: boolean;
   filterLabel?: string;
   searchValue?: string;
   onSearchChange?: (value: string) => void;
   onFilterPress?: () => void;
+  onToggleDensity?: () => void;
   onAction: () => void;
 }) {
   const theme = useTheme();
@@ -39,6 +43,17 @@ export function InventoryHeader({
         <View style={{ flex: 1 }}>
           <Field label="Search" hideLabel placeholder={searchPlaceholder} value={searchValue} onChangeText={onSearchChange} autoCapitalize="characters" autoCorrect={false} clearButtonMode="while-editing" />
         </View>
+        {onToggleDensity ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={dense ? "Grid density: compact. Switch to comfortable." : "Grid density: comfortable. Switch to compact."}
+            onPress={onToggleDensity}
+            style={({ pressed }) => ({ alignItems: "center", justifyContent: "center", minHeight: 44, minWidth: 44, opacity: pressed ? 0.72 : 1 })}
+            testID={`${title.toLowerCase()}-density-button`}
+          >
+            <Icon name={dense ? "apps" : "grid-outline"} size={20} tone="accent" />
+          </Pressable>
+        ) : null}
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={`Filter: ${filterLabel}`}
