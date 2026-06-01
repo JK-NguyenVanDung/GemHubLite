@@ -1,4 +1,4 @@
-const GENERATED_SKU_PATTERN = /^SKU-(\d{8})-(\d+)$/;
+const GENERATED_SKU_PATTERN = /^GH-(\d+)$/;
 const VALID_SKU_PATTERN = /^[A-Z0-9._-]+$/;
 
 /**
@@ -23,36 +23,33 @@ export function isValidSku(input: string): boolean {
 }
 
 /**
- * Builds a local generated SKU for current capture day and sequence.
- * Input date uses local timezone fields to match merchant capture day; sequence must be positive.
- * Invariant: sequence is padded to width 3, expanding naturally for values above 999.
- * Example: `generateSku(new Date(2026, 0, 2), 7)` returns `SKU-20260102-007`.
+ * Builds a stable local catalog SKU from the next inventory sequence.
+ * Sequence is the only input so generation stays idempotent until a product is saved.
+ * Invariant: sequence is padded to width 6, expanding naturally for values above 999999.
+ * Example: `generateSku(7)` returns `GH-000007`.
  */
-export function generateSku(date: Date, sequence: number): string {
+export function generateSku(sequence: number): string {
   if (!Number.isInteger(sequence) || sequence < 1) {
     throw new Error("Generated SKU sequence must be a positive integer.");
   }
 
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const suffix = String(sequence).padStart(3, "0");
+  const suffix = String(sequence).padStart(6, "0");
 
-  return `SKU-${year}${month}${day}-${suffix}`;
+  return `GH-${suffix}`;
 }
 
 /**
- * Reads generated SKU metadata for the default `SKU-YYYYMMDD-###` path.
+ * Reads generated SKU metadata for the default `GH-######` path.
  * Input may be raw SKU text and is normalized before parsing.
  * Invariant: only generated SKU prefixes return metadata; manual SKUs return `null`.
- * Example: `parseGeneratedSku("sku-20260102-007")` returns `{ date: "20260102", sequence: 7 }`.
+ * Example: `parseGeneratedSku("gh-000007")` returns `{ sequence: 7 }`.
  */
-export function parseGeneratedSku(sku: string): { date: string; sequence: number } | null {
+export function parseGeneratedSku(sku: string): { sequence: number } | null {
   const match = normalizeSku(sku).match(GENERATED_SKU_PATTERN);
 
   if (!match) {
     return null;
   }
 
-  return { date: match[1], sequence: Number(match[2]) };
+  return { sequence: Number(match[1]) };
 }
