@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.gemhublite.app",
@@ -19,8 +19,7 @@
     "android": {
       "package": "com.gemhublite.app",
       "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
+        "android.permission.CAMERA"
       ],
       "blockedPermissions": [
         "android.permission.INTERNET",
@@ -66,7 +65,8 @@
             "enableMinifyInReleaseBuilds": true
           }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "extra": {
       "router": {},
