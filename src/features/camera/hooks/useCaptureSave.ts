@@ -2,7 +2,9 @@ import { router } from "expo-router";
 import { Alert } from "react-native";
 
 import { isValidSku, normalizeSku, type MediaKind, type ProductType } from "@/src/domain";
-import { mediaRepo, productsRepo } from "@/src/lib/db";
+import { saveCaptureAtomically } from "@/src/lib/db";
+import { toUserFacingError } from "@/src/lib/errors/userFacing";
+import { deleteMediaFile } from "@/src/lib/files";
 
 export type CaptureMediaMetadata = {
   kind: MediaKind;
@@ -26,19 +28,20 @@ export function useCaptureSave(uri: string | null) {
       throw new Error("SKU is required.");
     }
 
-    const { product, created } = await productsRepo.upsertBySku({
-      sku: normalized,
-      title: input.title,
-      type: input.type,
-      description: input.description,
-    });
-    await mediaRepo.appendMedia({ sku: product.sku, uri, ...input.media });
+    let result;
 
-    if (!created) {
-      Alert.alert("Added media", "Media added to existing SKU.");
+    try {
+      result = await saveCaptureAtomically({ sku: normalized, uri, title: input.title, type: input.type, description: input.description, ...input.media });
+    } catch (error) {
+      deleteMediaFile(uri);
+      throw toUserFacingError(error, "Save failed. Your photo was not added; please retry.");
     }
 
-    router.replace({ pathname: "/product/[sku]", params: { sku: product.sku } });
+    if (!result.created) {
+      Alert.alert("Photo added", "This product now has a new photo.");
+    }
+
+    router.replace({ pathname: "/product/[sku]", params: { sku: result.product.sku } });
   }
 
   return { save };

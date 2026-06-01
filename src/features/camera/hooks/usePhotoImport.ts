@@ -1,7 +1,10 @@
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
+import { Alert } from "react-native";
 
+import { getPowerSaveWarning } from "@/src/lib/device/power";
+import { toUserFacingError } from "@/src/lib/errors/userFacing";
 import { storeMediaAsset } from "@/src/lib/files";
 
 export function usePhotoImport(sku?: string) {
@@ -16,6 +19,11 @@ export function usePhotoImport(sku?: string) {
       const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!permission.granted) {
         throw new Error("Photo library access is required.");
+      }
+
+      const powerWarning = await getPowerSaveWarning();
+      if (powerWarning) {
+        Alert.alert("Power saver active", powerWarning);
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -58,7 +66,7 @@ export function usePhotoImport(sku?: string) {
         },
       });
     } catch (error) {
-      setImportError(error instanceof Error ? error.message : "Photo import failed.");
+      setImportError(toUserFacingError(error, "Photo import failed. Try another file or free storage.").message);
     } finally {
       setImporting(false);
     }

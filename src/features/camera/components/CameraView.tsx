@@ -12,6 +12,7 @@ import type { CameraDevice } from "react-native-vision-camera";
 
 import { ActionSheet, Button, Card, Icon, Text } from "@/src/components/ui";
 import type { ActionSheetOption, IoniconName } from "@/src/components/ui";
+import { getPowerSaveWarning } from "@/src/lib/device/power";
 import { storeMediaAsset } from "@/src/lib/files";
 import { useTheme } from "@/src/theme";
 import { usePhotoImport } from "@/src/features/camera/hooks/usePhotoImport";
@@ -102,7 +103,6 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { importPhoto } = usePhotoImport(sku);
   const settingsOptions: ActionSheetOption[] = useMemo(() => [
-    { label: "Native Tap Focus Enabled", icon: "scan-outline", onPress: () => null, testID: "camera-tap-focus-info" },
     { label: "Choose from Library", icon: "images-outline", onPress: importPhoto, testID: "camera-library" },
   ], [importPhoto]);
 
@@ -113,6 +113,11 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
     setError(null);
 
     try {
+      const powerWarning = await getPowerSaveWarning();
+      if (powerWarning) {
+        setError(powerWarning);
+      }
+
       const photo = await photoOutput.capturePhotoToFile({ flashMode: "off" }, {});
       const stored = await storeMediaAsset({ uri: photo.filePath, kind: "image", mimeType: "image/jpeg" });
       router.push({
@@ -166,12 +171,12 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
       </View>
       <View style={{ backgroundColor: theme.colors.surface, borderTopLeftRadius: theme.radius.xl, borderTopRightRadius: theme.radius.xl, marginTop: -theme.spacing.md, padding: theme.spacing.md, gap: theme.spacing.md }}>
         <View style={{ flexDirection: "row", gap: theme.spacing.sm }}>
-          <Pill label="Not Connected" icon="bluetooth" />
-          <Pill label="Neutral" icon="color-filter-outline" />
+          <Pill label="Camera ready" icon="camera-outline" />
+          <Pill label="Photo mode" icon="image-outline" />
         </View>
         {error ? <Text variant="metadata" tone="danger">{error}</Text> : null}
         <View style={{ alignItems: "center", gap: theme.spacing.xs, paddingTop: theme.spacing.xs }}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Capture Product" disabled={!ready || capturing} onPress={capture} style={({ pressed }) => ({ alignItems: "center", backgroundColor: theme.colors.accent, borderColor: theme.colors.surface, borderRadius: theme.radius.pill, borderWidth: 4, height: 76, justifyContent: "center", opacity: pressed || capturing ? 0.72 : 1, width: 76 })}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Take photo" disabled={!ready || capturing} onPress={capture} style={({ pressed }) => ({ alignItems: "center", backgroundColor: theme.colors.accent, borderColor: theme.colors.surface, borderRadius: theme.radius.pill, borderWidth: 4, height: 76, justifyContent: "center", opacity: pressed || capturing ? 0.72 : 1, width: 76 })}>
             {capturing ? <ActivityIndicator color={theme.colors.surface} /> : <Icon name="camera" size={30} tone="onAccent" />}
           </Pressable>
           <Text variant="metadata" tone="secondary">Photo</Text>
@@ -185,13 +190,13 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
 function RoundControl({ accessibilityLabel, active = false, icon, label, onPress }: { accessibilityLabel?: string; active?: boolean; icon?: IoniconName; label?: string; onPress?: () => void }) {
   const theme = useTheme();
   return (
-    <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel ?? label} disabled={!onPress} onPress={onPress} style={({ pressed }) => ({ alignItems: "center", backgroundColor: active ? theme.colors.accent : "rgba(8, 13, 26, 0.58)", borderRadius: theme.radius.pill, height: 34, justifyContent: "center", opacity: pressed ? 0.72 : 1, width: 34 })}>
+    <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel ?? label} disabled={!onPress} onPress={onPress} style={({ pressed }) => ({ alignItems: "center", backgroundColor: active ? theme.colors.accent : "rgba(8, 13, 26, 0.58)", borderRadius: theme.radius.pill, height: 44, justifyContent: "center", opacity: pressed ? 0.72 : 1, width: 44 })}>
       {icon ? <Icon name={icon} tone="onAccent" size={17} /> : <Text variant="metadata" tone="onAccent">{label}</Text>}
     </Pressable>
   );
 }
 
-function Pill({ icon, label }: { icon: "bluetooth" | "color-filter-outline"; label: string }) {
+function Pill({ icon, label }: { icon: IoniconName; label: string }) {
   const theme = useTheme();
   return (
     <View style={{ alignItems: "center", backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.md, flex: 1, flexDirection: "row", gap: theme.spacing.xs, justifyContent: "center", padding: theme.spacing.sm }}>

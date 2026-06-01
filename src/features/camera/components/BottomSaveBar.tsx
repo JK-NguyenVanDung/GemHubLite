@@ -8,7 +8,7 @@ export function BottomSaveBar({ canSave, onSave, saving }: { canSave: boolean; o
 
   return (
     <View style={{ backgroundColor: theme.colors.surface, borderTopColor: theme.colors.border, borderTopWidth: 1, padding: theme.spacing.md }}>
-      <Button disabled={!canSave || saving} fullWidth label="Save Product" loading={saving} onPress={onSave} size="lg" />
+      <Button disabled={!canSave || saving} fullWidth label="Save" loading={saving} onPress={onSave} size="lg" />
     </View>
   );
 }
