@@ -35,16 +35,32 @@ Bonus capabilities present beyond the required flow: photo-library import (also 
 
 ## Prerequisites And Running
 
-Required local environment:
+### Stack Versions
+
+- Expo SDK `56` (`expo ~56.0.8`).
+- React Native `0.85.3`, React `19.2.3`, Hermes enabled, New Architecture enabled.
+- VisionCamera `^5.0.11`; this means Expo Go is **not** enough. Use a native build.
+- Main native IDs: iOS bundle `com.gemhublite.app`, Android package `com.gemhublite.app`, URL scheme `gemhublite`.
+
+### Required Local Environment
 
 - Node `22.21.0` recommended and pinned in `.nvmrc` / `.node-version`; package range is Node `>=20.19 <23`.
 - npm `>=10`.
-- Xcode + iOS Simulator for `npx expo run:ios`.
-- Android Studio / Android SDK for `./gradlew`; this repo uses Gradle `9.3.1`, compile/target SDK `36`, min SDK `24`, and NDK `27.1.12297006`.
-- A native development build is required because the app uses VisionCamera; Expo Go is not enough.
-- No backend env vars or API keys are required. `.env.example` is intentionally empty/placeholder because the app is local-only.
+- macOS with Xcode + iOS Simulator for iOS builds.
+- Android Studio with Android SDK Platform `36`, Android SDK Build-Tools `36.0.0`, and Android NDK `27.1.12297006` for Android builds.
+- Gradle wrapper is included and downloads Gradle `9.3.1`; do not install a separate Gradle manually.
+- Java must be compatible with the Android Gradle Plugin used by Expo/RN; Android Studio's bundled JDK is recommended.
+- No backend env vars or API keys are required. `.env.example` is intentionally placeholder-only because the app is local-only.
 
-Install dependencies:
+### Install Dependencies
+
+Use the pinned Node version first:
+
+```bash
+nvm use
+```
+
+Then install packages:
 
 ```bash
 npm install
@@ -52,25 +68,112 @@ npm install
 
 Then run on a platform below. Optional checks: `npm test`, `npm run typecheck`, `npm run lint`, and `npm run verify:submission`.
 
-### iOS
+### iOS: Build, Install, Run
+
+Run a native development build on the default simulator:
 
 ```bash
 npx expo run:ios
 ```
 
-VisionCamera requires a native/development build. The iOS simulator has no rear camera, so the app shows a production-shaped camera shell with a photo-picker fallback for validation.
-
-### Android
+If multiple simulators are installed, choose one explicitly:
 
 ```bash
-cd android
-./gradlew :app:assembleDebug --console=plain
+npx expo run:ios --device "iPhone 17 Pro"
 ```
 
-Android runtime validation uses an emulator plus the development build. If the default AVD hangs or exits during boot, launch it headless with wiped state:
+The iOS simulator has no rear camera. Expected simulator behavior: Camera opens a production-shaped shell and uses photo-library fallback for validation. Real VisionCamera capture needs a physical iPhone build.
+
+Useful iOS reset when native deps or Pods get stale:
+
+```bash
+rm -rf ios/Pods ios/Podfile.lock
+npx pod-install ios
+npx expo run:ios
+```
+
+### Android: Build, Install, Run
+
+Start an emulator from Android Studio Device Manager, or CLI if available:
 
 ```bash
 ~/Library/Android/sdk/emulator/emulator -avd Pixel_9 -no-window -wipe-data -no-snapshot -no-audio -gpu swiftshader_indirect
+```
+
+Build and install the debug app:
+
+```bash
+npx expo run:android
+```
+
+Build debug APK only:
+
+```bash
+(cd android && ./gradlew :app:assembleDebug --console=plain)
+```
+
+Install debug APK manually:
+
+```bash
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+adb shell monkey -p com.gemhublite.app 1
+```
+
+Build release APK locally:
+
+```bash
+(cd android && ./gradlew :app:assembleRelease --no-daemon)
+```
+
+Release APK output:
+
+```text
+android/app/build/outputs/apk/release/app-release.apk
+```
+
+Build release AAB locally:
+
+```bash
+(cd android && ./gradlew :app:bundleRelease --no-daemon)
+```
+
+Release AAB output:
+
+```text
+android/app/build/outputs/bundle/release/app-release.aab
+```
+
+Production signing is wired through `GEMHUB_RELEASE_STORE_FILE`, `GEMHUB_RELEASE_STORE_PASSWORD`, `GEMHUB_RELEASE_KEY_ALIAS`, and `GEMHUB_RELEASE_KEY_PASSWORD`. Without those, local release builds may use debug signing; `npm run verify:submission` reports this as a warning.
+
+### Known Run Issues
+
+- **Expo Go will not work**: VisionCamera requires native code.
+- **iOS Simulator has no real camera**: use the built-in photo-library fallback, or test capture on a physical iPhone.
+- **Android emulator can drop during boot on this host**: if `adb` disconnects or the AVD exits, boot from Android Studio Device Manager or use the wiped/headless command above.
+- **Android native linker error for Nitro/VisionCamera**: if you see `libNitroModules.so: unknown file type`, clean native CXX caches and rebuild:
+
+```bash
+rm -rf \
+  node_modules/react-native-nitro-modules/android/build/intermediates/cxx \
+  node_modules/react-native-nitro-modules/android/.cxx \
+  node_modules/react-native-nitro-image/android/build/intermediates/cxx \
+  node_modules/react-native-nitro-image/android/.cxx \
+  node_modules/react-native-vision-camera/android/.cxx \
+  node_modules/react-native-vision-camera/android/build/intermediates/cxx
+./android/gradlew -p android --stop
+(cd android && ./gradlew :app:assembleRelease --no-daemon)
+```
+
+- **Android Studio cannot find Node**: `android/settings.gradle` tries to resolve Node from `NODE_BINARY`, `/usr/local/bin/node`, `/opt/homebrew/bin/node`, or the default `nvm` alias. If Android Studio was opened from Finder and Gradle cannot find Node, set `NODE_BINARY` or symlink Node into `/usr/local/bin`.
+- **Release credentials are not included**: store upload signing and EAS submit credentials must be supplied by the reviewer/developer.
+
+### Verification Commands
+
+```bash
+npm test
+npm run typecheck
+npm run lint
+npm run verify:submission
 ```
 
 ## Architecture
