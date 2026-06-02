@@ -13,7 +13,6 @@ import type {
 
 /** ActionSheet shows a parent-driven bottom sheet with consistent iOS + Android visuals. */
 export function ActionSheet({
-  cancelLabel = "Cancel",
   onClose,
   options,
   testID,
@@ -105,13 +104,6 @@ export function ActionSheet({
               ) : null}
             </Fragment>
           ))}
-          <View style={{ height: theme.spacing.sm }} />
-          <ActionSheetRow
-            option={{ label: cancelLabel, onPress: onClose }}
-            onClose={onClose}
-            onSelect={handleSelect}
-            cancel
-          />
         </View>
       </RNHostView>
     </BottomSheet>
@@ -135,6 +127,7 @@ function ActionSheetRow({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={option.label}
+      accessibilityState={{ selected: option.selected }}
       onPress={() => {
         if (cancel) {
           onClose();
@@ -146,7 +139,11 @@ function ActionSheetRow({
       testID={option.testID}
       style={({ pressed }) => ({
         alignItems: "center",
-        backgroundColor: cancel ? theme.colors.surfaceMuted : "transparent",
+        backgroundColor: cancel
+          ? theme.colors.surfaceMuted
+          : option.selected
+            ? theme.colors.accentSoft
+            : "transparent",
         borderRadius: theme.radius.md,
         flexDirection: "row",
         gap: theme.spacing.sm,
@@ -160,15 +157,17 @@ function ActionSheetRow({
       {option.icon ? (
         <Icon
           name={option.icon}
-          tone={option.destructive ? "danger" : "primary"}
+          tone={option.destructive ? "danger" : option.selected ? "accent" : "primary"}
         />
       ) : null}
       <Text
         variant="bodyStrong"
         tone={option.destructive ? "danger" : cancel ? "secondary" : "primary"}
+        style={{ flex: 1 }}
       >
         {option.label}
       </Text>
+      {option.selected && !cancel ? <Icon name="checkmark-circle" tone="accent" /> : null}
     </Pressable>
   );
 }

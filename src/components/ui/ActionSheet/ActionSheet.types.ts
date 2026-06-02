@@ -5,6 +5,8 @@ export type ActionSheetOption = {
   label: string;
   icon?: IoniconName;
   destructive?: boolean;
+  /** Marks the row as the active choice so reopening the sheet shows current selection. */
+  selected?: boolean;
   onPress: () => void;
   testID?: string;
 };
@@ -17,7 +19,6 @@ export type ActionSheetProps = {
   visible: boolean;
   title?: string;
   options: ActionSheetOption[];
-  cancelLabel?: string;
   onClose: () => void;
   testID?: string;
 };

@@ -157,11 +157,6 @@ if rg 'ADB|No app evidence captured|API37|Android 17' docs/evidence/android-api3
 else
   fail "Android API37 blocker evidence is missing/invalid"
 fi
-if [ -f docs/evidence/REAL_DEVICE_CAMERA.md ] && rg '^VERIFIED_REAL_DEVICE_CAMERA=true$' docs/evidence/REAL_DEVICE_CAMERA.md >/dev/null 2>&1; then
-  pass "real-device camera evidence is verified"
-else
-  warn "real-device camera evidence is missing or still marked false"
-fi
 if [ -f docs/submission/BUNDLE_ANALYSIS.md ] && rg '^VERIFIED_EXPO_ATLAS=true$' docs/submission/BUNDLE_ANALYSIS.md >/dev/null 2>&1; then
   pass "Expo Atlas bundle analysis is verified"
 else

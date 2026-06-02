@@ -136,6 +136,8 @@ test("generated SKU sequence uses max existing suffix instead of row count", () 
 test("camera route params normalize and reject invalid SKU handoff", () => {
   const camera = read("app/camera.tsx");
   const captureReview = read("src/features/camera/components/CaptureReview.tsx");
+  const captureSave = read("src/features/camera/hooks/useCaptureSave.ts");
+  const removeActivePhoto = captureReview.slice(captureReview.indexOf("const removeActivePhoto"), captureReview.indexOf("const typeOptions"));
 
   assert.match(camera, /normalizeSku\(Array\.isArray\(sku\) \? sku\[0\] : sku \?\? ""\)/);
   assert.match(camera, /isValidSku\(normalizedSku\) \? normalizedSku : undefined/);
@@ -144,10 +146,34 @@ test("camera route params normalize and reject invalid SKU handoff", () => {
   assert.match(captureReview, /const initialValidSku = isValidSku\(initialSku\) \? initialSku : ""/);
   assert.match(captureReview, /useState\(initialValidSku\)/);
   assert.match(captureReview, /const \[pendingMedia, setPendingMedia\] = useState<PendingCaptureMedia\[\]>/);
+  assert.match(removeActivePhoto, /Removing this asset also discards the product draft\./);
+  assert.match(removeActivePhoto, /router\.back\(\)/);
+  assert.doesNotMatch(removeActivePhoto, /router\.replace\("\/camera"\)/);
   assert.match(captureReview, /label: "Add Photo from Library"/);
   assert.match(captureReview, /params: \{ sku: normalizedSku \}/);
+  assert.match(captureSave, /router\.dismissTo\("\/\(tabs\)\/camera"\)/);
+  assert.doesNotMatch(captureSave, /Photo added/);
+  assert.doesNotMatch(captureSave, /router\.replace\(\{ pathname: "\/product/);
   assert.doesNotMatch(captureReview, /typeof params\.sku === "string"/);
   assert.match(captureReview, /function readParam\(value\?: string \| string\[\]\): string \| null/);
+});
+
+test("adding a camera photo from capture review preserves the draft media stack", () => {
+  const captureReview = read("src/features/camera/components/CaptureReview.tsx");
+  const cameraView = read("src/features/camera/components/CameraView.tsx");
+  const photoImport = read("src/features/camera/hooks/usePhotoImport.ts");
+  const draft = read("src/features/camera/captureDraft.ts");
+
+  assert.match(draft, /setCaptureDraft/);
+  assert.match(draft, /appendCaptureDraftMedia/);
+  assert.match(draft, /takeCaptureDraft/);
+  assert.match(captureReview, /useFocusEffect\([\s\S]*?takeCaptureDraft\(\)[\s\S]*?setPendingMedia\(draft\.media\)/);
+  assert.match(captureReview, /setCaptureDraft\([\s\S]*?media: pendingMedia/);
+  assert.match(captureReview, /router\.push\([\s\S]*?pathname: "\/camera"/);
+  const addPhotoCameraOption = captureReview.slice(captureReview.indexOf('label: "Add Photo with Camera"'), captureReview.indexOf('testID: "capture-add-photo-camera"'));
+  assert.doesNotMatch(addPhotoCameraOption, /router\.replace\([\s\S]*?"\/camera"/);
+  assert.match(cameraView, /appendCaptureDraftMedia\(media\)[\s\S]*?router\.back\(\)/);
+  assert.match(photoImport, /appendCaptureDraftMedia\([\s\S]*?router\.back\(\)/);
 });
 
 test("existing SKU saves can update metadata without creating duplicate rows", () => {

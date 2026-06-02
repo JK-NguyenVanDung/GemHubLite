@@ -1,5 +1,4 @@
 import { router } from "expo-router";
-import { Alert } from "react-native";
 
 import { isValidSku, normalizeSku, type MediaKind, type ProductType } from "@/src/domain";
 import { saveCaptureAtomically } from "@/src/lib/db";
@@ -44,11 +43,7 @@ export function useCaptureSave(uri: string | null) {
       throw new Error("Save failed. Add a photo and try again.");
     }
 
-    if (!result.created) {
-      Alert.alert("Photo added", mediaItems.length > 1 ? "This product now has new photos." : "This product now has a new photo.");
-    }
-
-    router.replace({ pathname: "/product/[sku]", params: { sku: result.product.sku } });
+    router.dismissTo("/(tabs)/camera");
   }
 
   return { save };

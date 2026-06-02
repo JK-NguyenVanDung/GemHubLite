@@ -1,13 +1,16 @@
 import * as ImagePicker from "expo-image-picker";
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import { useCallback, useState } from "react";
 import { Alert, Platform } from "react-native";
 
 import { getPowerSaveWarning } from "@/src/lib/device/power";
 import { toUserFacingError } from "@/src/lib/errors/userFacing";
 import { storeMediaAsset } from "@/src/lib/files";
+import { appendCaptureDraftMedia } from "@/src/features/camera/captureDraft";
 
-export function usePhotoImport(sku?: string) {
+export function usePhotoImport(sku?: string, options?: { returnToProduct?: boolean }) {
+  const pathname = usePathname();
+  const returnToProduct = options?.returnToProduct ?? false;
   const [importing, setImporting] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
 
@@ -49,10 +52,31 @@ export function usePhotoImport(sku?: string) {
         filenameHint: asset.fileName ?? asset.assetId ?? null,
       });
 
-      router.push({
+      // Adding from the camera screen while a review draft is in flight: append
+      // to the draft and pop back so existing media/form survive.
+      if (
+        appendCaptureDraftMedia({
+          uri: stored.uri,
+          kind: stored.kind,
+          mimeType: stored.mimeType,
+          originalBytes: stored.originalBytes ?? null,
+          storedBytes: stored.storedBytes ?? null,
+          width: stored.width ?? null,
+          height: stored.height ?? null,
+          durationMs: stored.durationMs ?? null,
+          compressed: stored.compressed,
+        })
+      ) {
+        router.back();
+        return;
+      }
+
+      const shouldReturnToProduct = returnToProduct || (!!sku && pathname.startsWith("/product/"));
+      const route = {
         pathname: "/capture-preview",
         params: {
           ...(sku ? { sku } : {}),
+          ...(shouldReturnToProduct ? { returnToProduct: "1" } : {}),
           uri: stored.uri,
           kind: stored.kind,
           mimeType: stored.mimeType,
@@ -63,13 +87,20 @@ export function usePhotoImport(sku?: string) {
           durationMs: stored.durationMs?.toString() ?? "",
           compressed: stored.compressed ? "1" : "0",
         },
-      });
+      } as const;
+
+      if (shouldReturnToProduct) {
+        router.replace(route);
+        return;
+      }
+
+      router.push(route);
     } catch (error) {
       setImportError(toUserFacingError(error, "Photo import failed. Try another file or free storage.").message);
     } finally {
       setImporting(false);
     }
-  }, [sku]);
+  }, [pathname, returnToProduct, sku]);
 
   return { importError, importing, importPhoto };
 }

@@ -23,9 +23,10 @@ export interface ProductFormSectionProps {
   saving: boolean;
   error: string | null;
   onSave: (patch: ProductPatch) => Promise<void>;
+  onDeleteProduct: () => void;
 }
 
-export function ProductFormSection({ error, initialDescription, initialTitle, initialType, onSave, saving }: ProductFormSectionProps) {
+export function ProductFormSection({ error, initialDescription, initialTitle, initialType, onDeleteProduct, onSave, saving }: ProductFormSectionProps) {
   const theme = useTheme();
   const [title, setTitle] = useState(initialTitle ?? "");
   const [type, setType] = useState<ProductType | null>(initialType);
@@ -45,6 +46,7 @@ export function ProductFormSection({ error, initialDescription, initialTitle, in
       <View style={{ paddingTop: theme.spacing.xs }}>
         <Button fullWidth label="Save changes" disabled={!dirty || saving} loading={saving} onPress={() => onSave({ title: clean(title), type, description: clean(description) })} />
       </View>
+      <Button fullWidth label="Delete product" variant="danger" onPress={onDeleteProduct} testID="product-delete-button" />
       <ProductTypeSheet
         selectedType={type}
         visible={typeSheetOpen}

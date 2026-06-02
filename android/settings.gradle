@@ -25,6 +25,9 @@ pluginManagement {
     } catch (ignored) {}
     return 'node'
   }()
+  // Expose to the main settings body — rnConfigCommand below also shells out to
+  // a bare `node`, which fails under the GUI (Android Studio) daemon PATH.
+  gradle.ext.nodeBinary = nodeBinary
   // --------------------------------------------------------------------------
 
   def reactNativeGradlePlugin = new File(
@@ -54,12 +57,18 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   if (System.getenv('EXPO_USE_COMMUNITY_AUTOLINKING') == '1') {
     ex.autolinkLibrariesFromCommand()
   } else {
-    ex.autolinkLibrariesFromCommand(expoAutolinking.rnConfigCommand)
+    // rnConfigCommand starts with a bare "node"; swap in the absolute path so
+    // it does not depend on the daemon PATH (GUI launch lacks Homebrew/nvm).
+    def cmd = new ArrayList(expoAutolinking.rnConfigCommand)
+    if (!cmd.isEmpty() && cmd[0] == 'node') {
+      cmd[0] = gradle.ext.nodeBinary
+    }
+    ex.autolinkLibrariesFromCommand(cmd)
   }
 }
 expoAutolinking.useExpoModules()
 
-rootProject.name = 'GemHub Lite'
+rootProject.name = 'GemHubLite'
 
 expoAutolinking.useExpoVersionCatalog()
 

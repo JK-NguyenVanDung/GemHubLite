@@ -19,15 +19,39 @@ test("ProductHero renders full-width media with photo and video branches", () =>
 
 test("MediaStrip is a horizontal selector with an inline add tile", () => {
   const src = read("src/features/product-detail/components/MediaStrip.tsx");
-  assert.match(src, /ScrollView/);
+  assert.match(src, /FlatList/);
   assert.match(src, /horizontal/);
   assert.match(src, /testID="media-strip-add"/);
+  assert.match(src, /ListHeaderComponent/);
   assert.match(src, /usePhotoImport/);
-  assert.match(src, /pathname: "\/camera"/);
+  assert.match(src, /openCreateProduct\(sku\)/);
   assert.match(src, /ActionSheet/);
   // active thumbnail gets an accent border
   assert.match(src, /active \? theme\.colors\.accent/);
   assert.match(src, /onSelect\(item\.id\)/);
+});
+
+test("MediaStrip edit pen removes media until final image prompts product delete", () => {
+  const src = read("src/features/product-detail/components/MediaStrip.tsx");
+  assert.match(src, /name="pencil"/);
+  assert.match(src, /testID=\{`media-strip-remove-\$\{item\.id\}`\}/);
+  assert.match(src, /media\.length <= 1/);
+  assert.match(src, /Delete product\?/);
+  assert.match(src, /await onDeleteMedia\(item\.id\)/);
+});
+
+test("product detail can delete media files and entire products", () => {
+  const route = read("app/product/[sku].tsx");
+  const hook = read("src/features/product-detail/hooks/useProductDetail.ts");
+  const mediaRepo = read("src/lib/db/repositories/media.ts");
+  const productsRepo = read("src/lib/db/repositories/products.ts");
+
+  assert.match(route, /Delete product\?/);
+  assert.match(route, /router\.replace\("\/\(tabs\)\/products"\)/);
+  assert.match(hook, /deleteMediaFile\(removed\.uri\)/);
+  assert.match(hook, /productsRepo\.deleteBySku\(sku\)/);
+  assert.match(mediaRepo, /DELETE FROM media WHERE id = \?/);
+  assert.match(productsRepo, /DELETE FROM products WHERE sku = \?/);
 });
 
 test("product detail route uses hero + strip and SKU header title", () => {

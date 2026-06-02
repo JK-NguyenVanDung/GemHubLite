@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import { memo, useCallback, useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 
@@ -16,6 +15,7 @@ import { usePhotoImport } from "@/src/features/camera/hooks/usePhotoImport";
 import { MediaTile } from "@/src/features/media/components";
 import { useMedia } from "@/src/features/media/store";
 import { useResponsiveColumns, useResponsiveLayout } from "@/src/lib/layout/useResponsiveColumns";
+import { useCatalogNavigation } from "@/src/lib/navigation/catalogNavigation";
 
 type SortMode = "newest" | "oldest";
 type Range = "all" | "today" | "week";
@@ -38,6 +38,7 @@ export default function MediaScreen() {
   const [sort, setSort] = useState<SortMode>("newest");
   const [filterNow] = useState(() => Date.now());
   const { importPhoto } = usePhotoImport();
+  const { openCreateProduct, openProductDetail } = useCatalogNavigation();
 
   const refreshFromPull = useCallback(async () => {
     setRefreshing(true);
@@ -70,9 +71,9 @@ export default function MediaScreen() {
   }, [data, filterNow, query, range, sort, typeFilter]);
 
   const sourceOptions: ActionSheetOption[] = useMemo(() => [
-    { label: "Open Camera", icon: "camera-outline", onPress: () => router.push("/camera"), testID: "new-media-camera" },
+    { label: "Open Camera", icon: "camera-outline", onPress: () => openCreateProduct(), testID: "new-media-camera" },
     { label: "Choose from Library", icon: "images-outline", onPress: importPhoto, testID: "new-media-library" },
-  ], [importPhoto]);
+  ], [importPhoto, openCreateProduct]);
 
   const filterGroups: FilterGroup[] = useMemo(() => [
     {
@@ -116,8 +117,8 @@ export default function MediaScreen() {
   }, [filteredData.length, query, range, sort, typeFilter]);
 
   const openMediaProduct = useCallback((media: Media | MediaListItem) => {
-    router.push({ pathname: "/product/[sku]", params: { sku: media.sku } });
-  }, []);
+    openProductDetail(media.sku);
+  }, [openProductDetail]);
 
   const renderMedia = useCallback(({ item }: { item: MediaListItem }) => (
     <View style={{ flex: 1 / columns }}>
@@ -174,7 +175,6 @@ export default function MediaScreen() {
         visible={filterSheetOpen}
         title="Filter media"
         groups={filterGroups}
-        onClear={() => { setTypeFilter("all"); setRange("all"); setSort("newest"); }}
         onClose={() => setFilterSheetOpen(false)}
         testID="media-filter-sheet"
       />

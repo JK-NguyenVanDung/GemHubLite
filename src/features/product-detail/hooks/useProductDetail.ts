@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { useFocusEffect } from "expo-router";
 
 import type { Media, Product, ProductPatch } from "@/src/domain";
+import { deleteMediaFile } from "@/src/lib/files";
 import { mediaRepo, productsRepo } from "@/src/lib/db";
 
 export function useProductDetail(sku: string) {
@@ -69,5 +70,26 @@ export function useProductDetail(sku: string) {
     }
   }, [sku]);
 
-  return { product, media, loading, saving, error, saveError, refresh, mutate };
+  const deleteMedia = useCallback(async (id: string) => {
+    const removed = await mediaRepo.deleteById(id);
+
+    if (removed) {
+      deleteMediaFile(removed.uri);
+      setMedia((items) => items.filter((item) => item.id !== id));
+    }
+  }, []);
+
+  const deleteProduct = useCallback(async () => {
+    if (!sku) {
+      throw new Error("Missing SKU route parameter.");
+    }
+
+    const uris = media.map((item) => item.uri);
+    await productsRepo.deleteBySku(sku);
+    uris.forEach(deleteMediaFile);
+    setProduct(null);
+    setMedia([]);
+  }, [media, sku]);
+
+  return { product, media, loading, saving, error, saveError, refresh, mutate, deleteMedia, deleteProduct };
 }

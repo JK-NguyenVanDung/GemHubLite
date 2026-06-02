@@ -195,6 +195,20 @@ export const productsRepo = {
     return updated;
   },
 
+  async deleteBySku(sku: string): Promise<Product | null> {
+    const db = await getDb();
+    const normalizedSku = validateSku(sku);
+    const existing = await productsRepo.getBySku(normalizedSku);
+
+    if (!existing) {
+      return null;
+    }
+
+    await db.runAsync("DELETE FROM products WHERE sku = ?;", normalizedSku);
+
+    return existing;
+  },
+
   /** Returns next generated SKU sequence for local catalog path `GH-######`. */
   async nextSequence(): Promise<number> {
     const db = await getDb();

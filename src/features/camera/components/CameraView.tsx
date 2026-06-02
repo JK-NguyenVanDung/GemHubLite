@@ -17,6 +17,7 @@ import type { ActionSheetOption, IoniconName } from "@/src/components/ui";
 import { getPowerSaveWarning } from "@/src/lib/device/power";
 import { storeMediaAsset } from "@/src/lib/files";
 import { useTheme } from "@/src/theme";
+import { appendCaptureDraftMedia } from "@/src/features/camera/captureDraft";
 import { usePhotoImport } from "@/src/features/camera/hooks/usePhotoImport";
 
 const CAMERA_MOUNT_DELAY_MS = 250;
@@ -24,15 +25,18 @@ const ZOOM_PRESETS = [0.5, 1, 2, 3];
 const FOCUS_RING_SIZE = 68;
 const FOCUS_RING_DURATION_MS = 900;
 
-export function GemHubCameraView({ sku }: { sku?: string }) {
+export function GemHubCameraView({ returnToProduct = false, sku }: { returnToProduct?: boolean; sku?: string }) {
   const theme = useTheme();
   const device = useCameraDevice("back");
   const { hasPermission, requestPermission } = useCameraPermission();
   const [focused, setFocused] = useState(false);
   const [canMountCamera, setCanMountCamera] = useState(false);
+  const [cameraSession, setCameraSession] = useState(0);
 
   useFocusEffect(
     useCallback(() => {
+      setCanMountCamera(false);
+      setCameraSession((session) => session + 1);
       setFocused(true);
       return () => {
         setFocused(false);
@@ -63,7 +67,7 @@ export function GemHubCameraView({ sku }: { sku?: string }) {
   }
 
   if (!device) {
-    return <SimulatorCaptureFallback sku={sku} />;
+    return <SimulatorCaptureFallback key={`fallback-${cameraSession}`} returnToProduct={returnToProduct} sku={sku} />;
   }
 
   if (!focused || !canMountCamera) {
@@ -75,13 +79,13 @@ export function GemHubCameraView({ sku }: { sku?: string }) {
     );
   }
 
-  return <StableCameraPreview device={device} sku={sku} />;
+  return <StableCameraPreview key={`camera-${device.id}-${cameraSession}`} device={device} returnToProduct={returnToProduct} sku={sku} />;
 }
 
-function SimulatorCaptureFallback({ sku }: { sku?: string }) {
+function SimulatorCaptureFallback({ returnToProduct, sku }: { returnToProduct: boolean; sku?: string }) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const { importError, importing, importPhoto } = usePhotoImport(sku);
+  const { importError, importing, importPhoto } = usePhotoImport(sku, { returnToProduct });
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
@@ -94,7 +98,7 @@ function SimulatorCaptureFallback({ sku }: { sku?: string }) {
         <View style={{ position: "absolute", left: theme.spacing.md, right: theme.spacing.md, bottom: theme.spacing.xl, flexDirection: "row", justifyContent: "space-between" }}>
           <RoundControl icon="flash-off" accessibilityLabel="Flash unavailable" />
           <RoundControl label="1×" accessibilityLabel="Zoom unavailable" />
-          <RoundControl icon="settings-outline" onPress={importPhoto} accessibilityLabel="Choose from Library" />
+          <RoundControl icon="images-outline" onPress={importPhoto} accessibilityLabel="Choose from Library" />
         </View>
       </View>
       <View style={{ backgroundColor: theme.colors.surface, borderTopLeftRadius: theme.radius.xl, borderTopRightRadius: theme.radius.xl, padding: theme.spacing.md, paddingBottom: Math.max(theme.spacing.md, insets.bottom + theme.spacing.xs), gap: theme.spacing.sm }}>
@@ -109,7 +113,7 @@ function SimulatorCaptureFallback({ sku }: { sku?: string }) {
   );
 }
 
-function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: string }) {
+function StableCameraPreview({ device, returnToProduct, sku }: { device: CameraDevice; returnToProduct: boolean; sku?: string }) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const cameraRef = useRef<CameraRef>(null);
@@ -125,7 +129,7 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
   const [zoom, setZoom] = useState(() => clampZoom(1, device.minZoom, device.maxZoom));
   const [focusPoint, setFocusPoint] = useState<{ x: number; y: number } | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const { importPhoto } = usePhotoImport(sku);
+  const { importPhoto } = usePhotoImport(sku, { returnToProduct });
   const availableZooms = useMemo(
     () => ZOOM_PRESETS.filter((preset) => preset >= device.minZoom && preset <= device.maxZoom),
     [device.maxZoom, device.minZoom],
@@ -148,10 +152,29 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
 
       const photo = await photoOutput.capturePhotoToFile({ flashMode: flashEnabled && device.hasFlash ? "on" : "off" }, {});
       const stored = await storeMediaAsset({ uri: photo.filePath, kind: "image", mimeType: "image/jpeg" });
+      const media = {
+        uri: stored.uri,
+        kind: stored.kind,
+        mimeType: stored.mimeType,
+        originalBytes: stored.originalBytes ?? null,
+        storedBytes: stored.storedBytes ?? null,
+        width: stored.width ?? null,
+        height: stored.height ?? null,
+        durationMs: stored.durationMs ?? null,
+        compressed: stored.compressed,
+      };
+      // If we got here from an existing review draft (the "Add Photo with
+      // Camera" path), append to that draft and pop back to it so prior media
+      // and form fields survive instead of being replaced by a fresh review.
+      if (appendCaptureDraftMedia(media)) {
+        router.back();
+        return;
+      }
       router.push({
         pathname: "/capture-preview",
         params: {
           ...(sku ? { sku } : {}),
+          ...(returnToProduct ? { returnToProduct: "1" } : {}),
           uri: stored.uri,
           kind: stored.kind,
           mimeType: stored.mimeType,
@@ -167,7 +190,7 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
     } finally {
       setCapturing(false);
     }
-  }, [capturing, device.hasFlash, flashEnabled, photoOutput, ready, sku]);
+  }, [capturing, device.hasFlash, flashEnabled, photoOutput, ready, returnToProduct, sku]);
 
   const toggleFlash = useCallback(() => {
     if (!device.hasFlash && !device.hasTorch) {
@@ -229,6 +252,7 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
         style={[styles.preview, { backgroundColor: theme.colors.black }]}
       >
         <Camera
+          key={device.id}
           ref={cameraRef}
           device={device}
           isActive
@@ -247,7 +271,7 @@ function StableCameraPreview({ device, sku }: { device: CameraDevice; sku?: stri
         <View style={{ position: "absolute", left: theme.spacing.md, right: theme.spacing.md, bottom: theme.spacing.xl, flexDirection: "row", justifyContent: "space-between" }}>
           <RoundControl active={flashEnabled} icon={flashEnabled ? "flash" : "flash-off"} onPress={toggleFlash} accessibilityLabel={flashEnabled ? "Turn flash off" : "Turn flash on"} />
           <RoundControl label={`${formatZoom(zoom)}×`} onPress={cycleZoom} accessibilityLabel="Change zoom" />
-          <RoundControl icon="settings-outline" onPress={() => setSettingsOpen(true)} accessibilityLabel="Camera Options" />
+          <RoundControl icon="images-outline" onPress={() => setSettingsOpen(true)} accessibilityLabel="Camera Options" />
         </View>
         {!ready ? (
           <View style={styles.overlay}>

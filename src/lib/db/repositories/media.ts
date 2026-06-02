@@ -192,6 +192,13 @@ export const mediaRepo = {
     return rows.map(mapMedia);
   },
 
+  async getById(id: string): Promise<Media | null> {
+    const db = await getDb();
+    const row = await db.getFirstAsync<MediaRow>("SELECT * FROM media WHERE id = ? LIMIT 1;", id);
+
+    return row ? mapMedia(row) : null;
+  },
+
   async listStoredUris(): Promise<string[]> {
     const db = await getDb();
     const rows = await db.getAllAsync<{ uri: string }>("SELECT uri FROM media;");
@@ -199,8 +206,17 @@ export const mediaRepo = {
     return rows.map((row) => row.uri);
   },
 
-  /** Delete stays outside v1 scope; detail/camera slices should not call it yet. */
-  async deleteById(_id: string): Promise<void> {
-    throw new Error("Deleting media is not implemented in v1.");
+  async deleteById(id: string): Promise<Media | null> {
+    const db = await getDb();
+    const existing = await mediaRepo.getById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    await db.runAsync("DELETE FROM media WHERE id = ?;", id);
+    await db.runAsync("UPDATE products SET updated_at = ? WHERE sku = ?;", Date.now(), existing.sku);
+
+    return existing;
   },
 };

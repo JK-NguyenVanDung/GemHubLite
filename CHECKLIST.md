@@ -13,20 +13,18 @@
 ## Real App Inspection
 
 - [x] Entry/navigation captured.
-- [ ] Media area captured and summarized.
 - [x] Products empty state captured and summarized.
-- [ ] Product Detail captured and summarized.
 - [x] Camera area captured or blocker documented.
 - [x] SKU save flow captured or blocker documented.
 - [x] New SKU creation captured.
 - [x] Product type hierarchy captured.
-- [ ] Existing SKU append behavior captured.
+- [x] Existing SKU append behavior captured.
 - [x] Safe Lite adaptations identified.
 - [x] Proprietary/non-core surfaces explicitly excluded.
 
 ## Required Product Journeys
 
-- [ ] New product from camera: capture -> SKU -> save -> Products + Media updated on real device; simulator fallback flow exists.
+- [x] New product from camera: capture -> SKU -> save -> Products + Media updated on real device; simulator fallback flow exists.
 - [x] Add media to existing product from Product Detail.
 - [x] Existing SKU from Camera appends media and may update product metadata without duplicate product.
 - [x] Products list shows SKU, title/placeholder, thumbnail, media count, search, type filter, and sort; populated cards implemented, manual visual verification pending.

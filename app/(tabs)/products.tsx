@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import { memo, useCallback, useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 
@@ -16,6 +15,7 @@ import { usePhotoImport } from "@/src/features/camera/hooks/usePhotoImport";
 import { ProductCard } from "@/src/features/products/components";
 import { useProducts } from "@/src/features/products/store";
 import { useResponsiveColumns, useResponsiveLayout } from "@/src/lib/layout/useResponsiveColumns";
+import { useCatalogNavigation } from "@/src/lib/navigation/catalogNavigation";
 
 type SortMode = "newest" | "oldest" | "most-photos";
 const MemoProductCard = memo(ProductCard);
@@ -39,6 +39,7 @@ export default function ProductsScreen() {
   const [typeFilter, setTypeFilter] = useState<"all" | ProductType>("all");
   const [sort, setSort] = useState<SortMode>("newest");
   const { importPhoto } = usePhotoImport();
+  const { openCreateProduct, openProductDetail } = useCatalogNavigation();
 
   const refreshFromPull = useCallback(async () => {
     setRefreshing(true);
@@ -73,9 +74,9 @@ export default function ProductsScreen() {
   }, [data, query, sort, typeFilter]);
 
   const sourceOptions: ActionSheetOption[] = useMemo(() => [
-    { label: "Open Camera", icon: "camera-outline", onPress: () => router.push("/camera"), testID: "new-product-camera" },
+    { label: "Open Camera", icon: "camera-outline", onPress: () => openCreateProduct(), testID: "new-product-camera" },
     { label: "Choose from Library", icon: "images-outline", onPress: importPhoto, testID: "new-product-library" },
-  ], [importPhoto]);
+  ], [importPhoto, openCreateProduct]);
 
   const filterGroups: FilterGroup[] = useMemo(() => [
     {
@@ -108,8 +109,8 @@ export default function ProductsScreen() {
   }, [filteredData.length, query, sort, typeFilter]);
 
   const openProduct = useCallback((sku: string) => {
-    router.push({ pathname: "/product/[sku]", params: { sku } });
-  }, []);
+    openProductDetail(sku);
+  }, [openProductDetail]);
 
   const renderProduct = useCallback(({ item }: { item: ProductListItem }) => (
     <View style={{ flex: 1 / columns }}>
@@ -166,7 +167,6 @@ export default function ProductsScreen() {
         visible={filterSheetOpen}
         title="Filter products"
         groups={filterGroups}
-        onClear={() => { setTypeFilter("all"); setSort("newest"); }}
         onClose={() => setFilterSheetOpen(false)}
         testID="products-filter-sheet"
       />

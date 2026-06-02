@@ -1,4 +1,5 @@
 import { BottomSheet, RNHostView } from "@expo/ui";
+import { useState } from "react";
 import { Pressable, useWindowDimensions, View } from "react-native";
 
 import { Button, Icon, Text } from "@/src/components/ui";
@@ -8,19 +9,60 @@ import type { FilterSheetProps } from "@/src/components/ui/FilterSheet/FilterShe
 
 export function FilterSheet({
   groups,
-  onClear,
   onClose,
   testID,
   title,
   visible,
 }: FilterSheetProps) {
+  return (
+    <BottomSheet isPresented={visible} onDismiss={onClose} testID={testID}>
+      {visible ? (
+        <FilterSheetContent
+          groups={groups}
+          onClose={onClose}
+          testID={testID}
+          title={title}
+        />
+      ) : null}
+    </BottomSheet>
+  );
+}
+
+type FilterSheetContentProps = Pick<
+  FilterSheetProps,
+  "groups" | "onClose" | "testID" | "title"
+>;
+
+function FilterSheetContent({
+  groups,
+  onClose,
+  testID,
+  title,
+}: FilterSheetContentProps) {
   const theme = useTheme();
   const { width } = useWindowDimensions();
   const sheetWidth = Math.max(280, width - theme.spacing.xxl);
+  const [draftValues, setDraftValues] = useState<Record<string, string>>(() =>
+    Object.fromEntries(groups.map((group) => [group.title, group.value])),
+  );
+
+  const clearDraft = () => {
+    setDraftValues(
+      Object.fromEntries(
+        groups.map((group) => [group.title, group.options[0]?.value ?? group.value]),
+      ),
+    );
+  };
+
+  const applyDraft = () => {
+    groups.forEach((group) => {
+      group.onChange(draftValues[group.title] ?? group.value);
+    });
+    onClose();
+  };
 
   return (
-    <BottomSheet isPresented={visible} onDismiss={onClose} testID={testID}>
-      <RNHostView matchContents testID={testID} style={{ width: sheetWidth }}>
+    <RNHostView matchContents testID={testID} style={{ width: sheetWidth }}>
         <View
           testID={testID}
           style={{ gap: theme.spacing.md, padding: theme.spacing.md, width: sheetWidth }}
@@ -59,14 +101,19 @@ export function FilterSheet({
                 }}
               >
                 {group.options.map((option) => {
-                  const selected = option.value === group.value;
+                  const selected = option.value === (draftValues[group.title] ?? group.value);
                   return (
                     <Pressable
                       key={option.value}
                       accessibilityRole="button"
                       accessibilityLabel={`${group.title}: ${option.label}`}
                       accessibilityState={{ selected }}
-                      onPress={() => group.onChange(option.value)}
+                      onPress={() => {
+                        setDraftValues((values) => ({
+                          ...values,
+                          [group.title]: option.value,
+                        }));
+                      }}
                       style={({ pressed }) => ({
                         alignItems: "center",
                         backgroundColor: selected
@@ -109,16 +156,15 @@ export function FilterSheet({
               <Button
                 variant="secondary"
                 label="Clear"
-                onPress={onClear}
+                onPress={clearDraft}
                 fullWidth
               />
             </View>
             <View style={{ flex: 1 }}>
-              <Button label="Apply" onPress={onClose} fullWidth />
+              <Button label="Apply" onPress={applyDraft} fullWidth />
             </View>
           </View>
         </View>
-      </RNHostView>
-    </BottomSheet>
+    </RNHostView>
   );
 }

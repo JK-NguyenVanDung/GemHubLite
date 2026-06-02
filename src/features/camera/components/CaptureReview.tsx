@@ -1,12 +1,11 @@
 import { BottomSheet, RNHostView } from "@expo/ui";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
-  Keyboard,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -48,6 +47,7 @@ import {
   type ProductListItem,
   type ProductType,
 } from "@/src/domain";
+import { clearCaptureDraft, setCaptureDraft, takeCaptureDraft } from "@/src/features/camera/captureDraft";
 import { productsRepo } from "@/src/lib/db";
 import { getPowerSaveWarning } from "@/src/lib/device/power";
 import { toUserFacingError } from "@/src/lib/errors/userFacing";
@@ -93,6 +93,7 @@ export function CaptureReview() {
     kind?: string;
     mimeType?: string;
     originalBytes?: string;
+    returnToProduct?: string;
     sku?: string;
     storedBytes?: string;
     uri?: string;
@@ -125,6 +126,7 @@ export function CaptureReview() {
     ],
   );
   const initialSku = normalizeSku(readParam(params.sku) ?? "");
+  const shouldReturnToProduct = readParam(params.returnToProduct) === "1";
   const initialValidSku = isValidSku(initialSku) ? initialSku : "";
   const [sku, setSku] = useState(initialValidSku);
   const [title, setTitle] = useState("");
@@ -132,6 +134,7 @@ export function CaptureReview() {
   const [description, setDescription] = useState("");
   const [skuError, setSkuError] = useState<string | null>(null);
   const [imageSheetOpen, setImageSheetOpen] = useState(false);
+  const [photoEditSheetOpen, setPhotoEditSheetOpen] = useState(false);
   const [typeSheetOpen, setTypeSheetOpen] = useState(false);
   const [skuFlowOpen, setSkuFlowOpen] = useState(false);
   const [scannerOpen, setScannerOpen] = useState(false);
@@ -144,42 +147,88 @@ export function CaptureReview() {
   const [pendingMedia, setPendingMedia] = useState<PendingCaptureMedia[]>(() =>
     uri ? [{ uri, ...mediaMetadata }] : [],
   );
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [importingPhoto, setImportingPhoto] = useState(false);
   const { save } = useCaptureSave(uri);
   const normalizedSku = normalizeSku(sku);
+  const selectedMediaIndex = pendingMedia[activeMediaIndex] ? activeMediaIndex : 0;
+  const activeMedia = pendingMedia[selectedMediaIndex] ?? null;
+
+  // Rehydrate on focus (not just mount): when "Add Photo with Camera" pops the
+  // camera back to this already-mounted review, the buffered draft (prior media
+  // + form) is merged with the newly captured asset so nothing is replaced.
+  useFocusEffect(
+    useCallback(() => {
+      const draft = takeCaptureDraft();
+      if (!draft) return;
+
+      setSku(draft.sku);
+      setTitle(draft.title);
+      setType(draft.type);
+      setDescription(draft.description);
+      setPendingMedia(draft.media);
+      setActiveMediaIndex(Math.max(0, draft.media.length - 1));
+      setSkuIntent(draft.sku ? "existing" : "new");
+      setSkuError(null);
+    }, []),
+  );
+
+  const addPhotoWithCamera = useCallback(() => {
+    setCaptureDraft({
+      sku: normalizedSku,
+      title,
+      type,
+      description,
+      media: pendingMedia,
+    });
+    setImageSheetOpen(false);
+    router.push(
+      normalizedSku
+        ? { pathname: "/camera", params: { sku: normalizedSku, ...(shouldReturnToProduct ? { returnToProduct: "1" } : {}) } }
+        : "/camera",
+    );
+  }, [description, normalizedSku, pendingMedia, shouldReturnToProduct, title, type]);
+
+  const removeActivePhoto = useCallback(() => {
+    if (!activeMedia) return;
+
+    if (pendingMedia.length <= 1) {
+      const removesDraftProduct = skuIntent === "new";
+      Alert.alert(removesDraftProduct ? "Discard product?" : "Remove asset?", removesDraftProduct ? "Removing this asset also discards the product draft." : "This discards the current unsaved photo.", [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: removesDraftProduct ? "Discard Product" : "Remove Asset",
+          style: "destructive",
+          onPress: () => {
+            clearCaptureDraft();
+            setPhotoEditSheetOpen(false);
+            router.back();
+          },
+        },
+      ]);
+      return;
+    }
+
+    setPendingMedia((current) => current.filter((_, index) => index !== selectedMediaIndex));
+    setActiveMediaIndex(Math.max(0, selectedMediaIndex - 1));
+    setPhotoEditSheetOpen(false);
+  }, [activeMedia, pendingMedia.length, selectedMediaIndex, skuIntent]);
 
   const typeOptions = useMemo(
     () =>
       productTypes.map((option) => ({
         label: option.label,
         icon: option.icon,
+        selected: option.value === type,
         onPress: () => setType(option.value),
       })),
-    [],
+    [type],
   );
-  const imageOptions: ActionSheetOption[] = useMemo(
-    () => [
-      {
-        label: "Add Photo from Library",
-        icon: "images-outline",
-        onPress: addPhotoFromLibrary,
-        testID: "capture-add-photo-library",
-      },
-      {
-        label: "Add Photo with Camera",
-        icon: "camera-outline",
-        onPress: () =>
-          router.replace(
-            normalizedSku
-              ? { pathname: "/camera", params: { sku: normalizedSku } }
-              : "/camera",
-          ),
-        testID: "capture-add-photo-camera",
-      },
-    ],
-    [normalizedSku],
+  const photoEditOptions: ActionSheetOption[] = useMemo(
+    () => [{ label: "Remove Asset", icon: "trash-outline", destructive: true, onPress: removeActivePhoto, testID: "capture-remove-asset" }],
+    [removeActivePhoto],
   );
   const typeLabel = useMemo(
     () => productTypes.find((option) => option.value === type)?.label,
@@ -246,7 +295,7 @@ export function CaptureReview() {
     setSkuFlowOpen(true);
   }
 
-  async function addPhotoFromLibrary() {
+  const addPhotoFromLibrary = useCallback(async () => {
     setImportingPhoto(true);
     setSaveError(null);
 
@@ -280,27 +329,48 @@ export function CaptureReview() {
         filenameHint: asset.fileName ?? asset.assetId ?? null,
       });
 
-      setPendingMedia((current) => [
-        ...current,
-        {
-          uri: stored.uri,
-          kind: stored.kind,
-          mimeType: stored.mimeType,
-          originalBytes: stored.originalBytes,
-          storedBytes: stored.storedBytes,
-          width: stored.width,
-          height: stored.height,
-          durationMs: stored.durationMs,
-          compressed: stored.compressed,
-        },
-      ]);
+      setPendingMedia((current) => {
+        setActiveMediaIndex(current.length);
+        return [
+          ...current,
+          {
+            uri: stored.uri,
+            kind: stored.kind,
+            mimeType: stored.mimeType,
+            originalBytes: stored.originalBytes,
+            storedBytes: stored.storedBytes,
+            width: stored.width,
+            height: stored.height,
+            durationMs: stored.durationMs,
+            compressed: stored.compressed,
+          },
+        ];
+      });
       setImageSheetOpen(false);
     } catch (error) {
       setSaveError(toUserFacingError(error, "Photo import failed. Try another file or free storage.").message);
     } finally {
       setImportingPhoto(false);
     }
-  }
+  }, []);
+
+  const imageOptions: ActionSheetOption[] = useMemo(
+    () => [
+      {
+        label: "Add Photo from Library",
+        icon: "images-outline",
+        onPress: addPhotoFromLibrary,
+        testID: "capture-add-photo-library",
+      },
+      {
+        label: "Add Photo with Camera",
+        icon: "camera-outline",
+        onPress: addPhotoWithCamera,
+        testID: "capture-add-photo-camera",
+      },
+    ],
+    [addPhotoFromLibrary, addPhotoWithCamera],
+  );
 
   async function attemptSave() {
     const normalized = normalizeSku(sku);
@@ -349,7 +419,7 @@ export function CaptureReview() {
           </Text>
           <Button
             label="Back to Camera"
-            onPress={() => router.replace("/camera")}
+            onPress={() => shouldReturnToProduct && normalizedSku ? router.replace({ pathname: "/product/[sku]", params: { sku: normalizedSku } }) : router.replace("/camera")}
           />
         </Card>
       </View>
@@ -390,10 +460,11 @@ export function CaptureReview() {
         <View style={{ width: 18 + 50 }} />
       </View>
       <View style={{ backgroundColor: theme.colors.surface }}>
-        {mediaKind === "image" ? (
+        {activeMedia?.kind !== "video" ? (
           <Image
+            key={activeMedia?.uri ?? "empty-media"}
             cachePolicy="memory-disk"
-            source={{ uri }}
+            source={{ uri: activeMedia?.uri ?? uri }}
             style={{
               aspectRatio: 1.08,
               backgroundColor: theme.colors.surfaceMuted,
@@ -429,7 +500,7 @@ export function CaptureReview() {
         >
           <RoundIcon
             icon="pencil"
-            onPress={() => setImageSheetOpen(true)}
+            onPress={() => setPhotoEditSheetOpen(true)}
             accessibilityLabel="Photo actions"
           />
         </View>
@@ -473,9 +544,9 @@ export function CaptureReview() {
           </Pressable>
           {pendingMedia.map((item, index) =>
             item.kind === "image" ? (
-              <Thumbnail key={`${item.uri}-${index}`} source={{ uri: item.uri }} selected={index === pendingMedia.length - 1} size="sm" />
+              <Thumbnail key={`${item.uri}-${index}`} source={{ uri: item.uri }} selected={index === selectedMediaIndex} size="sm" onPress={() => setActiveMediaIndex(index)} />
             ) : (
-              <VideoThumb key={`${item.uri}-${index}`} />
+              <VideoThumb key={`${item.uri}-${index}`} selected={index === selectedMediaIndex} onPress={() => setActiveMediaIndex(index)} />
             ),
           )}
         </View>
@@ -559,6 +630,12 @@ export function CaptureReview() {
         title="Add photo"
         options={imageOptions}
         onClose={() => setImageSheetOpen(false)}
+      />
+      <ActionSheet
+        visible={photoEditSheetOpen}
+        title="Edit photo"
+        options={photoEditOptions}
+        onClose={() => setPhotoEditSheetOpen(false)}
       />
       <ActionSheet
         visible={typeSheetOpen}
@@ -746,14 +823,12 @@ function SkuCreationFlow({
   }
 
   return (
-    <BottomSheet isPresented onDismiss={onClose} snapPoints={[{ fraction: 0.58 }]}> 
+    <BottomSheet isPresented onDismiss={onClose}>
       <RNHostView matchContents style={{ width: sheetWidth }}>
         <View
           style={{
-            backgroundColor: theme.colors.surface,
-            borderTopLeftRadius: theme.radius.xl,
-            borderTopRightRadius: theme.radius.xl,
-            overflow: "hidden",
+            gap: theme.spacing.md,
+            padding: theme.spacing.md,
             width: sheetWidth,
           }}
         >
@@ -762,12 +837,10 @@ function SkuCreationFlow({
               alignItems: "center",
               flexDirection: "row",
               justifyContent: "space-between",
-              paddingHorizontal: theme.spacing.md,
-              paddingTop: theme.spacing.lg,
-              paddingBottom: theme.spacing.sm,
+              minHeight: 44,
             }}
           >
-            <Button label="Cancel" variant="ghost" size="sm" onPress={onClose} />
+            <View style={{ width: 72 }} />
             <Text variant="screenTitle">Choose SKU</Text>
             <Button
               label="Confirm"
@@ -781,9 +854,6 @@ function SkuCreationFlow({
             contentInsetAdjustmentBehavior="automatic"
             contentContainerStyle={{
               gap: theme.spacing.md,
-              paddingHorizontal: theme.spacing.md,
-              paddingTop: theme.spacing.xs,
-              paddingBottom: theme.spacing.xl,
               width: "100%",
             }}
             keyboardShouldPersistTaps="handled"
@@ -987,16 +1057,7 @@ function SkuScannerOverlay({
   const insets = useSafeAreaInsets();
   const device = useCameraDevice("back");
   const { hasPermission, requestPermission } = useCameraPermission();
-  const [manualCode, setManualCode] = useState("");
   const [detectedCode, setDetectedCode] = useState<string | null>(null);
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const normalizedManualCode = normalizeSku(manualCode);
-  const canUseManualCode = isValidSku(normalizedManualCode);
-
-  function submitManualCode() {
-    if (!canUseManualCode) return;
-    onScanned(normalizedManualCode);
-  }
 
   const handleObjectsScanned = useCallback(
     (objects: ScannedObject[]) => {
@@ -1008,7 +1069,6 @@ function SkuScannerOverlay({
       if (!normalizedCode) return;
 
       setDetectedCode(normalizedCode);
-      setManualCode(normalizedCode);
       onScanned(normalizedCode);
     },
     [detectedCode, onScanned],
@@ -1021,22 +1081,6 @@ function SkuScannerOverlay({
   const canUseNativeScanner = hasPermission && Boolean(device);
   const bottomInset = Math.max(insets.bottom, theme.spacing.md);
   const topInset = Math.max(insets.top, theme.spacing.md);
-
-  useEffect(() => {
-    const show = Keyboard.addListener(
-      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow",
-      () => setKeyboardVisible(true),
-    );
-    const hide = Keyboard.addListener(
-      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide",
-      () => setKeyboardVisible(false),
-    );
-
-    return () => {
-      show.remove();
-      hide.remove();
-    };
-  }, []);
 
   return (
     <Modal animationType="fade" onRequestClose={onClose} visible>
@@ -1058,10 +1102,11 @@ function SkuScannerOverlay({
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "flex-start",
               paddingBottom: theme.spacing.sm,
               paddingHorizontal: theme.spacing.lg,
               paddingTop: topInset + theme.spacing.sm,
+              zIndex: 2,
             }}
           >
             <Pressable
@@ -1080,59 +1125,39 @@ function SkuScannerOverlay({
             >
               <Icon name="close" size={26} tone="onAccent" />
             </Pressable>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Scanner settings"
-              hitSlop={8}
-              style={{
-                alignItems: "center",
-                backgroundColor: "rgba(255,255,255,0.16)",
-                borderRadius: theme.radius.pill,
-                height: 44,
-                justifyContent: "center",
-                width: 44,
-              }}
-            >
-              <Icon name="settings" size={24} tone="onAccent" />
-            </Pressable>
           </View>
           <ScrollView
             contentContainerStyle={{
               flexGrow: 1,
-              justifyContent: keyboardVisible ? "flex-start" : "center",
+              justifyContent: "center",
               paddingBottom: bottomInset + theme.spacing.md,
               paddingHorizontal: theme.spacing.lg,
-              paddingTop: keyboardVisible ? theme.spacing.sm : theme.spacing.md,
+              paddingTop: theme.spacing.md,
             }}
             keyboardShouldPersistTaps="handled"
           >
             <View
               style={{
                 alignSelf: "center",
-                aspectRatio: keyboardVisible ? undefined : 1,
+                aspectRatio: 1,
                 borderColor: theme.colors.surface,
                 borderRadius: theme.radius.xl,
-                borderWidth: keyboardVisible ? 2 : 4,
+                borderWidth: 4,
                 justifyContent: "center",
                 maxWidth: 330,
-                minHeight: keyboardVisible ? 92 : undefined,
                 opacity: 0.95,
-                width: keyboardVisible ? "100%" : "84%",
+                width: "84%",
               }}
             >
               <View
                 style={{
                   alignItems: "center",
                   gap: theme.spacing.sm,
-                  padding: keyboardVisible ? theme.spacing.md : 0,
+                  padding: 0,
                 }}
               >
                 {canUseNativeScanner ? (
-                  <Icon
-                    name="scan-outline"
-                    size={keyboardVisible ? 28 : 56}
-                    tone="onAccent"
-                  />
+                  <Icon name="scan-outline" size={56} tone="onAccent" />
                 ) : (
                   <ActivityIndicator color={theme.colors.surface} />
                 )}
@@ -1163,7 +1188,7 @@ function SkuScannerOverlay({
                 <Text variant="body" style={{ flex: 1 }}>
                   {canUseNativeScanner
                     ? "Place the code inside the frame."
-                    : "Enter the SKU manually, or allow camera access to scan."}
+                    : "Allow camera access to scan a SKU."}
                 </Text>
               </View>
               {!hasPermission ? (
@@ -1174,37 +1199,6 @@ function SkuScannerOverlay({
                   onPress={requestPermission}
                 />
               ) : null}
-              <TextInput
-                autoCapitalize="characters"
-                autoCorrect={false}
-                blurOnSubmit
-                maxFontSizeMultiplier={1.3}
-                onChangeText={setManualCode}
-                onSubmitEditing={submitManualCode}
-                placeholder="Enter SKU"
-                placeholderTextColor={theme.colors.tertiaryText}
-                returnKeyType="done"
-                style={[
-                  theme.typography.body,
-                  {
-                    backgroundColor: theme.colors.surfaceMuted,
-                    borderRadius: theme.radius.md,
-                    color: theme.colors.text,
-                    minHeight: 48,
-                    paddingHorizontal: theme.spacing.sm,
-                  },
-                ]}
-                testID="sku-scanner-manual-code"
-                value={manualCode}
-              />
-              <Button
-                label="Use SKU"
-                fullWidth
-                onPress={submitManualCode}
-                disabled={!canUseManualCode}
-                leftIcon={<Icon name="barcode-outline" tone="onAccent" />}
-                testID="sku-scanner-use-code"
-              />
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
@@ -1268,23 +1262,33 @@ function RoundIcon({
   );
 }
 
-function VideoThumb() {
+function VideoThumb({
+  onPress,
+  selected = false,
+}: {
+  onPress?: () => void;
+  selected?: boolean;
+}) {
   const theme = useTheme();
   return (
-    <View
+    <Pressable
+      accessibilityRole="imagebutton"
+      accessibilityLabel="Show video"
+      onPress={onPress}
+      hitSlop={10}
       style={{
         alignItems: "center",
         backgroundColor: theme.colors.black,
-        borderColor: theme.colors.accent,
+        borderColor: selected ? theme.colors.accent : theme.colors.border,
         borderRadius: theme.radius.sm,
-        borderWidth: 2,
+        borderWidth: selected ? 2 : 1,
         height: 64,
         justifyContent: "center",
         width: 64,
       }}
     >
       <Icon name="videocam" size={22} tone="onAccent" />
-    </View>
+    </Pressable>
   );
 }
 

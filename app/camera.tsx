@@ -14,11 +14,12 @@ export default function CameraScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const entrance = useMemo(() => new Animated.Value(0), []);
-  const { sku } = useLocalSearchParams<{ sku?: string }>();
+  const { returnToProduct, sku } = useLocalSearchParams<{ returnToProduct?: string; sku?: string }>();
   const normalizedSku = normalizeSku(Array.isArray(sku) ? sku[0] : sku ?? "");
   const activeSku = isValidSku(normalizedSku) ? normalizedSku : undefined;
+  const shouldReturnToProduct = returnToProduct === "1" && activeSku;
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const { importPhoto } = usePhotoImport(activeSku);
+  const { importPhoto } = usePhotoImport(activeSku, { returnToProduct: !!shouldReturnToProduct });
   const settingsOptions: ActionSheetOption[] = useMemo(() => [
     { label: "Choose from Library", icon: "images-outline", onPress: importPhoto, testID: "camera-header-library" },
   ], [importPhoto]);
@@ -48,7 +49,7 @@ export default function CameraScreen() {
   return (
     <Screen scroll={false} constrainContent={false} safeAreaEdges={["left", "right"]} contentStyle={{ padding: 0, gap: 0 }} testID="camera-screen">
       <Animated.View style={[{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", minHeight: 64, paddingHorizontal: theme.spacing.md, paddingBottom: theme.spacing.sm, paddingTop: Math.max(insets.top, 54) }, entranceStyle]}>
-        <Pressable accessibilityLabel="Close Camera" accessibilityRole="button" hitSlop={theme.spacing.sm} onPress={() => router.back()} style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1, padding: theme.spacing.xs })} testID="camera-close-button">
+        <Pressable accessibilityLabel="Close Camera" accessibilityRole="button" hitSlop={theme.spacing.sm} onPress={() => shouldReturnToProduct ? router.replace({ pathname: "/product/[sku]", params: { sku: activeSku } }) : router.back()} style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1, padding: theme.spacing.xs })} testID="camera-close-button">
           <Icon name="close" size={34} tone="secondary" />
         </Pressable>
         {activeSku ? <Chip label={`Adding to ${activeSku}`} tone="accent" /> : <View />}
@@ -57,7 +58,7 @@ export default function CameraScreen() {
         </Pressable>
       </Animated.View>
       <Animated.View style={[{ flex: 1 }, entranceStyle]}>
-        <GemHubCameraView sku={activeSku} />
+        <GemHubCameraView returnToProduct={!!shouldReturnToProduct} sku={activeSku} />
       </Animated.View>
       <ActionSheet visible={settingsOpen} title="Camera options" options={settingsOptions} onClose={() => setSettingsOpen(false)} />
     </Screen>

@@ -6,17 +6,19 @@ import { Button, Card, EmptyStateCard, Icon, Screen, Spinner, Text } from "@/src
 import { ProductCard } from "@/src/features/products/components";
 import { useProducts } from "@/src/features/products/store";
 import { useMedia } from "@/src/features/media/store";
+import { useCatalogNavigation } from "@/src/lib/navigation/catalogNavigation";
 import { useTheme } from "@/src/theme";
 
 export default function HomeScreen() {
   const theme = useTheme();
   const { data: products, loading: productsLoading } = useProducts();
   const { data: media, loading: mediaLoading } = useMedia();
+  const { openCreateProduct, openProductDetail } = useCatalogNavigation();
   const recentProducts = useMemo(() => products.slice(0, 4), [products]);
   const loading = productsLoading && mediaLoading && products.length === 0;
   const openProduct = useCallback((sku: string) => {
-    router.push({ pathname: "/product/[sku]", params: { sku } });
-  }, []);
+    openProductDetail(sku);
+  }, [openProductDetail]);
 
   if (loading) {
     return <Screen testID="home-screen"><Spinner /></Screen>;
@@ -66,7 +68,7 @@ export default function HomeScreen() {
             <Text variant="body" tone="secondary">Take a photo, add the SKU, and save it to your catalog.</Text>
           </View>
         </View>
-        <Button fullWidth label="Add Product" leftIcon={<Icon name="camera-outline" tone="onAccent" />} onPress={() => router.push("/camera")} testID="home-capture-button" />
+        <Button fullWidth label="Add Product" leftIcon={<Icon name="camera-outline" tone="onAccent" />} onPress={() => openCreateProduct()} testID="home-capture-button" />
       </Card>
 
       <View style={{ flexDirection: "row", gap: theme.spacing.sm }}>
@@ -77,7 +79,7 @@ export default function HomeScreen() {
       <View style={{ gap: theme.spacing.sm }}>
         <Text variant="sectionTitle">Recent products</Text>
         {recentProducts.length === 0 ? (
-          <EmptyStateCard icon="sparkles-outline" title="No products yet" body="Add your first product photo to get started." actionLabel="Open Camera" onAction={() => router.push("/camera")} />
+          <EmptyStateCard icon="sparkles-outline" title="No products yet" body="Add your first product photo to get started." actionLabel="Open Camera" onAction={() => openCreateProduct()} />
         ) : (
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: theme.spacing.sm }}>
             {recentProducts.map((product) => (

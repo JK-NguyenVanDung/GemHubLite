@@ -66,7 +66,7 @@ function AppStack() {
             headerBackTitle: "",
             headerBackVisible: false,
             headerLeft: () => <ProductBackButton />,
-            title: "Product Detail",
+            title: "",
           }}
         />
       </Stack>

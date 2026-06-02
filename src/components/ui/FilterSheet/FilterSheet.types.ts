@@ -17,7 +17,6 @@ export type FilterSheetProps = {
   visible: boolean;
   title: string;
   groups: FilterGroup[];
-  onClear: () => void;
   onClose: () => void;
   testID?: string;
 };
