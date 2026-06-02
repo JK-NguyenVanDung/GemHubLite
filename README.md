@@ -4,10 +4,10 @@ GemHub Lite is a local-first Expo inventory app for the project camera-to-SKU ca
 
 ## Local Media Storage
 
-- Captured and imported assets are copied into app-owned `Documents/media/` storage.
+- Captured and imported photos are copied into app-owned `Documents/media/` storage.
 - Images are stored under `Documents/media/images/`, normalized to JPEG, downscaled to a maximum 1600px edge, and saved at high-quality compression (`0.86`) to minimize file size while preserving product-detail fidelity.
-- Videos are stored under `Documents/media/videos/`; picker import requests H.264 1280x720 export on iOS where supported, then preserves the resulting file without extra transcoding.
-- Large inputs are rejected before copy (`45 MB` images, `220 MB` videos) and saves require enough free disk headroom to avoid half-written catalog rows.
+- The storage layer has video-ready fields and a `Documents/media/videos/` directory, but the submitted UI is photo-only: camera capture and gallery import both save images, not video clips.
+- Large image inputs are rejected before copy (`45 MB`) and saves require enough free disk headroom to avoid half-written catalog rows.
 - Failed saves delete the just-copied media file, and startup maintenance removes orphaned files not referenced by SQLite.
 - SQLite stores media kind, MIME type, dimensions, duration, original bytes, stored bytes, and compression status with each media row.
 
@@ -19,7 +19,7 @@ GemHub Lite is a local-first Expo inventory app for the project camera-to-SKU ca
 4. Save Product.
 5. Review Product Detail, Products, Media, or Home recents.
 6. Filter Products by type/sort and Media by type/date/sort.
-7. Add another image or video from Product Detail to append media to the same SKU.
+7. Add another photo from Product Detail to append media to the same SKU.
 
 ## SKU Rules
 

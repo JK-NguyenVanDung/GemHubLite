@@ -29,12 +29,12 @@
 - [x] Existing SKU from Camera appends media and may update product metadata without duplicate product.
 - [x] Products list shows SKU, title/placeholder, thumbnail, media count, search, type filter, and sort; populated cards implemented, manual visual verification pending.
 - [x] Media gallery shows thumbnail, SKU/product context, search, type filter, date filter, and sort.
-- [x] Local media storage defined for image/video assets under app-owned `Documents/media/` directories.
+- [x] Local media storage defined for photo assets under app-owned `Documents/media/` directories.
 - [x] Image imports/captures compressed before persistence while retaining high visual quality.
-- [x] Video imports request platform H.264 1280x720 export when available and persist video metadata locally.
+- [ ] Video import/capture is not shipped; storage has video-ready fields but the submitted UI is photo-only.
 - [x] Media tap opens Product Detail for linked SKU.
 - [x] Product Detail edits title, description, and type.
-- [x] Product Detail shows all local image/video media for product.
+- [x] Product Detail shows all local photo media for product.
 - [x] SKU is always required before save.
 
 ## Platform Validation
