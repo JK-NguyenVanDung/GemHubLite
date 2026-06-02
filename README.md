@@ -33,15 +33,24 @@ GemHub Lite is a local-first Expo inventory app for the project camera-to-SKU ca
 
 Bonus capabilities present beyond the required flow: photo-library import (also the simulator capture fallback), barcode/QR SKU fill, and adjustable grid density on Products and Media.
 
-## Run
+## Prerequisites And Running
 
-**Node `22.21.0`** (pinned in `.nvmrc` / `.node-version`). Use whatever version manager you prefer — `nvm use`, `fnm use`, `asdf`, or just install Node 22 directly. Any Node `>=20.19 <23` works.
+Required local environment:
+
+- Node `22.21.0` recommended and pinned in `.nvmrc` / `.node-version`; package range is Node `>=20.19 <23`.
+- npm `>=10`.
+- Xcode + iOS Simulator for `npx expo run:ios`.
+- Android Studio / Android SDK for `./gradlew`; this repo uses Gradle `9.3.1`, compile/target SDK `36`, min SDK `24`, and NDK `27.1.12297006`.
+- A native development build is required because the app uses VisionCamera; Expo Go is not enough.
+- No backend env vars or API keys are required. `.env.example` is intentionally empty/placeholder because the app is local-only.
+
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Then run on a platform below. Optional checks: `npm run typecheck`, `npm run lint`.
+Then run on a platform below. Optional checks: `npm test`, `npm run typecheck`, `npm run lint`, and `npm run verify:submission`.
 
 ### iOS
 
