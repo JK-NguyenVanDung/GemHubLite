@@ -22,7 +22,7 @@ export interface ProductFormSectionProps {
   initialDescription: string | null;
   saving: boolean;
   error: string | null;
-  onSave: (patch: ProductPatch) => Promise<void>;
+  onSave: (patch: ProductPatch) => Promise<boolean>;
   onDeleteProduct: () => void;
 }
 

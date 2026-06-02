@@ -1,13 +1,14 @@
 import { BottomSheet, RNHostView } from "@expo/ui";
 import { Image } from "expo-image";
-import * as ImagePicker from "expo-image-picker";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  InteractionManager,
   KeyboardAvoidingView,
   Modal,
+  NativeModules,
   Platform,
   Pressable,
   ScrollView,
@@ -48,6 +49,7 @@ import {
   type ProductType,
 } from "@/src/domain";
 import { clearCaptureDraft, setCaptureDraft, takeCaptureDraft } from "@/src/features/camera/captureDraft";
+import { launchSingleImageLibraryAsync } from "@/src/features/camera/photoLibraryPicker";
 import { productsRepo } from "@/src/lib/db";
 import { getPowerSaveWarning } from "@/src/lib/device/power";
 import { toUserFacingError } from "@/src/lib/errors/userFacing";
@@ -56,6 +58,8 @@ import { useTheme } from "@/src/theme";
 import { BottomSaveBar } from "@/src/features/camera/components/BottomSaveBar";
 import type { CaptureMediaMetadata } from "@/src/features/camera/hooks/useCaptureSave";
 import { useCaptureSave } from "@/src/features/camera/hooks/useCaptureSave";
+
+const isSimulator = NativeModules.GemHubEnvironment?.isSimulator === true;
 
 const productTypes: { value: ProductType; label: string; icon: IoniconName }[] =
   [
@@ -86,6 +90,7 @@ const skuScannerTypes: ScannedObjectType[] = [
 
 export function CaptureReview() {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const params = useLocalSearchParams<{
     compressed?: string;
     durationMs?: string;
@@ -247,6 +252,11 @@ export function CaptureReview() {
   const canSave =
     pendingMedia.length > 0 && isValidSku(normalizedSku) && skuStatus.kind !== "error";
 
+  const openSkuScanner = useCallback(() => {
+    setSkuFlowOpen(false);
+    InteractionManager.runAfterInteractions(() => setScannerOpen(true));
+  }, []);
+
   useEffect(() => {
     let alive = true;
 
@@ -300,23 +310,12 @@ export function CaptureReview() {
     setSaveError(null);
 
     try {
-      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!permission.granted) {
-        throw new Error("Photo library access is required.");
-      }
-
       const powerWarning = await getPowerSaveWarning();
       if (powerWarning) {
         Alert.alert("Power saver active", powerWarning);
       }
 
-      const result = await ImagePicker.launchImageLibraryAsync({
-        allowsMultipleSelection: false,
-        allowsEditing: Platform.OS === "ios",
-        mediaTypes: ["images"],
-        quality: 1,
-      });
-      const asset = result.canceled ? null : result.assets[0];
+      const asset = await launchSingleImageLibraryAsync();
       if (!asset?.uri) return;
 
       const stored = await storeMediaAsset({
@@ -426,8 +425,17 @@ export function CaptureReview() {
     );
   }
 
+  const bottomInset = Math.max(insets.bottom, theme.spacing.md);
+
   return (
-    <View style={{ gap: 0 }}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
+      <ScrollView
+        automaticallyAdjustKeyboardInsets
+        contentContainerStyle={{ paddingBottom: bottomInset + theme.spacing.xl }}
+        keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
       <View
         style={{
           backgroundColor: theme.colors.surface,
@@ -577,7 +585,7 @@ export function CaptureReview() {
                   : "tertiary"
             }
             onPress={() => setSkuFlowOpen(true)}
-            onScan={() => setScannerOpen(true)}
+            onScan={openSkuScanner}
           />
           <Field
             label="Title"
@@ -624,6 +632,7 @@ export function CaptureReview() {
           </View>
         ) : null}
       </View>
+      </ScrollView>
       <BottomSaveBar canSave={canSave} saving={saving} onSave={onSave} />
       <ActionSheet
         visible={imageSheetOpen}
@@ -657,13 +666,13 @@ export function CaptureReview() {
           onChangeManualSku={(value) => applyNewSku(value)}
           onClose={() => setSkuFlowOpen(false)}
           onGenerate={generate}
-          onOpenScanner={() => setScannerOpen(true)}
+          onOpenScanner={openSkuScanner}
           onSelectExisting={applyExistingSku}
           sku={normalizedSku}
           skuStatus={skuStatus}
         />
       ) : null}
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -683,20 +692,7 @@ function SkuSummaryCard({
   const theme = useTheme();
 
   return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={
-        sku
-          ? `Choose SKU. Current SKU ${sku}. ${status}`
-          : `Choose SKU. ${status}`
-      }
-      onPress={onPress}
-      testID="capture-sku-field"
-      style={({ pressed }) => ({
-        gap: theme.spacing.xs,
-        opacity: pressed ? 0.78 : 1,
-      })}
-    >
+    <View style={{ gap: theme.spacing.xs }}>
       <Text variant="metadata" tone="secondary">
         SKU *
       </Text>
@@ -714,7 +710,17 @@ function SkuSummaryCard({
           paddingHorizontal: theme.spacing.sm,
         }}
       >
-        <View style={{ flex: 1 }}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={
+            sku
+              ? `Choose SKU. Current SKU ${sku}. ${status}`
+              : `Choose SKU. ${status}`
+          }
+          onPress={onPress}
+          testID="capture-sku-field"
+          style={({ pressed }) => ({ flex: 1, opacity: pressed ? 0.78 : 1 })}
+        >
           <Text variant="bodyStrong" selectable>
             {sku || "Select SKU"}
           </Text>
@@ -723,15 +729,12 @@ function SkuSummaryCard({
               {status}
             </Text>
           ) : null}
-        </View>
+        </Pressable>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Scan SKU barcode"
           hitSlop={10}
-          onPress={(event) => {
-            event.stopPropagation();
-            onScan();
-          }}
+          onPress={onScan}
           style={({ pressed }) => ({
             opacity: pressed ? 0.62 : 1,
             padding: theme.spacing.xs,
@@ -740,7 +743,7 @@ function SkuSummaryCard({
           <Icon name="barcode-outline" size={28} tone="primary" />
         </Pressable>
       </View>
-    </Pressable>
+    </View>
   );
 }
 
@@ -1055,46 +1058,15 @@ function SkuScannerOverlay({
 }) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const device = useCameraDevice("back");
   const { hasPermission, requestPermission } = useCameraPermission();
-  const [detectedCode, setDetectedCode] = useState<string | null>(null);
-
-  const handleObjectsScanned = useCallback(
-    (objects: ScannedObject[]) => {
-      if (detectedCode) return;
-      const scannedCode = objects.find(isScannedCode)?.value;
-      if (!scannedCode) return;
-
-      const normalizedCode = normalizeSku(scannedCode);
-      if (!normalizedCode) return;
-
-      setDetectedCode(normalizedCode);
-      onScanned(normalizedCode);
-    },
-    [detectedCode, onScanned],
-  );
-  const objectOutput = useObjectOutput({
-    types: skuScannerTypes,
-    onObjectsScanned: handleObjectsScanned,
-  });
-  const scannerOutputs = useMemo(() => [objectOutput], [objectOutput]);
-  const canUseNativeScanner = hasPermission && Boolean(device);
+  const canAttemptNativeScanner = Platform.OS === "ios" && !isSimulator;
+  const canUseNativeScanner = canAttemptNativeScanner && hasPermission;
   const bottomInset = Math.max(insets.bottom, theme.spacing.md);
   const topInset = Math.max(insets.top, theme.spacing.md);
 
   return (
     <Modal animationType="fade" onRequestClose={onClose} visible>
       <View style={{ backgroundColor: theme.colors.black, flex: 1 }}>
-        {canUseNativeScanner && device ? (
-          <Camera
-            device={device}
-            isActive
-            outputs={scannerOutputs}
-            resizeMode="cover"
-            style={StyleSheet.absoluteFill}
-          />
-        ) : null}
-        <View pointerEvents="none" style={StyleSheet.absoluteFill} />
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={{ flex: 1 }}
@@ -1106,6 +1078,7 @@ function SkuScannerOverlay({
               paddingBottom: theme.spacing.sm,
               paddingHorizontal: theme.spacing.lg,
               paddingTop: topInset + theme.spacing.sm,
+              elevation: 12,
               zIndex: 2,
             }}
           >
@@ -1146,10 +1119,15 @@ function SkuScannerOverlay({
                 justifyContent: "center",
                 maxWidth: 330,
                 opacity: 0.95,
+                overflow: "hidden",
                 width: "84%",
               }}
             >
+              {canUseNativeScanner ? (
+                <NativeSkuScannerCamera onScanned={onScanned} />
+              ) : null}
               <View
+                pointerEvents="none"
                 style={{
                   alignItems: "center",
                   gap: theme.spacing.sm,
@@ -1164,7 +1142,7 @@ function SkuScannerOverlay({
                 <Text variant="bodyStrong" tone="onAccent" align="center">
                   {canUseNativeScanner
                     ? "Scan SKU or QR code"
-                    : "Camera scanner unavailable"}
+                    : "Enter SKU manually"}
                 </Text>
               </View>
             </View>
@@ -1188,10 +1166,10 @@ function SkuScannerOverlay({
                 <Text variant="body" style={{ flex: 1 }}>
                   {canUseNativeScanner
                     ? "Place the code inside the frame."
-                    : "Allow camera access to scan a SKU."}
+                    : "Barcode scan is unavailable on this device."}
                 </Text>
               </View>
-              {!hasPermission ? (
+              {canAttemptNativeScanner && !hasPermission ? (
                 <Button
                   label="Allow Camera"
                   variant="secondary"
@@ -1204,6 +1182,43 @@ function SkuScannerOverlay({
         </KeyboardAvoidingView>
       </View>
     </Modal>
+  );
+}
+
+function NativeSkuScannerCamera({ onScanned }: { onScanned: (sku: string) => void }) {
+  const device = useCameraDevice("back");
+  const [detectedCode, setDetectedCode] = useState<string | null>(null);
+
+  const handleObjectsScanned = useCallback(
+    (objects: ScannedObject[]) => {
+      if (detectedCode) return;
+      const scannedCode = objects.find(isScannedCode)?.value;
+      if (!scannedCode) return;
+
+      const normalizedCode = normalizeSku(scannedCode);
+      if (!normalizedCode) return;
+
+      setDetectedCode(normalizedCode);
+      onScanned(normalizedCode);
+    },
+    [detectedCode, onScanned],
+  );
+  const objectOutput = useObjectOutput({
+    types: skuScannerTypes,
+    onObjectsScanned: handleObjectsScanned,
+  });
+  const scannerOutputs = useMemo(() => [objectOutput], [objectOutput]);
+
+  if (!device) return null;
+
+  return (
+    <Camera
+      device={device}
+      isActive
+      outputs={scannerOutputs}
+      resizeMode="cover"
+      style={StyleSheet.absoluteFill}
+    />
   );
 }
 

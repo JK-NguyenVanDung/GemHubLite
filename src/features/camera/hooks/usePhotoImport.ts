@@ -1,12 +1,12 @@
-import * as ImagePicker from "expo-image-picker";
 import { router, usePathname } from "expo-router";
 import { useCallback, useState } from "react";
-import { Alert, Platform } from "react-native";
+import { Alert } from "react-native";
 
+import { appendCaptureDraftMedia } from "@/src/features/camera/captureDraft";
+import { launchSingleImageLibraryAsync } from "@/src/features/camera/photoLibraryPicker";
 import { getPowerSaveWarning } from "@/src/lib/device/power";
 import { toUserFacingError } from "@/src/lib/errors/userFacing";
 import { storeMediaAsset } from "@/src/lib/files";
-import { appendCaptureDraftMedia } from "@/src/features/camera/captureDraft";
 
 export function usePhotoImport(sku?: string, options?: { returnToProduct?: boolean }) {
   const pathname = usePathname();
@@ -19,24 +19,12 @@ export function usePhotoImport(sku?: string, options?: { returnToProduct?: boole
     setImportError(null);
 
     try {
-      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!permission.granted) {
-        throw new Error("Photo library access is required.");
-      }
-
       const powerWarning = await getPowerSaveWarning();
       if (powerWarning) {
         Alert.alert("Power saver active", powerWarning);
       }
 
-      const result = await ImagePicker.launchImageLibraryAsync({
-        allowsMultipleSelection: false,
-        allowsEditing: Platform.OS === "ios",
-        mediaTypes: ["images"],
-        quality: 1,
-      });
-
-      const asset = result.canceled ? null : result.assets[0];
+      const asset = await launchSingleImageLibraryAsync();
       if (!asset?.uri) {
         return;
       }

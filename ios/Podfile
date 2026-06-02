@@ -64,6 +64,10 @@ target 'GemHubLite' do
     )
 
     installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |build_config|
+        build_config.build_settings['SWIFT_ENABLE_EXPLICIT_MODULES'] = 'NO'
+      end
+
       next unless target.name == 'Yoga'
 
       target.build_configurations.each do |build_config|

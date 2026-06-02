@@ -48,6 +48,7 @@ Bonus capabilities present beyond the required flow: photo-library import (also 
 - Node `22.21.0` recommended and pinned in `.nvmrc` / `.node-version`; package range is Node `>=20.19 <23`.
 - npm `>=10`.
 - macOS with Xcode + iOS Simulator for iOS builds.
+- Ruby + CocoaPods for the iOS pod step (`ios/Pods/` is `.gitignore`d). Tested with Ruby `3.4.7` and CocoaPods `1.16.2`; macOS system Ruby also works, but a version manager (`rbenv`/`chruby`/`rvm`) is recommended. Install CocoaPods with `gem install cocoapods` if missing.
 - Android Studio with Android SDK Platform `36`, Android SDK Build-Tools `36.0.0`, and Android NDK `27.1.12297006` for Android builds.
 - Gradle wrapper is included and downloads Gradle `9.3.1`; do not install a separate Gradle manually.
 - Java must be compatible with the Android Gradle Plugin used by Expo/RN; Android Studio's bundled JDK is recommended.
@@ -67,9 +68,37 @@ Then install packages:
 npm install
 ```
 
-Then run on a platform below. Optional checks: `npm test`, `npm run typecheck`, `npm run lint`, and `npm run verify:submission`.
+Then run start:
+
+```bash
+npm run start
+```
+
+Or run on a platform below. Optional checks: `npm test`, `npm run typecheck`, `npm run lint`, and `npm run verify:submission`.
+
+### Native Build (Expo Prebuild)
+
+Short answer: the app needs native code (VisionCamera, so Expo Go is **not** enough), but you normally do **not** need to run `expo prebuild` yourself.
+
+By default a managed Expo project does **not** ship `ios/` and `android/` folders — they are generated on demand by prebuild and are usually `.gitignore`d. This repo deliberately commits both native projects (only build artifacts like `ios/build/`, `android/build/`, `android/.gradle/`, `android/app/.cxx/` are ignored), so the native build is reproducible and the custom native edits are preserved in version control.
+
+- Because `ios/` and `android/` are already committed (with custom native config: Info.plist permissions, Podfile, Gradle, `expo-build-properties`), `npx expo run:ios` / `npx expo run:android` build directly without a manual prebuild step. The native build commands also run prebuild automatically only if a native folder is ever missing.
+- `npm run start` (Expo Go / Metro) is for JS-only iteration on an already-installed native build; it cannot bootstrap VisionCamera on its own.
+- Only run a manual prebuild to regenerate native projects from `app.json`:
+  ```bash
+  npx expo prebuild --clean
+  ```
+  This is **destructive**: `--clean` overwrites `ios/` and `android/`, discarding the committed native edits. Avoid it for normal builds and reviews; use it only when intentionally regenerating native projects, and re-apply native config afterward.
 
 ### iOS: Build, Install, Run
+
+Install CocoaPods dependencies once (and after native dep changes). `npx expo run:ios` runs this for you, so a manual step is only needed if you build through Xcode or hit a Pods error:
+
+```bash
+npx pod-install ios
+# or directly:
+(cd ios && pod install)
+```
 
 Run a native development build on the default simulator:
 
@@ -150,6 +179,7 @@ Production signing is wired through `GEMHUB_RELEASE_STORE_FILE`, `GEMHUB_RELEASE
 
 - **Expo Go will not work**: VisionCamera requires native code.
 - **iOS Simulator has no real camera**: use the built-in photo-library fallback, or test capture on a physical iPhone.
+- **VisionCamera simulator regression can look like a library crash**: if Xcode stops in `HybridCameraPhotoOutput.swift` around `output.maxPhotoDimensions = nearestPhotoDimension`, do not patch VisionCamera first. The intended simulator path is the black "Camera unavailable" shell with the photo-library button. As a human fix, verify the app is still gating simulator capture before mounting `<Camera>`/photo outputs, then rebuild or reload the native app. This can reappear after Pods/native deps are refreshed because the VisionCamera device/output stack may start returning a simulator pseudo-device instead of no device.
 - **Android emulator can drop during boot on this host**: if `adb` disconnects or the AVD exits, boot from Android Studio Device Manager or use the wiped/headless command above.
 - **Android native linker error for Nitro/VisionCamera**: if you see `libNitroModules.so: unknown file type`, clean native CXX caches and rebuild:
 
@@ -176,6 +206,8 @@ npm run typecheck
 npm run lint
 npm run verify:submission
 ```
+
+`npm test` runs the regression suite in [`tests/`](tests/): SKU generation/append in [`tests/sku-flow.test.mjs`](tests/sku-flow.test.mjs), product-detail behavior in [`tests/product-detail-redesign.test.mjs`](tests/product-detail-redesign.test.mjs), and app risk/regression guards in [`tests/app-risk-regression.test.mjs`](tests/app-risk-regression.test.mjs).
 
 ## Architecture
 
@@ -226,6 +258,7 @@ The workflow was designed so AI accelerated the work without becoming the source
 6. **Implement in vertical slices.** Built one end-to-end journey at a time (Camera → required SKU → file copy → SQLite product/media → Products/Media refresh → Product Detail) so each slice proved the full loop before any secondary polish.
 7. **Run a subagent orchestra against the checklist.** An orchestrator dispatched specialized subagents (research, design, implementation, platform build/validation, regression, security) in parallel on independent surfaces, while I kept integration decisions centralized and corrected or rejected output that drifted.
 8. **Validate with evidence, then review in a fresh context.** Closed each slice with static gates, platform attempts, and captured evidence, then re-reviewed README/submission claims against actual code in clean context to catch stale or overstated docs before submitting.
+9. **Drive a live visual feedback loop with Argent.** I used Argent (iOS Simulator / Android Emulator control) to launch the app, navigate the real running build, and interact with each screen (tabs, camera fallback, SKU entry, save, Products/Media refresh, detail). Argent took screenshots of the actual UI and fed them back to the agents, which compared the running output against `DESIGN.md` and the production captures, flagged misalignment (spacing, touch targets, states, flow gaps), proposed fixes, and re-ran the loop until the live screens matched intent.
 
 ### How I used AI to move faster without losing control
 
@@ -235,7 +268,8 @@ The workflow was designed so AI accelerated the work without becoming the source
 - **Role-split the work.** I used separate mental/agent roles for product fit, platform validation, implementation, QA/grill-with-docs, and security/correctness. That kept UI decisions, native setup, persistence, and submission readiness from blending into one vague task.
 - **Parallelize only independent surfaces.** While one path focused on camera/SKU persistence, another checked iOS/Android native setup, another reviewed required-scope drift, and another captured validation/runbook evidence. I kept integration decisions centralized so parallel work did not create conflicting architecture.
 - **Use AI as an adversarial reviewer, not just a code generator.** I repeatedly asked it to challenge false completion, missing required journeys, stale README claims, platform gaps, and privacy/security risks. This is why the repo includes completion audits, Android issue notes, bundle analysis, and screenshot evidence instead of only code.
-- **Convert advice into tests and gates.** Risk reviews became regression tests for SKU generation, existing-SKU append behavior, stale async refresh guards, touch targets, grid density, media cleanup, and product-detail behavior. Final gates are `npm test`, `npm run typecheck`, `npm run lint`, and `npm run verify:submission`.
+- **Close the loop on the running app with Argent.** I did not trust code review alone: I used Argent to launch the build on simulator/emulator, interact with the live flows, and capture real screenshots. Those screenshots went straight back to the AI agents as visual ground truth, so they could validate actual output against `DESIGN.md` and the production references, catch UI/flow misalignment, and propose targeted fixes — then I re-launched and re-shot to confirm the adjustment landed before moving on.
+- **Convert advice into tests and gates.** Risk reviews became regression tests in [`tests/`](tests/) for SKU generation, existing-SKU append behavior, stale async refresh guards, touch targets, grid density, media cleanup, and product-detail behavior. Final gates are `npm test`, `npm run typecheck`, `npm run lint`, and `npm run verify:submission`.
 - **Trace native failures to evidence.** When Android/VisionCamera failed, I inspected the native artifact itself rather than guessing; the bad Nitro `.so` was zero-filled data, so the fix was a targeted CXX cache clean and rebuild, then release verification.
 - **Review in fresh context and correct the docs.** After implementation, I used clean review passes to compare README/submission claims against actual code. That caught and fixed stale claims such as video import support, SKU format, and run/setup requirements.
 - **Keep scope honest.** AI suggested broader GemHub-like surfaces (auth, cloud, AI/editor tools, video, production navigation). I cut those when they did not serve the take-home core flow, and documented them as deliberate cuts or bonus backlog.
@@ -245,6 +279,8 @@ The workflow was designed so AI accelerated the work without becoming the source
 The agent first generated SKUs using a **row count** as the sequence suffix (`GH-{rowCount+1}`). I rejected this: with seeded or imported SKUs the row count can lag the highest existing suffix and produce **colliding SKUs**. I changed it to derive the next sequence from the **maximum existing `GH-` suffix + 1** instead (`productsRepo.nextSequence`), which makes generated SKUs collision-safe against non-contiguous data. (See "Generated SKU sequencing uses max existing suffix rather than row count" in `CHECKLIST.md`.)
 
 A second correction worth noting: an early existing-SKU save overwrote product metadata with whatever was in the form, including blanks. I constrained it to **update only non-empty fields**, so appending media from the camera never wipes an existing title or description.
+
+A third correction was the iOS Simulator camera path. A native VisionCamera crash appeared inside `HybridCameraPhotoOutput.swift` at `output.maxPhotoDimensions = nearestPhotoDimension`. An AI pass initially over-focused on the native library/pod symptoms, but the human diagnosis was simpler: the simulator should never enter the real photo-output configuration path. The correct behavior is the app-level fallback shell that says "Camera unavailable" and lets the reviewer choose from the photo library. The fix process was to compare the crashing screen against the intended simulator screenshot, reject node_modules/native-library patching, and keep the app logic responsible for routing simulator validation to library import while leaving real camera capture for physical devices.
 
 ## Validation Evidence
 

@@ -57,6 +57,7 @@ test("touch target hardening covers known small controls", () => {
   assert.match(button, /sm: \{ paddingV: "xs", minHeight: 44 \}/);
   assert.match(captureReview, /accessibilityLabel="Clear SKU search"[\s\S]*?hitSlop=\{10\}/);
   assert.match(captureReview, /accessibilityLabel="Scan SKU barcode"[\s\S]*?hitSlop=\{10\}/);
+  assert.match(captureReview, /InteractionManager\.runAfterInteractions\(\(\) => setScannerOpen\(true\)\)/);
   assert.match(captureReview, /accessibilityLabel=\{[\s\S]*?sku[\s\S]*?\? `Choose SKU\. Current SKU/);
   assert.match(captureReview, /accessibilityLabel="Close SKU chooser"/);
   assert.match(captureReview, /minHeight: 44/);
@@ -81,6 +82,8 @@ test("capture preview and SKU scanner use mobile-safe inputs and cached image re
   assert.doesNotMatch(captureReview, /label="Prefix"|label="Date"|label="Seq"/);
   assert.doesNotMatch(captureReview, /Generate SKU creates|New SKU\. Save photo/);
   assert.match(captureReview, /TextInput[\s\S]*autoCapitalize="characters"[\s\S]*autoCorrect=\{false\}/);
+  assert.match(captureReview, /overflow: "hidden",[\s\S]*?<Camera[\s\S]*?style=\{StyleSheet\.absoluteFill\}/);
+  assert.match(captureReview, /elevation: 12,[\s\S]*?zIndex: 2/);
 });
 
 test("product cards announce SKU title count and type", () => {
@@ -269,4 +272,13 @@ test("storage and input risks from advisory catalog stay covered app-wide", () =
   assert.doesNotMatch(allAppSource, /AsyncStorage/);
   assert.doesNotMatch(allAppSource, /Date\.parse|new Date\([^)]*\d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(allAppSource, /JSON\.parse/);
+});
+
+test("SKU scanner does not create iOS-only object output on Android", () => {
+  const captureReview = read("src/features/camera/components/CaptureReview.tsx");
+
+  assert.match(captureReview, /const canAttemptNativeScanner = Platform\.OS === "ios" && !isSimulator/);
+  assert.match(captureReview, /canUseNativeScanner \? \(\s*<NativeSkuScannerCamera onScanned=\{onScanned\} \/>/s);
+  assert.match(captureReview, /function NativeSkuScannerCamera/);
+  assert.match(captureReview, /useObjectOutput\(\{/);
 });

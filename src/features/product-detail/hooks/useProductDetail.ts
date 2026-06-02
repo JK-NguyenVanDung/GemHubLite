@@ -55,7 +55,7 @@ export function useProductDetail(sku: string) {
   const mutate = useCallback(async (patch: ProductPatch) => {
     if (!sku) {
       setSaveError("Missing SKU route parameter.");
-      return;
+      return false;
     }
 
     setSaving(true);
@@ -63,8 +63,10 @@ export function useProductDetail(sku: string) {
       const nextProduct = await productsRepo.update(sku, patch);
       setProduct(nextProduct);
       setSaveError(null);
+      return true;
     } catch (caught) {
       setSaveError(caught instanceof Error ? caught.message : "Product failed to save.");
+      return false;
     } finally {
       setSaving(false);
     }

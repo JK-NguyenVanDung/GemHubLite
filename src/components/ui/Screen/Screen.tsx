@@ -1,4 +1,4 @@
-import { ScrollView, View } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useTheme } from "@/src/theme";
@@ -17,10 +17,13 @@ export function Screen({ children, constrainContent = true, contentStyle, footer
       {scroll ? (
         <ScrollView
           testID={testID}
+          automaticallyAdjustKeyboardInsets
           contentInsetAdjustmentBehavior="automatic"
+          keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={content}
+          scrollIndicatorInsets={{ bottom: theme.spacing.md }}
         >
           {children}
         </ScrollView>
