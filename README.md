@@ -40,6 +40,7 @@ Bonus capabilities present beyond the required flow: photo-library import (also 
 - Expo SDK `56` (`expo ~56.0.8`).
 - React Native `0.85.3`, React `19.2.3`, Hermes enabled, New Architecture enabled.
 - VisionCamera `^5.0.11`; this means Expo Go is **not** enough. Use a native build.
+- Minimum OS targets: iOS deployment target `16.4`; Android min SDK `24` (Android 7.0 Nougat). Android compile/target SDK is `36`.
 - Main native IDs: iOS bundle `com.gemhublite.app`, Android package `com.gemhublite.app`, URL scheme `gemhublite`.
 
 ### Required Local Environment
@@ -213,23 +214,30 @@ GemHub Lite is offline-first and ships with no hard-coded secrets. No environmen
 
 This app was built AI-first, with engineering judgment applied at every checkpoint. The toolchain was **Claude (Claude Code) and OpenAI Codex running together in a custom multi-agent cluster**. An orchestrator dispatched specialized subagents and I reviewed and steered their output.
 
+The workflow was designed so AI accelerated the work without becoming the source of truth: align before code, stress-test vague requirements, turn the result into a PRD/checklist, slice work into vertical end-to-end journeys, run agents with tight feedback loops, and review the output in a fresh context instead of trusting a long-running chat blindly.
+
 ### Workflow (the full pipeline)
 
-1. **Inspect the real app.** Captured and reviewed production GemHub screenshots to extract the real mental model: capture → required SKU → media/products libraries → detail. Inspection notes live in `docs/research/` (`GEMIQ_APP_RESEARCH.md`, `REAL_APP_INSPECTION_CHECKLIST.md`) and captures in `docs/research/screenshots/`.
-2. **Generate a design system from the real captures.** The screenshots fed a design pass (`DESIGN.md`) that defined the theme primitives, layout, and component patterns, so the Lite UX is intentional rather than a blind clone.
-3. **Plan.** Produced a product requirements/plan (`PRP.MD`) and a harness/agent operating doc (`HARNESS.MD`) describing how the agent cluster should run.
-4. **Grill the plan.** Stress-tested the plan against the extracted domain model and terminology before writing code, sharpening SKU rules, scope boundaries, and edge cases.
-5. **Establish a checklist for the AI.** Turned scope into an explicit, machine-followable acceptance checklist (`CHECKLIST.md`) covering required journeys, platform validation, quality gates, and scope guardrails. The cluster worked against this as its source of truth.
-6. **Build toward the goal with a subagent orchestra.** An orchestrator ran multiple specialized subagents (inspection, design, implementation, build/validation, regression) in parallel to drive each area to completion, while I corrected and rejected output where it was wrong.
+1. **Research the real app.** Captured and reviewed production GemHub screenshots to extract the real mental model: capture → required SKU → media/products libraries → detail. Inspection notes live in `docs/research/` (`GEMIQ_APP_RESEARCH.md`, `REAL_APP_INSPECTION_CHECKLIST.md`, `UI_GRAPH.md`) with raw captures in `docs/research/screenshots/`.
+2. **Derive a design system from the captures.** The screenshots fed a design pass (`DESIGN.md`) that defined theme primitives, layout, and component patterns, so the Lite UX is intentional rather than a blind clone of production.
+3. **Write the plan as a PRD.** Produced a product requirements/plan (`PRP.MD`) plus a harness/agent operating doc (`HARNESS.MD`) that fixed required scope, non-goals, the platform matrix, the data model, and validation gates up front.
+4. **Grill the plan before coding.** Stress-tested the PRD against the extracted domain model and terminology — required vs. bonus, scope cuts, SKU rules, and edge cases — so the destination was locked before any implementation.
+5. **Turn scope into a machine-followable checklist.** Converted the PRD into an explicit acceptance checklist (`CHECKLIST.md`) covering required journeys, platform validation, quality gates, and scope guardrails. This stayed the single source of truth the agents worked against.
+6. **Implement in vertical slices.** Built one end-to-end journey at a time (Camera → required SKU → file copy → SQLite product/media → Products/Media refresh → Product Detail) so each slice proved the full loop before any secondary polish.
+7. **Run a subagent orchestra against the checklist.** An orchestrator dispatched specialized subagents (research, design, implementation, platform build/validation, regression, security) in parallel on independent surfaces, while I kept integration decisions centralized and corrected or rejected output that drifted.
+8. **Validate with evidence, then review in a fresh context.** Closed each slice with static gates, platform attempts, and captured evidence, then re-reviewed README/submission claims against actual code in clean context to catch stale or overstated docs before submitting.
 
 ### How I used AI to move faster without losing control
 
-- **Context pack first, code second.** I gave the agents the real-app screenshots, `PRP.MD`, `DESIGN.md`, `HARNESS.MD`, and `CHECKLIST.md` before implementation so outputs were anchored to the product brief instead of generic catalog-app patterns.
+- **Keep the model in the smart zone.** Instead of asking one giant chat to “build GemHub,” I externalized state into small repo files: `PRP.MD` for destination, `DESIGN.md` for UI rules, `HARNESS.MD` for agent roles, and `CHECKLIST.md` for acceptance. That made it cheap to reset context and re-run agents without losing product intent.
+- **Grill before coding.** I used a grill-with-docs pass to challenge vague requirements: what is required vs. bonus, what a non-technical jeweler needs first, which production GemHub features to cut, and how SKU/media persistence should behave. This prevented early drift into auth, cloud sync, AI studio, video, and other impressive-looking but wrong surfaces.
+- **Use vertical tracer bullets.** I sliced implementation around end-to-end user journeys rather than horizontal layers: Camera → required SKU → local file copy → SQLite product/media row → Products/Media refresh → Product Detail. This gave immediate feedback that the full loop worked before polishing secondary UI.
 - **Role-split the work.** I used separate mental/agent roles for product fit, platform validation, implementation, QA/grill-with-docs, and security/correctness. That kept UI decisions, native setup, persistence, and submission readiness from blending into one vague task.
 - **Parallelize only independent surfaces.** While one path focused on camera/SKU persistence, another checked iOS/Android native setup, another reviewed required-scope drift, and another captured validation/runbook evidence. I kept integration decisions centralized so parallel work did not create conflicting architecture.
 - **Use AI as an adversarial reviewer, not just a code generator.** I repeatedly asked it to challenge false completion, missing required journeys, stale README claims, platform gaps, and privacy/security risks. This is why the repo includes completion audits, Android issue notes, bundle analysis, and screenshot evidence instead of only code.
 - **Convert advice into tests and gates.** Risk reviews became regression tests for SKU generation, existing-SKU append behavior, stale async refresh guards, touch targets, grid density, media cleanup, and product-detail behavior. Final gates are `npm test`, `npm run typecheck`, `npm run lint`, and `npm run verify:submission`.
 - **Trace native failures to evidence.** When Android/VisionCamera failed, I inspected the native artifact itself rather than guessing; the bad Nitro `.so` was zero-filled data, so the fix was a targeted CXX cache clean and rebuild, then release verification.
+- **Review in fresh context and correct the docs.** After implementation, I used clean review passes to compare README/submission claims against actual code. That caught and fixed stale claims such as video import support, SKU format, and run/setup requirements.
 - **Keep scope honest.** AI suggested broader GemHub-like surfaces (auth, cloud, AI/editor tools, video, production navigation). I cut those when they did not serve the take-home core flow, and documented them as deliberate cuts or bonus backlog.
 
 ### One example where I corrected/rejected AI output
@@ -268,7 +276,3 @@ Completing only the required scope can still receive a strong pass. Bonus work m
 ## Time Spent
 
 About half a day total, split across Thursday night and the following Monday night. Most time went into native setup/camera validation, SKU edge cases, and keeping the required save/search flows reliable on both platforms.
-
-## Submission
-
-Static gates pass (`npm test`, `npm run typecheck`, `npm run lint`) and `npm run verify:submission` currently reports no local blockers with warnings for real signing/submission credentials. Android release artifacts and captured iOS/Android simulator or emulator evidence live under `docs/submission/` and `docs/evidence/`; real-device camera proof remains separate from simulator validation.
