@@ -31,7 +31,7 @@ GemHub Lite is a local-first Expo inventory app for the project camera-to-SKU ca
 - SKU is treated as immutable after product creation.
 - There is no save-without-SKU path: every saved media item is bound to a SKU (typed, picked from an existing product, or generated).
 
-Bonus capabilities present beyond the required flow: photo-library import (also the simulator capture fallback) and a barcode/QR scanner that fills the SKU field.
+Bonus capabilities present beyond the required flow: photo-library import (also the simulator capture fallback), barcode/QR SKU fill, and adjustable grid density on Products and Media.
 
 ## Run
 
@@ -82,7 +82,7 @@ app/ routes
 
 ## Scope And UX Divergence
 
-**Included:** Camera → SKU → Product save, Media library, Products library, Product Detail, metadata edits, append-media-to-existing-SKU, local SQLite persistence, app-owned media storage, gallery import, barcode/QR SKU fill, and basic search/filter/sort.
+**Included:** Camera → SKU → Product save, Media library, Products library, Product Detail, metadata edits, append-photo-to-existing-SKU, local SQLite persistence, app-owned media storage, gallery import, barcode/QR SKU fill, basic search/filter/sort, and adjustable grid density on Products and Media.
 
 **Deliberately cut:** auth, cloud sync, billing, ecommerce/integrations, hardware workflows, appraisal/editor tooling, AI-generated descriptions, and camera video capture. These were cut to keep the submission focused on the required non-technical jeweler flow: capture an item, assign a SKU, and find it again quickly.
 
@@ -103,8 +103,8 @@ This app was built AI-first, with engineering judgment applied at every checkpoi
 
 ### Workflow (the full pipeline)
 
-1. **Inspect the real app.** Recorded screen video and captured screenshots of the production GemHub flows, then walked them frame by frame to extract the real mental model: capture → required SKU → media/products libraries → detail. Inspection notes live in `docs/research/` (`GEMIQ_APP_RESEARCH.md`, `REAL_APP_INSPECTION_CHECKLIST.md`) and raw captures in `docs/research/screenshots/`.
-2. **Generate a design system from the real captures.** The recorded video and screenshots fed a design pass (`DESIGN.md`) that defined the theme primitives, layout, and component patterns, so the Lite UX is intentional rather than a blind clone.
+1. **Inspect the real app.** Captured and reviewed production GemHub screenshots to extract the real mental model: capture → required SKU → media/products libraries → detail. Inspection notes live in `docs/research/` (`GEMIQ_APP_RESEARCH.md`, `REAL_APP_INSPECTION_CHECKLIST.md`) and captures in `docs/research/screenshots/`.
+2. **Generate a design system from the real captures.** The screenshots fed a design pass (`DESIGN.md`) that defined the theme primitives, layout, and component patterns, so the Lite UX is intentional rather than a blind clone.
 3. **Plan.** Produced a product requirements/plan (`PRP.MD`) and a harness/agent operating doc (`HARNESS.MD`) describing how the agent cluster should run.
 4. **Grill the plan.** Stress-tested the plan against the extracted domain model and terminology before writing code, sharpening SKU rules, scope boundaries, and edge cases.
 5. **Establish a checklist for the AI.** Turned scope into an explicit, machine-followable acceptance checklist (`CHECKLIST.md`) covering required journeys, platform validation, quality gates, and scope guardrails. The cluster worked against this as its source of truth.
@@ -118,11 +118,11 @@ A second correction worth noting: an early existing-SKU save overwrote product m
 
 ## Validation Evidence
 
-Screenshots live in `docs/research/screenshots/validation/` and `docs/evidence/`. Current evidence includes iOS native build Home, camera fallback, capture preview, product detail, products grid/filter, media grid/filter, More, and Android development-build launch/blocker notes.
+Screenshots live in `docs/research/screenshots/validation/` and `docs/evidence/`. Current evidence includes iOS simulator Home, camera fallback, capture preview, product detail, Products grid/filter, Media grid/filter, More, and Android release/emulator evidence where captured.
 
 ## Demo Evidence
 
-A recorded walkthrough of the four required journeys (new product from camera, add media to an existing product, existing SKU from camera, and Products/Media sync) is scripted in `docs/submission/DEMO_SCRIPT.md`, with supporting screenshots in `docs/evidence/` and `docs/research/screenshots/validation/`. The script explicitly calls out the iOS simulator camera limitation (no rear camera → photo-library fallback; save/SKU/persistence logic is identical to real capture).
+A walkthrough of the four required journeys (new product from camera, add media to an existing product, existing SKU from camera, and Products/Media sync) is scripted in `docs/submission/DEMO_SCRIPT.md`, with supporting screenshots in `docs/evidence/` and `docs/research/screenshots/validation/`. The script explicitly calls out the iOS simulator camera limitation (no rear camera → photo-library fallback; save/SKU/persistence logic is identical after an image is selected).
 
 ## Bonus Scope (Optional Extra Credit Only)
 
@@ -133,13 +133,13 @@ Evaluation is based on the required scope. The items below can strengthen the su
 - Import from gallery / camera roll, with SKU required before save and the same save rules as camera capture.
 - Basic search, filters, and sort on Products and Media.
 - Offline-first local persistence with SQLite and app-owned media storage.
+- List/grid density toggle on Products and Media.
 
 **Bonus not built:**
 
 - Video capture, short clip per product.
 - AI product description via a conventional LLM API such as OpenAI or Anthropic, e.g. a button on preview or product detail that drafts a description from title/type and remains user-editable before save.
 - Offline-first sync to Supabase or other cloud storage.
-- List/grid toggle or adjustable media grid density.
 
 Completing only the required scope can still receive a strong pass. Bonus work mainly shows range and polish, not baseline competence.
 
@@ -149,4 +149,4 @@ About half a day total, split across Thursday night and the following Monday nig
 
 ## Submission
 
-iOS and Android both build and run; static gates pass; app is offline-first with locked-down release permissions. Run `npm run verify:submission` to check readiness. Detailed evidence, runbooks, and device matrix live under `docs/submission/` and `docs/evidence/`.
+Static gates pass (`npm test`, `npm run typecheck`, `npm run lint`) and `npm run verify:submission` currently reports no local blockers with warnings for real signing/submission credentials. Android release artifacts and captured iOS/Android simulator or emulator evidence live under `docs/submission/` and `docs/evidence/`; real-device camera proof remains separate from simulator validation.

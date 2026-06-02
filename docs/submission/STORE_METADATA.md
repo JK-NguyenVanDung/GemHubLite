@@ -36,7 +36,7 @@ Core capabilities:
 
 ### Data Stored On Device
 
-- Product SKUs, titles, descriptions, product type, media metadata, and app-owned image/video files.
+- Product SKUs, titles, descriptions, product type, media metadata, and app-owned image files. Video storage fields exist in code, but the submitted UI is photo-only.
 - Data stays local to the app container.
 - Android backup/device-transfer is disabled in the native manifest to avoid exporting local jewelry catalog data.
 

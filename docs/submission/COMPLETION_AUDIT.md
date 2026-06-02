@@ -20,7 +20,7 @@ This audit maps the active goal to proof. A row is complete only when current ev
 | Retryable save failure UX | Capture Review `Retry` action | Verified by typecheck/lint | Manual screenshot of failed-save retry state |
 | Error states | Camera unavailable/denied, save failure, storage guard, global error boundary | Implemented | Full manual matrix screenshots |
 | Full storage / low disk | Disk-space write preflight, startup low-storage banner | Implemented | Device/emulator low-storage scenario screenshot/log |
-| Oversized media | Source size limits for images/videos | Implemented | Manual huge-media rejection proof |
+| Oversized media | Source size limits for submitted photo flow; video storage limits exist for future video support | Implemented for photos | Manual huge-media rejection proof |
 | Low battery/low power | Non-blocking power hook currently no-op after native module removal | Deferred/limited | Real native low-power API or documented no-op accepted by scope |
 | Rate limit | No network/backend rate-limited features exist | Not applicable | Revisit if network features added |
 | Performance list rendering | FlatList-owned scrolling, responsive columns, memoized render patterns, Android release 1000-row screenshots/meminfo/logcat, trim-memory survival, `docs/submission/PERFORMANCE_RUNBOOK.md` | Partially verified | Exact 100/500-row captures and iOS profiling still optional/reviewer-dependent |

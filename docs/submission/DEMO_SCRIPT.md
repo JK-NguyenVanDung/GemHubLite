@@ -29,10 +29,10 @@ Read the **[SAY]** lines aloud; the **[DO]** lines are what you tap/show on scre
 **[SAY]**
 > "There's no 'save without SKU' path. I have three ways to set one: type it, pick an existing SKU, or generate one."
 
-**[DO]** Tap **Generate SKU**. Show the generated value, e.g. `SKU-20260602-001`.
+**[DO]** Tap **Generate SKU**. Show the generated value, e.g. `GH-000001`.
 
 **[SAY]**
-> "Generate creates a unique value in the format SKU-date-sequence — and the sequence is derived from the highest existing suffix, not a row count, so it won't collide with imported or seeded SKUs. I'll add a title too."
+> "Generate creates a unique `GH-######` value. The sequence is derived from the highest existing `GH-` suffix, not a row count, so it won't collide with imported or seeded SKUs. I'll add a title too."
 
 **[DO]** Type a title (e.g. "Gold Solitaire Ring"). Tap **Save**.
 
@@ -51,7 +51,7 @@ Read the **[SAY]** lines aloud; the **[DO]** lines are what you tap/show on scre
 **[DO]** From **Products**, tap the product to open **Product Detail**. Show title, description, type, and the media section.
 
 **[SAY]**
-> "Product Detail lets me edit the title, description, and product type, and shows every image and video for this SKU. I can add more photos right from here."
+> "Product Detail lets me edit the title, description, and product type, and shows every saved photo for this SKU. I can add more photos right from here."
 
 **[DO]** Tap **Add Photo**. Note that it routes to the camera with the SKU pre-filled.
 
@@ -101,7 +101,7 @@ Read the **[SAY]** lines aloud; the **[DO]** lines are what you tap/show on scre
 ## Closing (≈15s)
 
 **[SAY]**
-> "That's the full required scope: capture → required SKU → Products and Media libraries → Product Detail, all local-first and running on both iOS and Android. I also shipped a couple of small bonuses — photo-library import and a barcode/QR scanner that fills the SKU field. Thanks for watching."
+> "That's the full required scope: capture → required SKU → Products and Media libraries → Product Detail, all local-first. I also shipped small bonuses — photo-library import, barcode/QR SKU fill, search/filter/sort, and grid-density controls. Thanks for watching."
 
 ---
 
@@ -124,4 +124,4 @@ Pick whichever you actually want to narrate; both are real, defensible engineeri
 - **Android emulator UI validation was intermittently blocked** by the AVD/adb dropping before install. Next: stabilize the emulator (headless wiped-state boot) or validate on a physical Android device.
 - **Test coverage is partial.** Tests run on the Node test runner and cover the SKU flow, the Product Detail redesign, and app-wide regression guards; dedicated repository-level unit tests are still deferred. Next: add focused repository tests around upsert/append.
 - **AI product description (bonus) is backlog**, intentionally — save never depends on AI.
-- Next-sprint polish: user-selectable cover image, large-catalog performance profiling on iOS, and list/grid density toggle.
+- Next-sprint polish: user-selectable cover image, large-catalog performance profiling on iOS, and optional AI-generated draft descriptions.
