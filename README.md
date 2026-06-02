@@ -222,6 +222,16 @@ This app was built AI-first, with engineering judgment applied at every checkpoi
 5. **Establish a checklist for the AI.** Turned scope into an explicit, machine-followable acceptance checklist (`CHECKLIST.md`) covering required journeys, platform validation, quality gates, and scope guardrails. The cluster worked against this as its source of truth.
 6. **Build toward the goal with a subagent orchestra.** An orchestrator ran multiple specialized subagents (inspection, design, implementation, build/validation, regression) in parallel to drive each area to completion, while I corrected and rejected output where it was wrong.
 
+### How I used AI to move faster without losing control
+
+- **Context pack first, code second.** I gave the agents the real-app screenshots, `PRP.MD`, `DESIGN.md`, `HARNESS.MD`, and `CHECKLIST.md` before implementation so outputs were anchored to the product brief instead of generic catalog-app patterns.
+- **Role-split the work.** I used separate mental/agent roles for product fit, platform validation, implementation, QA/grill-with-docs, and security/correctness. That kept UI decisions, native setup, persistence, and submission readiness from blending into one vague task.
+- **Parallelize only independent surfaces.** While one path focused on camera/SKU persistence, another checked iOS/Android native setup, another reviewed required-scope drift, and another captured validation/runbook evidence. I kept integration decisions centralized so parallel work did not create conflicting architecture.
+- **Use AI as an adversarial reviewer, not just a code generator.** I repeatedly asked it to challenge false completion, missing required journeys, stale README claims, platform gaps, and privacy/security risks. This is why the repo includes completion audits, Android issue notes, bundle analysis, and screenshot evidence instead of only code.
+- **Convert advice into tests and gates.** Risk reviews became regression tests for SKU generation, existing-SKU append behavior, stale async refresh guards, touch targets, grid density, media cleanup, and product-detail behavior. Final gates are `npm test`, `npm run typecheck`, `npm run lint`, and `npm run verify:submission`.
+- **Trace native failures to evidence.** When Android/VisionCamera failed, I inspected the native artifact itself rather than guessing; the bad Nitro `.so` was zero-filled data, so the fix was a targeted CXX cache clean and rebuild, then release verification.
+- **Keep scope honest.** AI suggested broader GemHub-like surfaces (auth, cloud, AI/editor tools, video, production navigation). I cut those when they did not serve the take-home core flow, and documented them as deliberate cuts or bonus backlog.
+
 ### One example where I corrected/rejected AI output
 
 The agent first generated SKUs using a **row count** as the sequence suffix (`GH-{rowCount+1}`). I rejected this: with seeded or imported SKUs the row count can lag the highest existing suffix and produce **colliding SKUs**. I changed it to derive the next sequence from the **maximum existing `GH-` suffix + 1** instead (`productsRepo.nextSequence`), which makes generated SKUs collision-safe against non-contiguous data. (See "Generated SKU sequencing uses max existing suffix rather than row count" in `CHECKLIST.md`.)
